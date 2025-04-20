@@ -1,0 +1,14 @@
+<svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" style="position: absolute">
+    <defs>
+        <mask id="gradient-diamond-mask" maskUnits="userSpaceOnUse">
+            <rect
+                    width="426.084"
+                    height="424.924"
+                    rx="45"
+                    ry="45"
+                    transform="translate(-5.00879 297.165) rotate(-45)"
+                    fill=\"white\"
+            />
+        </mask>
+    </defs>
+</svg>
