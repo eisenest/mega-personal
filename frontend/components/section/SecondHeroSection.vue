@@ -14,13 +14,11 @@
     </div>
 
     <div class="about-hero__image-wrapper">
-      <div
-          class="image-mask"
-          :style="{ backgroundImage: `url(${image})` }"
-      ></div>
+      <img :src="image" alt="Hero image" class="hero-image" />
     </div>
   </div>
 </template>
+
 
 <script setup>
 defineProps({
@@ -52,13 +50,7 @@ defineProps({
   gap: 40px;
   border-radius: 24px;
   background: white;
-  overflow: hidden;
-  height: 640px;
-}
-
-.about-hero h1 {
-  margin: 0;
-}
+  overflow: hidden;}
 
 .about-hero__content {
   flex: 1;
@@ -88,20 +80,19 @@ defineProps({
 .about-hero__image-wrapper {
   position: relative;
   flex: 1;
-  aspect-ratio: 1 / 1;
-  left: 200px;
-  height: 200%;
   width: 66%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-shadow: inset 4px 0 0 0 #fff;
 }
 
-.image-mask {
+.hero-image {
   width: 100%;
   height: 100%;
-  /*background-size: contain;*/
-  box-shadow: inset 4px 0 0 0 #fff;
-  background-position: left;
-  opacity: 1;
-  overflow: hidden;
-  position: relative;
+  object-fit: cover;
+  object-position: left;
 }
+
 </style>
