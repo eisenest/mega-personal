@@ -1,39 +1,87 @@
 <template>
-  <section class="vacancies-section container">
-    <h2 class="vacancies-title headline">Фото</h2>
-    <div class="photo-gallery">
-      <img src="/photos/photo0.jpg" alt="Фото 1" class="photo-item" />
-      <img src="/photos/photo1.jpg" alt="Фото 1" class="photo-item" />
-      <img src="/photos/photo2.jpg" alt="Фото 2" class="photo-item" />
-      <img src="/photos/photo3.jpg" alt="Фото 3" class="photo-item" />
+  <section class="photo-section">
+    <div class="container">
+      <h2 class="vacancies-title headline">Фото</h2>
+    </div>
+    <div class="photo-gallery-wrapper">
+      <div class="photo-gallery" ref="galleryRef">
+        <div class="photo-track" ref="trackRef">
+          <img
+              v-for="(img, i) in images"
+              :key="'img-' + i"
+              :src="img"
+              class="photo-item"
+              alt="Фото"
+          />
+          <img
+              v-for="(img, i) in images"
+              :key="'clone-' + i"
+              :src="img"
+              class="photo-item"
+              alt="Фото копия"
+          />
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
+
 <script setup>
-// Можно подключать фото через props, если потребуется динамика
+import { onMounted, ref } from 'vue'
+
+const galleryRef = ref(null)
+const trackRef = ref(null)
+
+const images = [
+  '/photos/photo0.jpg',
+  '/photos/photo1.jpg',
+  '/photos/photo2.jpg',
+  '/photos/photo3.jpg',
+]
+
+onMounted(() => {
+  const el = galleryRef.value
+  let scrollSpeed = 0.5
+
+  function loopScroll() {
+    el.scrollLeft += scrollSpeed
+
+    // если дошли до середины (все оригинальные изображения прокручены) — сбрасываем scroll
+    if (el.scrollLeft >= trackRef.value.scrollWidth / 2) {
+      el.scrollLeft = 0
+    }
+
+    requestAnimationFrame(loopScroll)
+  }
+
+  loopScroll()
+})
 </script>
 
 <style scoped>
-.vacancies-section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-bottom: 100px;
+.photo-gallery-wrapper {
+  width: 100vw;
+  margin-left: calc(-1 * (100vw - 100%)/2); /* выравнивание относительно body */
+  overflow: hidden;
 }
 
 .photo-gallery {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.photo-track {
   display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .photo-item {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
+  flex: 0 0 auto;
+  width: 360px;
+  height: 280px;
   border-radius: 20px;
   object-fit: cover;
-  flex: 1 1 300px;
 }
+
 </style>

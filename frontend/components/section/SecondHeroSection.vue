@@ -102,7 +102,6 @@ defineProps({
   background-position: left;
   opacity: 1;
   overflow: hidden;
-  left: 200px;
   position: relative;
 }
 </style>

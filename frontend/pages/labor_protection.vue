@@ -103,7 +103,7 @@ const goalCards = [
 .goal-grid{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 300px);
+  grid-template-rows: repeat(1, 300px);
   gap: 24px;
 }
 

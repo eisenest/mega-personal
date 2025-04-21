@@ -10,7 +10,6 @@
   <ServiceSection/>
 
   <!--Ресурсы-->
-  <h2 class="headline">Ресурсы</h2>
   <div class="resources-wrapper">
     <ResourceSection/>
   </div>
