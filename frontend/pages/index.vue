@@ -26,12 +26,12 @@
   <CasesSection/>
   <FormSection/>
   <BlogSection :is-main="true"/>
+  <PopupMultitabForm/>
 
 </template>
 
 <script setup>
 import PropsSection from "~/components/section/PropsSection.vue";
-import GoalCard from "~/components/cards/GoalCard.vue";
 import ResourceSection from "~/components/section/ResourceSection.vue";
 import PartnersSection from "~/components/section/PartnersSection.vue";
 import ValuesSection from "~/components/section/ValuesSection.vue";
@@ -42,6 +42,7 @@ import BlogSection from "~/components/section/BlogSection.vue";
 import HeroSection from "~/components/section/HeroSection.vue";
 import GoalSection from "~/components/section/GoalSection.vue";
 import ServiceSection from "~/components/section/ServiceSection.vue";
+import PopupMultitabForm from "~/components/section/PopupMultitabForm.vue";
 
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase

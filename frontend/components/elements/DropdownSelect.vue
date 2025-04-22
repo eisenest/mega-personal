@@ -89,4 +89,10 @@ const selectOption = (option) => {
 .arrow {
   margin-left: 8px;
 }
+
+.modal-overlay .dropdown-selected{
+  border: none;
+  background: #f0f7ff;
+}
+
 </style>

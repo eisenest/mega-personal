@@ -29,6 +29,7 @@
       </div>
     </div>
   </section>
+
 </template>
 
 <style scoped>
@@ -127,6 +128,10 @@
 <script setup lang="ts">
 import Pagination from '~/components/elements/Pagination.vue'
 import { ref } from 'vue'
+import PopupMultitabForm from "~/components/section/PopupMultitabForm.vue";
+
+
+const popupRef = ref(null)
 
 const slides = [
   {
