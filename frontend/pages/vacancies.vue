@@ -5,9 +5,9 @@ import ValueCard from "~/components/cards/ValueCard.vue";
 import VacanciesSection from "~/components/section/VacanciesSection.vue";
 import StepRowSection from "~/components/section/StepRowSection.vue";
 import FaqSection from "~/components/section/FaqSection.vue";
-import RegistrationForm from "~/components/section/RegistrationForm.vue";
 import CustomerReviewSection from "~/components/section/CustomerReviewSection.vue";
 import PhotoSection from "~/components/section/PhotoSection.vue";
+import HelpFormSection from "~/components/section/HelpFormSection.vue";
 
 const values = [
   {
@@ -82,6 +82,10 @@ const questions = [
   }
 ]
 
+function goTo(url: string) {
+  window.open(url, '_blank')
+}
+
 
 </script>
 
@@ -120,6 +124,8 @@ const questions = [
   </div>
   <StepRowSection :steps="steps" />
 
+  <HelpFormSection/>
+
   <FaqSection :questions="questions" />
 
   <CustomerReviewSection/>
@@ -132,9 +138,18 @@ const questions = [
       Подписывайтесь на наши социальные сети и будьте в курсе новых вакансий, реальных отзывов сотрудников и всех преимуществ работы с нами!
     </p>
     <div class="social-buttons">
-      <button>ВКонтакте</button>
-      <button>Rutube</button>
-      <button>Telegram</button>
+      <button class="social-button" @click="goTo('https://vk.com/mega_personal')">
+        <img src="/icon/vk.svg" alt="VK" class="icon" /> Вконтакте
+      </button>
+
+      <button class="social-button" @click="goTo('https://rutube.ru/channel/59234567/')">
+        <img src="/icon/rutube.svg" alt="RUTUBE" class="icon" /> RUTUBE
+      </button>
+
+      <button class="social-button" @click="goTo('https://t.me/mega_personal_job')">
+        <img src="/icon/tg-white.svg" alt="Telegram" class="icon" /> Телеграм
+      </button>
+
     </div>
   </div>
 
@@ -196,6 +211,20 @@ const questions = [
 .social-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.social-buttons button{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  margin-right: 8px;
 }
 
 

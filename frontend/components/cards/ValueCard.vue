@@ -31,8 +31,11 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 16px;
-  /*box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);*/
   height: 240px;
+}
+
+.value-card:hover{
+  box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
 }
 
 .value-card__number {

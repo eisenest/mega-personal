@@ -47,7 +47,6 @@
 }
 
 .hero__container {
-  padding-top: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,7 +65,6 @@
 }
 
 .hero__cta {
-  background: #6d00c4;
   color: white;
   padding: 18px 32px;
   border-radius: 45px;
@@ -98,7 +96,7 @@
 
 .img-wrapper {
   overflow: hidden;
-  border-radius: 48px;
+  border-radius: 24px;
   width: 100%;
   height: 100%;
   background-position-y: center;

@@ -28,7 +28,7 @@
 
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const galleryRef = ref(null)
 const trackRef = ref(null)
@@ -40,15 +40,22 @@ const images = [
   '/photos/photo3.jpg',
 ]
 
-onMounted(() => {
+import { nextTick } from 'vue'
+
+onMounted(async () => {
+  console.log('mounted')
+  await nextTick()
+
   const el = galleryRef.value
-  let scrollSpeed = 0.5
+  const track = trackRef.value
+  if (!el || !track) return
+
+  const scrollSpeed = 0.5
 
   function loopScroll() {
     el.scrollLeft += scrollSpeed
 
-    // если дошли до середины (все оригинальные изображения прокручены) — сбрасываем scroll
-    if (el.scrollLeft >= trackRef.value.scrollWidth / 2) {
+    if (el.scrollLeft >= track.scrollWidth / 2) {
       el.scrollLeft = 0
     }
 

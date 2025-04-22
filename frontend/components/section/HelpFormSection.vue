@@ -4,6 +4,9 @@
       <!-- Левая часть -->
       <div class="form__info">
         <div class="form__info-top">
+          <h3>
+            Возможность работы <span class="highlight">для Вас!</span>
+          </h3>
           <div class="tabs">
             <button
                 v-for="(tab, i) in tabs"
@@ -14,9 +17,7 @@
               {{ tab }}
             </button>
           </div>
-          <h3>
-            Мы поможем вам <span class="highlight">найти работу!</span>
-          </h3>
+
         </div>
         <div class="form__info-bottom">
           <p>Заполните форму, и наш специалист свяжется с вами.</p>
@@ -44,7 +45,7 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
+const tabs = ['Работа', 'Подработка', 'Вахта']
 const activeTab = ref(1) // по умолчанию
 const route = useRoute()
 

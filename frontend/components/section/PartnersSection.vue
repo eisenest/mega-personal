@@ -3,9 +3,13 @@
     <div class="partners__container">
       <!-- Левая панель -->
       <div class="partners__cta">
-        <a href="#form" class="cta-link">
+        <NuxtLink
+            :to="{ path: '/', query: { tab: 0 }, hash: '#form' }"
+            class="cta-link"
+        >
+
           Оставить заявку <span>&rarr;</span>
-        </a>
+        </NuxtLink>
         <div class="stat">
           <strong>90%</strong>
           <p>Заказчиков становятся нашими<br />постоянными партнерами</p>
@@ -41,6 +45,21 @@ const logos = [
   '/partners/delovye.svg',
   '/partners/fesco.svg'
 ]
+
+
+
+const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
+const activeTab = ref(1) // по умолчанию
+
+const route = useRoute()
+
+onMounted(() => {
+  const tabFromQuery = Number(route.hash?.split('?tab=')[1])
+  if (!isNaN(tabFromQuery)) {
+    activeTab.value = tabFromQuery
+  }
+})
+
 </script>
 
 <style scoped>

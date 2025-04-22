@@ -30,6 +30,13 @@
         </div>
 
         <div class="info-item">
+          <strong>Для соискателей</strong>
+          <p>+7 800 222 99 39</p>
+        </div>
+
+
+
+        <div class="info-item">
           <strong>Время работы</strong>
           <p>ПН – ПТ, 09:00–18:00</p>
         </div>
@@ -66,17 +73,23 @@
 .contacts-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: white;
-  border-radius: 24px;
   overflow: hidden;
+  gap: 24px;
 }
 
 .map {
   width: 100%;
-  height: 480px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.map iframe {
+  filter: grayscale(100%);
 }
 
 .contact-info {
+  border-radius: 24px;
+  background: white;
   padding: 32px;
   display: flex;
   flex-direction: column;
@@ -112,4 +125,6 @@
     height: 300px;
   }
 }
+
+
 </style>

@@ -18,6 +18,14 @@
       </thead>
       <tbody>
       <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+      </tr>
+      <tr>
         <td colspan="6"><strong>Структурное подразделение Коллеги</strong></td>
       </tr>
       <tr>
@@ -108,6 +116,18 @@
       </tr>
       </thead>
       <tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+        <td>10</td>
+      </tr>
       <tr>
         <td>Рабочие места (ед.)</td>
         <td>2258</td>
@@ -201,7 +221,11 @@
   text-align: left;
 }
 
-.custom-table tbody tr:nth-child(odd) td {
+.custom-table thead th{
+  background: #ffffff;
+}
+
+.custom-table tbody tr:nth-child(even) td {
   background: #ffffff;
 }
 
@@ -211,3 +235,5 @@
   padding: 8px 0;
 }
 </style>
+<script setup lang="ts">
+</script>

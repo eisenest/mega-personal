@@ -18,11 +18,14 @@ defineProps({
   background: white;
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 12px;
+}
+
+.goal-card:hover{
+  box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
 }
 
 .goal-card:first-of-type h5{

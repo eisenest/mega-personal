@@ -14,7 +14,7 @@
         </div>
         <div class="form__info-bottom">
           <p>
-            Заполните форму и получите доступ к широкой <br />
+            Заполните форму и получите доступ к широкой
             базе вакансий в вашем личном кабинете
           </p>
         </div>
@@ -31,11 +31,14 @@
 
         <div class="form__row">
           <input type="tel" placeholder="Телефон" />
-          <select>
-            <option disabled selected>Тип юридического лица</option>
-            <option>ИП</option>
-            <option>Самозанятый</option>
-          </select>
+          <div class="custom-dropdown-wrapper">
+            <!-- 👇 Вставить сюда кастомный dropdown -->
+            <DropdownSelect
+                v-model="legalForm"
+                :options="['ИП', 'Самозанятый']"
+                placeholder="Тип юридического лица"
+            />
+          </div>
         </div>
 
         <div class="form__row">
@@ -82,4 +85,11 @@
 }
 
 
+
 </style>
+<script setup lang="ts">
+import DropdownSelect from "~/components/elements/DropdownSelect.vue";
+const legalForm = ref('')
+
+const options = ["ИП", "Самозанятый"]
+</script>

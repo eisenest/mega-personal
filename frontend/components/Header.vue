@@ -66,12 +66,13 @@ const navItems = [
 
 <style scoped>
 .header {
-  margin-bottom: 2rem;
-  background: #f3f9ff;
-  //padding: 16px 24px;
   border-radius: 0 0 32px 32px;
-  position: relative;
   z-index: 20;
+  padding: 2.5rem 4.5rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
 .header__container {

@@ -43,7 +43,6 @@ defineProps({
 
 <style scoped>
 .about-hero {
-  margin: 0 0 2rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,7 +65,6 @@ defineProps({
 }
 
 .cta-button {
-  background: #6d00c4;
   color: white;
   font-weight: 600;
   border: none;

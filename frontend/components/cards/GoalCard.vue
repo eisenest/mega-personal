@@ -26,6 +26,10 @@ defineProps({
   background: var(--light-grey, #EDF7FF);
 }
 
+.outsource-card:hover{
+  box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
+}
+
 .outsource-card h5{
   position: relative;
   margin-top: 0;
