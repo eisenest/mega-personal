@@ -38,7 +38,7 @@
           </svg>
           Вход
         </a>
-        <button class="cta-button">Оставить заявку</button>
+        <button @click="handleClick" class="cta-button">Оставить заявку</button>
       </div>
     </div>
   </header>
@@ -47,6 +47,14 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { inject } from 'vue'
+
+// Получаем функцию из layout
+const openPopupForm = inject('openPopupForm')
+
+function handleClick() {
+  openPopupForm(0) // Можно передать таб
+}
 
 
 const route = useRoute()

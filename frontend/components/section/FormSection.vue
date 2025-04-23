@@ -25,15 +25,74 @@
 
       <!-- Правая часть -->
       <form class="form__box">
-        <input type="text" placeholder="Имя и фамилия" required />
-        <div class="form__row">
-          <input type="text" placeholder="Телефон" required />
-          <input type="text" placeholder="Город" required />
-        </div>
+        <template v-if="activeTab === 0">
+          <div class="form__row">
+            <input placeholder="Телефон" />
+            <input placeholder="email" />
+          </div>
+          <div class="form__row">
+            <input placeholder="Организация" />
+            <input placeholder="Город проекта" />
+          </div>
+          <textarea placeholder="Комментарий"></textarea>
+        </template>
+
+        <template v-else-if="activeTab === 1">
+          <input placeholder="Имя и фамилия" />
+          <div class="form__row">
+            <input placeholder="Телефон" />
+            <input placeholder="Город" />
+          </div>
+        </template>
+
+        <template v-else>
+          <input placeholder="Имя, Фамилия, Отчество" />
+          <div class="form__row">
+            <input placeholder="Почта" />
+            <input type="date" placeholder="Дата Рождения" />
+          </div>
+          <div class="form__row">
+            <input placeholder="Телефон" />
+            <DropdownSelect v-model="entityType" placeholder="Тип юридического лица" :options="['ИП', 'Самозанятый']" />
+          </div>
+          <div class="form__row">
+            <input placeholder="Серия паспорта" />
+            <input placeholder="Номер паспорта" />
+          </div>
+          <div class="form__row">
+            <input placeholder="Наименование банка" />
+            <input placeholder="БИК банка" />
+          </div>
+          <div class="form__row">
+            <input placeholder="Корреспондентский счет" />
+            <input placeholder="Расчетный счет" />
+          </div>
+          <div class="form__row" v-if="entityType === 'Самозанятый'">
+            <input placeholder="Адрес регистрации" />
+            <input placeholder="ИНН банка" />
+          </div>
+          <div class="form__row" v-else-if="entityType === 'ИП'">
+            <input placeholder="ИНН" />
+            <input placeholder="КПП" />
+          </div>
+          <div class="form__row" v-if="entityType === 'ИП'">
+            <input placeholder="ОРГН" />
+            <input placeholder="Адрес регистрации" />
+          </div>
+
+          <div class="upload-links">
+            <p v-if="entityType === 'Самозанятый'" >📎 Справка самозанятого о постановке на учет</p>
+            <p v-else-if="entityType === 'ИП'">📎 Лист записи о регистрации ИП</p>
+            <p>📎 Скан паспорта (1 страница)</p>
+            <p>📎 Скан паспорта (Регистрация)</p>
+          </div>
+        </template>
+
         <label class="checkbox">
           <input type="checkbox" required />
           <span>Вы даете согласие на обработку персональных данных</span>
         </label>
+
         <button type="submit">Оставить заявку</button>
       </form>
     </div>
@@ -43,12 +102,13 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import DropdownSelect from "~/components/elements/DropdownSelect.vue";
 
+const entityType = ref('')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
 const activeTab = ref(1) // по умолчанию
 const route = useRoute()
 
-// Функция для установки таба
 const setTabFromRoute = () => {
   const tab = Number(route.query.tab)
   if (!isNaN(tab)) {
@@ -56,7 +116,6 @@ const setTabFromRoute = () => {
   }
 }
 
-// Следим за изменениями маршрута
 watch(
     () => route.query.tab,
     () => {
@@ -64,18 +123,17 @@ watch(
     },
     { immediate: true }
 )
-
-
 </script>
 
 <style scoped>
-
 #form{
   scroll-margin-top: 150px;
 }
 
-.form__container {
-  height: 483px;
+
+.upload-links p{
+  color: #fff;
 }
+
 
 </style>

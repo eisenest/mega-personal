@@ -1,32 +1,19 @@
 <template>
   <HeroSection/>
-
-  <!--Почему мы-->
   <PropsSection/>
-
-  <!--Аутсорсинг-->
   <GoalSection/>
-
   <ServiceSection/>
-
-  <!--Ресурсы-->
   <div class="resources-wrapper">
     <ResourceSection/>
   </div>
-
-  <!--Нам доверяют-->
   <h2 class="headline"><span class="highlight">Нам доверяют</span></h2>
   <PartnersSection/>
-
-  <!--Ценности-->
   <h2 class="headline">Ваше партнёрство с нами <span class="highlight">будет выгодным</span> благодаря</h2>
   <ValuesSection/>
-
   <ReviewsSection/>
   <CasesSection/>
   <FormSection/>
   <BlogSection :is-main="true"/>
-  <PopupMultitabForm/>
 
 </template>
 
@@ -42,7 +29,6 @@ import BlogSection from "~/components/section/BlogSection.vue";
 import HeroSection from "~/components/section/HeroSection.vue";
 import GoalSection from "~/components/section/GoalSection.vue";
 import ServiceSection from "~/components/section/ServiceSection.vue";
-import PopupMultitabForm from "~/components/section/PopupMultitabForm.vue";
 
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase

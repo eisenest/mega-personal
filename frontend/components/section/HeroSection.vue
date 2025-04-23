@@ -11,7 +11,7 @@
           <p>
             {{ slides[currentSlide].description }}
           </p>
-          <button class="hero__cta">Оставить заявку</button>
+          <button @click="handleClick" class="hero__cta">Оставить заявку</button>
         </div>
 
         <Pagination
@@ -128,10 +128,16 @@
 <script setup lang="ts">
 import Pagination from '~/components/elements/Pagination.vue'
 import { ref } from 'vue'
-import PopupMultitabForm from "~/components/section/PopupMultitabForm.vue";
+import { inject } from 'vue'
+
+// Получаем функцию из layout
+const openPopupForm = inject('openPopupForm')
+
+function handleClick() {
+  openPopupForm(0) // Можно передать таб
+}
 
 
-const popupRef = ref(null)
 
 const slides = [
   {

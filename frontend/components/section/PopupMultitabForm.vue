@@ -1,12 +1,14 @@
 <template>
   <div>
     <!-- Кнопка вызова -->
-    <button @click="showModal = true">Открыть форму</button>
+<!--    <button @click="showModal = true">Открыть форму</button>-->
 
     <!-- Модалка -->
-    <div v-if="showModal" class="modal-overlay">
-      <div class="modal">
-        <button class="modal-close" @click="showModal = false">&times;</button>
+    <div v-if="showModal" class="modal-overlay" @click="closeModal">
+      <div class="modal" @click.stop>
+        <button class="modal-close" @click="showModal = false">
+          <img src="/icon/close.svg" alt="Закрыть" />
+        </button>
 
         <h2 class="modal-title">Свяжитесь с нами!<br>Мы поможем вам найти работу!</h2>
 
@@ -51,7 +53,7 @@
             </div>
             <div class="form-row">
               <input placeholder="Телефон" />
-              <DropdownSelect placeholder="Тип юридического лица" :options="['ИП', 'Самозанятый']" />
+              <DropdownSelect v-model="entityType" placeholder="Тип юридического лица" :options="['ИП', 'Самозанятый']" />
             </div>
             <div class="form-row">
               <input placeholder="Серия паспорта" />
@@ -65,13 +67,22 @@
               <input placeholder="Корреспондентский счет" />
               <input placeholder="Расчетный счет" />
             </div>
-            <div class="form-row">
+            <div class="form-row" v-if="entityType === 'Самозанятый'">
               <input placeholder="Адрес регистрации" />
               <input placeholder="ИНН банка" />
             </div>
+            <div class="form-row" v-else-if="entityType === 'ИП'">
+              <input placeholder="ИНН" />
+              <input placeholder="КПП" />
+            </div>
+            <div class="form-row" v-if="entityType === 'ИП'">
+              <input placeholder="ОРГН" />
+              <input placeholder="Адрес регистрации" />
+            </div>
 
             <div class="upload-links">
-              <p>📎 Справка самозанятого о постановке на учет</p>
+              <p v-if="entityType === 'Самозанятый'" >📎 Справка самозанятого о постановке на учет</p>
+              <p v-else-if="entityType === 'ИП'">📎 Лист записи о регистрации ИП</p>
               <p>📎 Скан паспорта (1 страница)</p>
               <p>📎 Скан паспорта (Регистрация)</p>
             </div>
@@ -93,11 +104,28 @@
 import { ref } from 'vue'
 import DropdownSelect from "~/components/elements/DropdownSelect.vue";
 
+// Управляемые состояния
 const showModal = ref(false)
 const activeTab = ref(0)
 
+// Управляем компонентом извне
+defineExpose({
+  open(tab = 0) {
+    activeTab.value = tab
+    showModal.value = true
+  },
+  close() {
+    showModal.value = false
+  }
+})
+
+const entityType = ref('')
+
+const closeModal = () => {
+  showModal.value = false
+}
+
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
-const cities = ['Москва', 'Санкт-Петербург', 'Казань', 'Новосибирск']
 </script>
 
 <style scoped>
@@ -189,4 +217,21 @@ textarea {
   cursor: pointer;
   margin-top: 12px;
 }
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.modal-close img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
 </style>

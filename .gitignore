@@ -19,8 +19,9 @@ output/
 # Mac system files
 .DS_Store
 
-# VSCode
+# IDE
 .vscode/
+.idea
 
 # Docker
 docker-compose.override.yml
