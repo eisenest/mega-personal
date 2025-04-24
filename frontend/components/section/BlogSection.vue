@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div class="blog__container">
-      <h2 :class="{ headline: isMain }">Блог</h2>
+      <h2 :class="{ headline: isMain }">{{ title }}</h2>
       <div class="blog__grid">
         <div
             class="blog-card"
@@ -24,6 +24,10 @@
 <script setup>
 
 const props = defineProps({
+  title: {
+    type: String,
+    default: 'Блог',
+  },
   isMain: Boolean,
 })
 
