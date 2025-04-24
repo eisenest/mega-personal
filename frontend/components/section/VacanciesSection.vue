@@ -2,10 +2,10 @@
   <section class="vacancies-section container">
 
     <div class="vacancies__title-content headline">
-      <h2 class="vacancies-title">Вакансии</h2>
-      <div class="vacancies__description">
+      <h2 class="vacancies-title">{{ title }}</h2>
+      <div v-if="subtitle" class="vacancies__description">
         <p class="p24">
-          Наша компания предоставляет полный список услуг для поиска лучших кандидатов на рынке труда под ваши персональные запросы!
+          {{subtitle}}
         </p>
       </div>
     </div>
@@ -19,7 +19,7 @@
             @click="selectCategory(index)"
         >
           <p class="category-title">{{ category.title }}</p>
-          <p class="category-subtitle">{{ category.subtitle }}</p>
+          <p v-if="category.subtitle !== null" class="category-subtitle">{{ category.subtitle }}</p>
         </button>
       </div>
       <div class="positions-grid">
@@ -39,45 +39,13 @@
 <script setup>
 import { ref } from 'vue'
 
-const selectedCategoryIndex = ref(0)
+defineProps({
+  title: String,
+  subtitle: String,
+  categories: Array
+})
 
-const categories = [
-  {
-    title: 'Retail',
-    subtitle: 'Различные вакансии в супермаркетах, гипермаркетах',
-    positions: ['Кассир', 'Продавец', 'Работник торгового зала', 'Сканировщик', 'Грузчик', 'Курьер']
-  },
-  {
-    title: 'Складская логистика',
-    subtitle: 'Работа на складах, на производстве',
-    positions: []
-  },
-  {
-    title: 'Строительство',
-    subtitle: 'Включает проектирование и возведение объектов',
-    positions: []
-  },
-  {
-    title: 'Гостиничный бизнес',
-    subtitle: 'Работа в отелях и гостиницах',
-    positions: []
-  },
-  {
-    title: 'Сельское хозяйство',
-    subtitle: 'Включает рабочие места на фермах и полях',
-    positions: []
-  },
-  {
-    title: 'Производство',
-    subtitle: 'Включает проектирование и возведение объектов',
-    positions: []
-  },
-  {
-    title: 'Вахтовая работа или подработка',
-    subtitle: '',
-    positions: []
-  }
-]
+const selectedCategoryIndex = ref(0)
 
 function selectCategory(index) {
   selectedCategoryIndex.value = index
@@ -183,5 +151,9 @@ function selectCategory(index) {
   color: #5c1ce0;
   font-size: 18px;
   line-height: 1;
+}
+
+.vacancies__description{
+  flex: 2;
 }
 </style>

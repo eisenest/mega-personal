@@ -31,7 +31,11 @@ defineProps({
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 240px;
+  min-height: 240px;
+}
+
+.value-card.shifted {
+  grid-column: 2; /* Пропускаем первую колонку */
 }
 
 .value-card:hover{

@@ -82,6 +82,44 @@ const questions = [
   }
 ]
 
+const categories = [
+  {
+    title: 'Retail',
+    subtitle: 'Различные вакансии в супермаркетах, гипермаркетах',
+    positions: ['Кассир', 'Продавец', 'Работник торгового зала', 'Сканировщик', 'Грузчик', 'Курьер']
+  },
+  {
+    title: 'Складская логистика',
+    subtitle: 'Работа на складах, на производстве',
+    positions: []
+  },
+  {
+    title: 'Строительство',
+    subtitle: 'Включает проектирование и возведение объектов',
+    positions: []
+  },
+  {
+    title: 'Гостиничный бизнес',
+    subtitle: 'Работа в отелях и гостиницах',
+    positions: []
+  },
+  {
+    title: 'Сельское хозяйство',
+    subtitle: 'Включает рабочие места на фермах и полях',
+    positions: []
+  },
+  {
+    title: 'Производство',
+    subtitle: 'Включает проектирование и возведение объектов',
+    positions: []
+  },
+  {
+    title: 'Вахтовая работа или подработка',
+    subtitle: '',
+    positions: []
+  }
+]
+
 function goTo(url: string) {
   window.open(url, '_blank')
 }
@@ -110,8 +148,9 @@ function goTo(url: string) {
   </div>
 
 
-
-  <VacanciesSection/>
+  <VacanciesSection :title="'Вакансии'"
+                    :subtitle="'Наша компания предоставляет полный список услуг для поиска лучших кандидатов на рынке труда под ваши персональные запросы!'"
+                    :categories="categories" />
 
 
   <div class="services__title-content headline">

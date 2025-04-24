@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineProps({
+  description: String
+})
+</script>
+
 <template>
   <section class="mission container white">
     <div class="mission__content">
@@ -5,8 +11,7 @@
         Миссия компании <span class="highlight">Mega-Personal</span>
       </h2>
       <p class="mission__text">
-        Мы предоставляем высококачественные услуги по подбору и управлению персоналом, помогая клиентам оптимизировать бизнес-процессы, сокращать затраты и устойчиво расти.
-        Стремимся быть надёжным партнёром, снабжая компании трудовыми ресурсами, соблюдая законодательные нормы.
+          {{description}}
       </p>
     </div>
     <div class="mission__icon">
@@ -14,6 +19,10 @@
     </div>
   </section>
 </template>
+
+
+
+
 
 <style scoped>
 .mission {
@@ -36,8 +45,6 @@
   justify-content: space-between;
   height: 100%;
 }
-
-
 
 .highlight {
   color: #1c9eff;

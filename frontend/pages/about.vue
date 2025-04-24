@@ -14,7 +14,7 @@
       />
     </div>
 
-    <MissionSection/>
+    <MissionSection :description=mission_description />
     <CompanyValuesSection/>
     <HorizonSection/>
     <OurGoalSection/>
@@ -40,6 +40,9 @@ const propsData = [
   { number: "30000", description: "Трудоустроенных сотрудников" },
   { number: "200", description: "Компаний среди партнеров и клиентов" },
 ];
+
+const mission_description = "Мы предоставляем высококачественные услуги по подбору и управлению персоналом, помогая клиентам оптимизировать бизнес-процессы, сокращать затраты и устойчиво расти.\n" +
+    "Стремимся быть надёжным партнёром, снабжая компании трудовыми ресурсами, соблюдая законодательные нормы."
 
 </script>
 

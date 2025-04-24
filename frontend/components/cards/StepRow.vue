@@ -46,6 +46,10 @@ defineProps({
   margin-right: 13px;
 }
 
+.service .step-row{
+  grid-template-columns: 1fr 2fr 3fr;
+}
+
 
 
 @media (max-width: 768px) {

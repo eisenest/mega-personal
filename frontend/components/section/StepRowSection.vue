@@ -29,4 +29,5 @@ import StepRow from '~/components/cards/StepRow.vue'
   gap: 32px;
   margin-top: 64px;
 }
+
 </style>

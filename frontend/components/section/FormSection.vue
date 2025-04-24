@@ -5,17 +5,24 @@
       <div class="form__info">
         <div class="form__info-top">
           <div class="tabs">
-            <button
-                v-for="(tab, i) in tabs"
-                :key="i"
-                :class="{ active: activeTab === i }"
-                @click="activeTab = i"
-            >
-              {{ tab }}
-            </button>
+            <template v-if="fixedTab !== null">
+              <button class="active" disabled>
+                {{ tabs[fixedTab] }}
+              </button>
+            </template>
+            <template v-else>
+              <button
+                  v-for="(tab, i) in tabs"
+                  :key="i"
+                  :class="{ active: activeTab === i }"
+                  @click="activeTab = i"
+              >
+                {{ tab }}
+              </button>
+            </template>
           </div>
           <h3>
-            Мы поможем вам <span class="highlight">найти работу!</span>
+            {{ tabHeadlines[activeTab].text }}<span class="highlight">{{ tabHeadlines[activeTab].highlight }}</span>
           </h3>
         </div>
         <div class="form__info-bottom">
@@ -104,6 +111,13 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import DropdownSelect from "~/components/elements/DropdownSelect.vue";
 
+const { fixedTab } = defineProps({
+  fixedTab: {
+    type: Number,
+    default: null
+  }
+})
+
 const entityType = ref('')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
 const activeTab = ref(1) // по умолчанию
@@ -116,13 +130,34 @@ const setTabFromRoute = () => {
   }
 }
 
+// Следим за табом в query только если fixedTab не передан
 watch(
     () => route.query.tab,
     () => {
-      setTabFromRoute()
+      if (fixedTab === null) {
+        setTabFromRoute()
+      }
     },
     { immediate: true }
 )
+
+
+const tabHeadlines = [
+  {
+    text: 'Мы поможем вам найти ',
+    highlight: 'работу!'
+  },
+  {
+    text: 'Оставьте заявку — мы поможем вам ',
+    highlight: 'найти сотрудников!'
+  },
+  {
+    text: 'Зарегистрируйтесь на нашей партнерской платформе — получайте ',
+    highlight: 'неограниченный доход за трудоустроенных кандидатов'
+  }
+]
+
+
 </script>
 
 <style scoped>
