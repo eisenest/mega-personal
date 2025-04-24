@@ -11,7 +11,7 @@
           <p>
             {{ slides[currentSlide].description }}
           </p>
-          <button @click="handleClick" class="hero__cta">Оставить заявку</button>
+          <button @click="handleClick(slides[currentSlide].formTab)" class="hero__cta">Оставить заявку</button>
         </div>
 
         <Pagination
@@ -133,8 +133,8 @@ import { inject } from 'vue'
 // Получаем функцию из layout
 const openPopupForm = inject('openPopupForm')
 
-function handleClick() {
-  openPopupForm(0) // Можно передать таб
+function handleClick(tab) {
+  openPopupForm(tab) // Можно передать таб
 }
 
 
@@ -143,19 +143,20 @@ const slides = [
   {
     main: '/hero/hero1.png',
     title: 'Найдите лучших сотрудников для вашего бизнеса',
-    description: 'Мы помогаем расти бизнесу любого масштаба и создаем достойные рабочие места по всей России.'
-
-
+    description: 'Мы помогаем расти бизнесу любого масштаба и создаем достойные рабочие места по всей России.',
+    formTab: 0,
   },
   {
     main: '/hero/hero2.png',
     title: 'Работа для всех!',
-    description: 'Работа в нашей команде - это стабильность, удобство и перспективы.'
+    description: 'Работа в нашей команде - это стабильность, удобство и перспективы.',
+    formTab: 1,
   },
   {
     main: '/hero/hero3.png',
     title: 'Партнерская  программа для рекрутеров',
-    description: 'Зарабатывайте на поборе сотрудников онлайн через удобную CRM-платформу. Подбирайте сотрудников в штат и получайте неограниченный доход.'
+    description: 'Зарабатывайте на поборе сотрудников онлайн через удобную CRM-платформу. Подбирайте сотрудников в штат и получайте неограниченный доход.',
+    formTab: 2,
   }
 ]
 

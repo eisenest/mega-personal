@@ -3,8 +3,8 @@
     <div class="container">
       <h2 class="vacancies-title headline">Фото</h2>
     </div>
-    <div class="photo-gallery-wrapper">
-      <div class="photo-gallery" ref="galleryRef">
+    <div class="photo-gallery-wrapper" >
+      <div class="photo-gallery" ref="scrollContainer">
         <div class="photo-track" ref="trackRef">
           <img
               v-for="(img, i) in images"
@@ -27,8 +27,8 @@
 </template>
 
 
-<script setup>
-import { ref, onMounted } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
 const galleryRef = ref(null)
 const trackRef = ref(null)
@@ -40,30 +40,25 @@ const images = [
   '/photos/photo3.jpg',
 ]
 
-import { nextTick } from 'vue'
+const scrollContainer = ref<HTMLElement | null>(null)
+let interval: ReturnType<typeof setInterval>
 
-onMounted(async () => {
-  console.log('mounted')
-  await nextTick()
+onMounted(() => {
+  const container = scrollContainer.value
+  if (!container) return
 
-  const el = galleryRef.value
-  const track = trackRef.value
-  if (!el || !track) return
-
-  const scrollSpeed = 0.5
-
-  function loopScroll() {
-    el.scrollLeft += scrollSpeed
-
-    if (el.scrollLeft >= track.scrollWidth / 2) {
-      el.scrollLeft = 0
+  interval = setInterval(() => {
+    container.scrollLeft += 1
+    if (container.scrollLeft >= container.scrollWidth / 2) {
+      container.scrollLeft = 0
     }
-
-    requestAnimationFrame(loopScroll)
-  }
-
-  loopScroll()
+  }, 20)
 })
+
+onUnmounted(() => {
+  clearInterval(interval)
+})
+
 </script>
 
 <style scoped>

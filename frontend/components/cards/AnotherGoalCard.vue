@@ -28,7 +28,7 @@ defineProps({
   box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
 }
 
-.goal-card:first-of-type h5{
+.goal-card:hover h5{
   color: var(--main-blue, #00A2F6);
 }
 

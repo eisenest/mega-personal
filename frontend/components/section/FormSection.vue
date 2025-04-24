@@ -120,7 +120,7 @@ const { fixedTab } = defineProps({
 
 const entityType = ref('')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
-const activeTab = ref(1) // по умолчанию
+const activeTab = ref(0) // по умолчанию
 const route = useRoute()
 
 const setTabFromRoute = () => {

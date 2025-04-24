@@ -16,7 +16,7 @@
         <div class="footer__column contacts">
           <p><strong>Отдел развития</strong><br /><a href="tel:+79151724404">+7 915 172 44 04</a></p>
           <p><strong>Ресепшен</strong><br /><a href="tel:+74993466006">+7 499 346 60 06</a></p>
-          <p><strong>Для соискателей</strong><br /><a href="tel:+78002229939">+7 800 222 99 396</a></p>
+          <p><strong>Для соискателей</strong><br /><a href="tel:+78002229939">+7 800 222 99 39</a></p>
           <p><strong>Адрес</strong><br />г. Москва, Волгоградский проспект, 43, к3</p>
         </div>
 
@@ -92,7 +92,6 @@
   flex: 1 1 200px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .footer__column ul{

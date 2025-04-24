@@ -8,7 +8,7 @@ const propsData = [
   { number: "10", description: "Лет на рынке услуг" },
   { number: "9", description: "Направлений деятельности" },
   { number: "150", description: "Сотрудников в собственных офисах" },
-  { number: "5000", description: "Действующих сотрудников нашли работу" }
+  { number: "5000", description: "Действующих сотрудников на проектах" }
 ];
 </script>
 

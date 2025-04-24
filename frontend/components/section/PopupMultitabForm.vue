@@ -10,7 +10,7 @@
           <img src="/icon/close.svg" alt="Закрыть" />
         </button>
 
-        <h2 class="modal-title">Свяжитесь с нами!<br>Мы поможем вам найти работу!</h2>
+        <h2 class="modal-title" v-html="`${currentTitle.title}<br>${currentTitle.subtitle}`"></h2>
 
         <div class="tabs">
           <button
@@ -72,25 +72,87 @@
               <input placeholder="ИНН банка" />
             </div>
             <div class="form-row" v-else-if="entityType === 'ИП'">
-              <input placeholder="ИНН" />
+              <input placeholder="ИНН банка" />
               <input placeholder="КПП" />
             </div>
             <div class="form-row" v-if="entityType === 'ИП'">
               <input placeholder="ОРГН" />
               <input placeholder="Адрес регистрации" />
             </div>
+            <input placeholder="ИНН физ. лица" />
 
-            <div class="upload-links">
+<!--            <div class="upload-links">
               <p v-if="entityType === 'Самозанятый'" >📎 Справка самозанятого о постановке на учет</p>
               <p v-else-if="entityType === 'ИП'">📎 Лист записи о регистрации ИП</p>
               <p>📎 Скан паспорта (1 страница)</p>
               <p>📎 Скан паспорта (Регистрация)</p>
+            </div>-->
+
+
+            <div class="upload-links">
+              <!-- Самозанятый -->
+              <p
+                  v-if="entityType === 'Самозанятый'"
+                  @click="triggerUpload('doc1')"
+              >
+                <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+                Справка самозанятого о постановке на учет
+                <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+              </p>
+              <input
+                  ref="doc1"
+                  type="file"
+                  @change="handleFileUpload($event, 'doc1')"
+                  style="display: none"
+              />
+
+              <!-- ИП -->
+              <p
+                  v-if="entityType === 'ИП'"
+                  @click="triggerUpload('doc1')"
+              >
+                <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+                Лист записи о регистрации ИП
+                <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+              </p>
+              <input
+                  ref="doc1"
+                  type="file"
+                  @change="handleFileUpload($event, 'doc1')"
+                  style="display: none"
+              />
+
+              <!-- Общие -->
+              <p @click="triggerUpload('doc2')">
+                <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+                Скан паспорта (1 страница)
+                <span v-if="uploadedFiles.doc2"> — {{ uploadedFiles.doc2.name }}</span>
+              </p>
+              <input
+                  ref="doc2"
+                  type="file"
+                  @change="handleFileUpload($event, 'doc2')"
+                  style="display: none"
+              />
+
+              <p @click="triggerUpload('doc3')">
+                <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+                Скан паспорта (Регистрация)
+                <span v-if="uploadedFiles.doc3"> — {{ uploadedFiles.doc3.name }}</span>
+              </p>
+              <input
+                  ref="doc3"
+                  type="file"
+                  @change="handleFileUpload($event, 'doc3')"
+                  style="display: none"
+              />
             </div>
+
           </template>
 
           <label class="checkbox">
             <input type="checkbox" />
-            <span>Вы даете согласие на обработку персональных данных</span>
+            <span>Вы даете согласие на <a href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a>></span>
           </label>
 
           <button type="submit" class="submit">Оставить заявку</button>
@@ -100,8 +162,9 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+
 import DropdownSelect from "~/components/elements/DropdownSelect.vue";
 
 // Управляемые состояния
@@ -119,13 +182,56 @@ defineExpose({
   }
 })
 
-const entityType = ref('')
+const entityType = ref('ИП')
 
 const closeModal = () => {
   showModal.value = false
 }
 
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
+
+const tabTitles = [
+  {
+    title: 'Свяжитесь с нами!',
+    subtitle: 'Мы поможем вам найти сотрудников'
+  },
+  {
+    title: 'Свяжитесь с нами!',
+    subtitle: 'Мы поможем вам найти работу!'
+  },
+  {
+    title: 'Получайте неограниченный доход',
+    subtitle: 'за трудоустроенных кандидатов!'
+  }
+]
+
+const currentTitle = computed(() => tabTitles[activeTab.value])
+
+
+const doc1 = ref(null)
+const doc2 = ref(null)
+const doc3 = ref(null)
+
+const uploadedFiles = reactive({
+  doc1: null,
+  doc2: null,
+  doc3: null,
+})
+
+const triggerUpload = (name) => {
+  if (name === 'doc1') doc1.value?.click()
+  if (name === 'doc2') doc2.value?.click()
+  if (name === 'doc3') doc3.value?.click()
+}
+
+const handleFileUpload = (event, name) => {
+  const file = event.target.files[0]
+  if (file) {
+    uploadedFiles[name] = file
+    console.log(`Загружен файл ${file.name} (${name})`)
+  }
+}
+
 </script>
 
 <style scoped>
@@ -133,20 +239,26 @@ const tabs = ['Работодателям', 'Соискателям', 'Фрил�
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  /* заменяем вот это: */
+/*   align-items: center;
+   justify-content: center;*/
+
+  display: block;
+  overflow-y: auto;
   z-index: 999;
+  padding: 40px 16px;
 }
 .modal {
+  margin: 40px auto;
   background: white;
   border-radius: 20px;
   max-width: 768px;
   width: 100%;
   padding: 32px;
   position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
+/*  max-height: 90vh;
+  overflow-y: auto;*/
 }
 .modal-close {
   position: absolute;
@@ -160,6 +272,7 @@ const tabs = ['Работодателям', 'Соискателям', 'Фрил�
 
 .modal span{
   color: var(--dark-grey, #2C3E50);
+  font-size: clamp(15px, 1vw, 18px);
 }
 
 .modal-title {
@@ -194,6 +307,7 @@ const tabs = ['Работодателям', 'Соискателям', 'Фрил�
   grid-template-columns: repeat(2, 1fr);
 }
 input, textarea, select {
+  font-family: 'Inter';
   width: 100%;
   background: #f0f7ff;
 }
@@ -210,7 +324,6 @@ textarea {
 .submit {
   padding: 18px;
   font-size: 16px;
-  background: #6800d4;
   color: white;
   border: none;
   border-radius: 30px;
@@ -232,6 +345,13 @@ textarea {
   width: 24px;
   height: 24px;
   display: block;
+}
+
+.upload-links p{
+  color: var(--main-blue, #00A2F6);
+  align-items: center;
+  display: flex;
+  gap: 8px;
 }
 
 </style>
