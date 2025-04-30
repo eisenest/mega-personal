@@ -1,41 +1,38 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import Fastify from 'fastify';
-import { fastifyCors } from '@fastify/cors'
-import mongoose from 'mongoose';
-import AdminJS from 'adminjs';
-import AdminJSFastify from '@adminjs/fastify';
+import dotenv from 'dotenv'
+import Fastify from 'fastify'
+import AdminJS from 'adminjs'
+import AdminJSFastify from '@adminjs/fastify'
+import mongoose from 'mongoose'
 import { Database, Resource } from '@adminjs/mongoose'
+import { User } from './model/User.js'
 
-const fastify = Fastify({ logger: true });
-await fastify.register(fastifyCors);
+dotenv.config()
 
-AdminJS.registerAdapter({
-  Database,
-  Resource
-})
+const fastify = Fastify({ logger: true })
 
-await mongoose.connect(process.env.MONGO_URI);
+await mongoose.connect(process.env.MONGO_URI)
 
-// Пример модели
-const Service = mongoose.model('Service', {
-  name: String,
-  slug: String,
-  description: String,
-});
+AdminJS.registerAdapter({ Database, Resource })
 
 const admin = new AdminJS({
-  resources: [Service],
+  resources: [User],
   rootPath: '/admin',
-});
+})
 
-await AdminJSFastify.buildRouter(admin, fastify);
+await AdminJSFastify.buildAuthenticatedRouter(admin, {
+  authenticate: async (email, password) => {
+    const user = await User.findOne({ email })
+    if (!user) return null
+    const bcrypt = await import('bcrypt')
+    const isValid = await bcrypt.compare(password, user.password)
+    if (!isValid) return null
+    return user
+  },
+  cookieName: 'adminjs',
+  cookiePassword: process.env.COOKIE_SECRET || 'secret',
+}, fastify)
 
-fastify.get('/api/ping', async () => {
-  return { pong: true };
-});
 
-fastify.listen({ port: process.env.PORT || 5050, host: '0.0.0.0' }, (err) => {
-  if (err) throw err;
-});
+fastify.listen({ port: 5050, host: '0.0.0.0' }, () => {
+  console.log('🚀 AdminJS running at http://localhost:3000/admin')
+})
