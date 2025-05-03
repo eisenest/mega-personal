@@ -1,8 +1,14 @@
-version: '3.8'
-
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        NODE_ENV: ${NODE_ENV}
+    volumes:
+      - ./backend:/app:cached
+      - /app/node_modules
+      # ⬇️ монтируем локальную папку uploads, чтобы она не затиралась
+      - ./backend/public/uploads:/app/public/uploads
     container_name: mega-backend
     ports:
       - '5050:5050'
