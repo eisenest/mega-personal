@@ -7,11 +7,17 @@ import { Database, Resource } from '@adminjs/mongoose'
 import { User } from './model/User.js'
 import { Article } from './model/Article.js'
 import { ArticleResource } from './admin-resources/article.resource.js'
+import { ServicePage } from './model/ServicePage.js'
+import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
+import { ServicePageResource } from './admin-resources/servicePage.resource.js'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 import formidableMiddleware from 'express-formidable'
 import { ComponentLoader } from 'adminjs'
+import { ContactInfo } from './model/ContactInfo.js'
+
+
 
 dotenv.config()
 
@@ -40,8 +46,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')))
 // 🛠️ AdminJS конфиг
 const admin = new AdminJS({
   resources: [
-    { resource: User },
+      { resource: User },
+    ContactInfoResource,
     ArticleResource(componentLoader),
+    ServicePageResource
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature
@@ -83,6 +91,24 @@ app.post('/api/upload', (req, res) => {
     res.json({ url: `/uploads/${fileName}` })
   })
 })
+
+app.get('/api/contact', async (req, res) => {
+  const contact = await ContactInfo.findOne().sort({ createdAt: -1 })
+  res.json(contact)
+})
+
+app.get('/api/services/:slug', async (req, res) => {
+  const { slug } = req.params
+  try {
+    const page = await ServicePage.findOne({ slug })
+    if (!page) return res.status(404).json({ error: 'Услуга не найдена' })
+    res.json(page)
+  } catch (err) {
+    console.error('Ошибка при получении услуги:', err)
+    res.status(500).json({ error: 'Ошибка сервера' })
+  }
+})
+
 
 // 🚀 Запуск сервера
 app.listen(5050, () => {

@@ -51,6 +51,10 @@ defineProps({
   background: white;
   overflow: hidden;}
 
+.about-hero h1{
+  margin: 0;
+}
+
 .about-hero__content {
   flex: 1;
   display: flex;

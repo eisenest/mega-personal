@@ -1,55 +1,46 @@
+<script setup lang="ts">
+
+const apiBase = useRuntimeConfig().public.apiBase
+const { data: contact } = await useFetch(`${apiBase}/api/contact`)
+</script>
+
 <template>
-  <section class="contacts-section container">
+  <section v-if="contact" class="contacts-section container">
     <h2 class="contacts-title">Контакты</h2>
     <div class="contacts-wrapper">
       <div class="map">
-        <!-- Тут вставляется iframe или компонент карты -->
-        <iframe
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3A3a0f9bcd4f12402e56fc89dba9e15c3e5d564b6b7e09d1c72c5a5d0d95b32a23&amp;source=constructor"
-            width="100%"
-            height="100%"
-            frameborder="0"
-        ></iframe>
+        <iframe :src="contact.mapEmbedUrl" width="100%" height="100%" frameborder="0"></iframe>
       </div>
       <div class="contact-info">
-        <a href="mailto:info@mega-personal.ru" class="email">info@mega-personal.ru</a>
+        <a :href="`mailto:${contact.email}`" class="email">{{ contact.email }}</a>
 
         <div class="info-item">
           <strong>Адрес</strong>
-          <p>г. Москва, Волгоградский проспект, 43, к3</p>
+          <p>{{ contact.address }}</p>
         </div>
 
         <div class="info-item">
           <strong>Отдел развития</strong>
-          <p>+7 915 172 44 04</p>
+          <p>{{ contact.devPhone }}</p>
         </div>
 
         <div class="info-item">
           <strong>Ресепшен</strong>
-          <p>+7 499 346 60 06</p>
+          <p>{{ contact.receptionPhone }}</p>
         </div>
 
         <div class="info-item">
           <strong>Для соискателей</strong>
-          <p>+7 800 222 99 39</p>
+          <p>{{ contact.applicantPhone }}</p>
         </div>
-
-
 
         <div class="info-item">
           <strong>Время работы</strong>
-          <p>ПН – ПТ, 09:00–18:00</p>
+          <p>{{ contact.workingHours }}</p>
         </div>
 
-        <div class="info-item small">
-          <p>
-            Общество с ограниченной ответственностью «Ресурс Плюс»<br>
-            Юридический адрес: 109316, г. Москва, вн. тер. г. муниципальный округ Текстильщики,
-            пр-кт Волгоградский, д. 43, к. 3<br>
-            ИНН: 7719492019<br>
-            КПП: 772201001<br>
-            ОГРН: 1197746321607
-          </p>
+        <div class="info-item small legal">
+          <p v-html="contact.legalInfo" />
         </div>
       </div>
     </div>
@@ -62,6 +53,10 @@
   flex-direction: column;
   gap: 24px;
   margin-bottom: 100px;
+}
+
+.legal{
+  white-space: pre-line;
 }
 
 .contacts-title {
