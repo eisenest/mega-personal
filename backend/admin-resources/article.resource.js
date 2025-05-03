@@ -31,6 +31,9 @@ export const ArticleResource = (componentLoader) => {
         ],
         options: {
             properties: {
+                content: {
+                    type: 'richtext', // ← вуаля, встроенный редактор
+                },
                 uploadImage: {
                     isVisible: {
                         list: false,
