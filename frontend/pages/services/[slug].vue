@@ -58,8 +58,10 @@ const { data: service } = await useFetch(`${apiBase}/api/services/${route.params
     </div>
   </div>
 
-  <MissionSection :description=service.mission />
-  <div class="mission__grid">
+  <MissionSection
+      v-if="service.mission"
+      :description=service.mission />
+  <div v-if="service.missionCards" class="mission__grid">
     <ValueCard
         v-for="(item, index) in service.missionCards"
         :key="index"
@@ -75,7 +77,7 @@ const { data: service } = await useFetch(`${apiBase}/api/services/${route.params
     <StepRowSection class="service" :steps="service.recruitmentSteps" />
   </div>
 
-  <FourStepSection :steps="service.resultSteps"/>
+  <FourStepSection v-if="service.resultSteps" :steps="service.resultSteps"/>
 
   <FormSection :fixed-tab="0"/>
 
