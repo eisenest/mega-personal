@@ -35,10 +35,10 @@ const apiBase = config.public.apiBase
 
 // const { data: response } = await useFetch(`${apiBase}/api/ping`)
 
-const { data: response } = await useFetch(`${apiBase}/api/ping`, {
-  server: false // ❗ только на клиенте
-  // server: process.env.NODE_ENV === 'development' ? false : true
-})
+// const { data: response } = await useFetch(`${apiBase}/api/ping`, {
+//   server: false // ❗ только на клиенте
+//   // server: process.env.NODE_ENV === 'development' ? false : true
+// })
 
 
 </script>

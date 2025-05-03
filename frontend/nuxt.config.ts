@@ -19,8 +19,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: 'http://127.0.0.1:5050' // ⚠️ здесь наш новый порт
+      apiBase: process.env.API_BASE || 'http://backend:5050'
     }
   },
-  // 👇 Это важно для Docker
 })
