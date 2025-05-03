@@ -20,7 +20,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: process.env.API_BASE || 'http://backend:5050'
+      apiBase: process.env.API_BASE || 'http://backend:5050',
+      publicHost: process.env.NUXT_PUBLIC_PUBLIC_HOST || 'http://localhost:5050',
     }
   },
 })

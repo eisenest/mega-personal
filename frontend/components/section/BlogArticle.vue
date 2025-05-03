@@ -1,17 +1,85 @@
+<script setup lang="ts">
+
+import { parseDocument } from 'htmlparser2'
+import { DomUtils } from 'htmlparser2'
+import { watch, ref, onMounted, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
+
+
+const { article } = defineProps({
+  article: Object,
+})
+
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+const publicHost = useRuntimeConfig().public.publicHost
+const fullImageUrl = computed(() =>
+    article?.image ? `${publicHost}/uploads/${article.image}` : ''
+)
+
+function extractHeadings(html: string) {
+  const doc = parseDocument(html)
+  const headings: { id: string; level: string; text: string }[] = []
+
+  const tags = ['h2', 'h3', 'h4']
+
+  let index = 1
+  DomUtils.findAll(el => {
+    if (el.type === 'tag' && tags.includes(el.name) && el.children?.length) {
+      const text = DomUtils.textContent(el).trim()
+      const id = `section-${index++}`
+
+      el.attribs = { ...el.attribs, id }
+
+      headings.push({
+        id,
+        level: el.name,
+        text,
+      })
+    }
+    return false
+  }, doc.children)
+
+  const updatedHtml = DomUtils.getOuterHTML(doc)
+  return { headings, updatedHtml }
+}
+
+
+const { headings, updatedHtml } = extractHeadings(article.content)
+
+function scrollTo(id: string) {
+  const el = document.getElementById(id)
+  if (!el) return
+
+  const yOffset = -200 // отступ сверху
+  const y = el.getBoundingClientRect().top + window.scrollY + yOffset
+
+  window.scrollTo({
+    top: y,
+    behavior: 'smooth'
+  })
+}
+
+</script>
 <template>
   <section class="blog-article container">
     <!-- Header -->
     <div class="article-header">
       <div class="article-header__image">
-        <img src="/blog/1.png" alt="Фото статьи" class="article-image" />
+        <img :src="fullImageUrl" alt="Фото статьи" class="article-image" />
       </div>
       <div class="article-header__text">
-        <p class="article-date">28 Апреля 2024</p>
-        <h1 class="article-title">
-          Как понять, что перед вами <span class="highlight">идеальный кандидат?</span>
-        </h1>
+        <p class="article-date">{{ formatDate(article.date) }}</p>
+        <h1 class="article-title" v-html="article.title"></h1>
         <p class="article-intro">
-          Найм сотрудника – ответственная задача, от которой зависит успех компании. Идеальный кандидат — это не только человек с нужными компетенциями, но и тот, кто подходит по духу команде, разделяет ценности компании и способен адаптироваться к рабочей среде. Рассмотрим ключевые признаки, которые помогут определить идеального кандидата.
+          {{ article.intro }}
         </p>
         <div class="share-links">
           <span>Поделиться</span>
@@ -27,61 +95,22 @@
       <aside class="article-toc">
         <h5>Содержание</h5>
         <ul>
-          <li><a href="#professional">1. Соответствие профессиональным требованиям</a></li>
-          <li><a href="#flexibility">2. Гибкость и обучаемость</a></li>
-          <li><a href="#motivation">3. Мотивация и интерес к работе</a></li>
-          <li><a href="#responsibility">4. Ответственность</a></li>
-          <li><a href="#conclusion">5. Вывод</a></li>
+          <li v-for="(item, index) in headings" :key="item.id">
+            <a
+                :href="`#${item.id}`"
+                @click.prevent="scrollTo(item.id)">
+              {{ index + 1 }}. {{ item.text }}
+            </a>
+          </li>
         </ul>
       </aside>
 
+
       <article class="article-body">
-        <section id="professional">
-          <h4>Соответствие профессиональным требованиям</h4>
-          <p>
-            Первой и самой очевидной фразой – это соответствие кандидата требованиям вакансии. Обратите внимание на:
-          </p>
-          <ul>
-            <li>Образование и квалификацию</li>
-            <li>Опыт работы в аналогичной сфере</li>
-            <li>Навыки владения оборудованием и инструментами</li>
-            <li>Портфолио (если применимо)</li>
-          </ul>
-          <p>Даже если компетенции соответствуют, задайте себе дополнительные вопросы: насколько он открыт, умеет ли адаптироваться?</p>
-        </section>
+        <div ref="articleContent" v-html="updatedHtml">
 
-        <section id="flexibility">
-          <h4>Гибкость и обучаемость</h4>
-          <p>
-            Мир быстро меняется, и способность адаптироваться к новым условиям – важное качество. Идеальный кандидат:
-            Быстро усваивает новую информацию. Открыт к изменениям и развитию. Готов осваивать новые технологии и подходы.
-            При этом даже самый опытный специалист может не вписаться в коллектив. Стоит оценить, совпадают ли его ценности с корпоративными, комфортно ли ему будет работать в команде и сможет ли он адаптироваться к вашей рабочей среде. Командная работа – основа успеха большинства компаний, поэтому важно, чтобы кандидат умел ясно излагать мысли, внимательно слушал и задавал уточняющие вопросы, проявлял эмпатию и уважение к собеседнику.          </p>
-        </section>
+        </div>
 
-        <section id="motivation">
-          <h4>Мотивация и интерес к работе</h4>
-          <p>
-            Также немаловажным фактором являются ответственность и организованность. Человек, который способен брать на себя ответственность и грамотно управлять своим временем, является ценным сотрудником. Хороший кандидат держит слово и выполняет обещания, соблюдает сроки и организует рабочий процесс, проявляет самостоятельность в решении задач. Если у него есть успешный опыт работы, коллеги и бывшие работодатели могут дать ему рекомендации, и положительные отзывы о прошлом опыте станут дополнительным плюсом.          </p>
-        </section>
-
-        <section id="responsibility">
-          <h4>Ответственность</h4>
-          <p>
-            Человек, который способен брать на себя ответственность и грамотно управлять своим временем, – ценный сотрудник. Хороший кандидат:
-            Держит слово и выполняет обещания.
-            Соблюдает сроки и организует рабочий процесс.
-            Проявляет самостоятельность в решении задач.
-            7. Профессиональная репутация и рекомендации
-            Если у кандидата есть успешный опыт работы, коллеги и бывшие работодатели могут дать ему рекомендации. Хорошие отзывы о прошлом опыте – важный плюс.
-            8. Тестовое задание и пробный период
-            Если кандидат соответствует большинству критериев, но у вас остаются сомнения, предложите выполнить тестовое задание или пройти испытательный срок. Это поможет на практике увидеть его в деле.          </p>
-        </section>
-
-        <section id="conclusion">
-          <h4>Вывод</h4>
-          <p>
-            Идеальный кандидат – это не только профессионал, но и человек, который гармонично вольётся в команду и будет разделять цели компании. Оценивая не только профессиональные качества, но и личностные характеристики, вы сможете сделать правильный выбор и найти сотрудника, который принесёт компании максимальную пользу.          </p>
-        </section>
         <div class="article-footer">
           <a href="#" class="prev">
             <img src="/icon/left-blue-arrow.svg" alt="">
@@ -89,7 +118,7 @@
           </a>
           <a href="#" class="next">
             Следующая статья
-            <img src="/icon/left-blue-arrow.svg" alt="">
+            <img src="/icon/right-blue-arrow.svg" alt="">
           </a>
         </div>
       </article>
@@ -119,6 +148,9 @@
   margin-top: 16px;
 }
 
+[id^="section-"], h2, h3, h4 {
+  scroll-margin-top: 100px;
+}
 .highlight {
   color: #3795f4;
 }
@@ -138,7 +170,11 @@
   background: #f7fbff;
   padding: 16px;
   border-radius: 12px;
-  //font-size: 14px;
+}
+
+.article-header__image{
+  max-height: 420px;
+  display: flex;
 }
 
 .article-toc ul {
@@ -224,6 +260,10 @@
   padding: 24px;
   border-radius: 16px;
   font-size: 16px;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  height: fit-content;
 }
 
 .article-toc h3 {
@@ -293,5 +333,3 @@
 }
 
 </style>
-<script setup lang="ts">
-</script>

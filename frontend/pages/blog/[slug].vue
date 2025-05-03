@@ -1,22 +1,14 @@
 <template>
-  <section class="blog-article container" v-if="article">
-    <div class="article-header">
-      <div class="article-header__image">
-        <img :src="article.image" alt="Фото статьи" class="article-image" />
-      </div>
-      <div class="article-header__text">
-        <p class="article-date">{{ formatDate(article.date) }}</p>
-        <h1 class="article-title" v-html="article.title" />
-        <p class="article-intro">{{ article.intro }}</p>
-      </div>
-    </div>
-    <div class="article-content">
-      <article class="article-body" v-html="article.content" />
-    </div>
-  </section>
+  <BlogArticle :article="article" />
+  <BlogSection :is-main="true" :title="'Читать по этой теме'"/>
+  <FormSection :fixed-tab="0"/>
 </template>
 
 <script setup lang="ts">
+import BlogSection from "~/components/section/BlogSection.vue";
+import FormSection from "~/components/section/FormSection.vue";
+import BlogArticle from "~/components/section/BlogArticle.vue";
+
 const route = useRoute()
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
