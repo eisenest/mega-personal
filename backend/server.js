@@ -70,12 +70,41 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
 
 app.use(admin.options.rootPath, adminRouter)
 
+app.get('/api/articles', async (req, res) => {
+  const articles = await Article.find({}, 'title slug image intro date') // ← только нужные поля
+      .sort({ date: -1 }) // по дате, последние сверху
+      .limit(100)         // можно ограничить
+
+  res.json(articles)
+})
+
+
 // 📘 Отдача статьи по slug
 app.get('/api/articles/:slug', async (req, res) => {
   const { slug } = req.params
   const article = await Article.findOne({ slug })
   if (!article) return res.status(404).json({ error: 'Статья не найдена' })
-  res.json(article)
+
+  // Получаем предыдущую статью (созданную раньше)
+  const prev = await Article.findOne({
+    createdAt: { $lt: article.createdAt },
+  })
+      .sort({ createdAt: -1 }) // ближайшая по времени назад
+      .select('slug title')
+
+  // Получаем следующую статью (созданную позже)
+  const next = await Article.findOne({
+    createdAt: { $gt: article.createdAt },
+  })
+      .sort({ createdAt: 1 }) // ближайшая по времени вперёд
+      .select('slug title')
+
+  res.json({
+    ...article.toObject(),
+    prev,
+    next,
+  })
+
 })
 
 // ⬆️ Ручная загрузка (если понадобится)

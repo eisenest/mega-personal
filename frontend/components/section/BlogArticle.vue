@@ -67,6 +67,33 @@ function scrollTo(id: string) {
   })
 }
 
+
+function scrollToIfAnchorClick(event: MouseEvent) {
+  const target = event.target as HTMLElement
+
+  // Найдём ближайшую ссылку
+  const link = target.closest('a')
+  if (!link) return
+
+  const href = link.getAttribute('href')
+  if (href && href.startsWith('#')) {
+    event.preventDefault()
+
+    const id = href.slice(1)
+    const el = document.getElementById(id)
+    if (el) {
+      const yOffset = -200
+      const y = el.getBoundingClientRect().top + window.scrollY + yOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
+  }
+}
+
+onMounted(() => {
+  const toc = document.querySelector('.article-toc')
+  toc?.addEventListener('click', scrollToIfAnchorClick)
+})
+
 </script>
 <template>
   <section class="blog-article container">
@@ -97,8 +124,7 @@ function scrollTo(id: string) {
         <ul>
           <li v-for="(item, index) in headings" :key="item.id">
             <a
-                :href="`#${item.id}`"
-                @click.prevent="scrollTo(item.id)">
+                :href="`#${item.id}`">
               {{ index + 1 }}. {{ item.text }}
             </a>
           </li>
@@ -112,15 +138,25 @@ function scrollTo(id: string) {
         </div>
 
         <div class="article-footer">
-          <a href="#" class="prev">
+          <a
+              :href="article.prev?.slug || '#'"
+              class="prev"
+              :class="{ disabled: !article.prev }"
+          >
             <img src="/icon/left-blue-arrow.svg" alt="">
             Предыдущая статья
           </a>
-          <a href="#" class="next">
+
+          <a
+              :href="article.next?.slug || '#'"
+              class="next"
+              :class="{ disabled: !article.next }"
+          >
             Следующая статья
             <img src="/icon/right-blue-arrow.svg" alt="">
           </a>
         </div>
+
       </article>
     </div>
 
@@ -136,6 +172,12 @@ function scrollTo(id: string) {
 
 .article-header {
   text-align: left;
+}
+
+.article-footer a.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .article-title {

@@ -13,7 +13,7 @@
   <ReviewsSection/>
   <CasesSection/>
   <FormSection/>
-  <BlogSection :is-main="true"/>
+  <BlogSection :is-main="true" :posts="articles" />
 
 </template>
 
@@ -33,12 +33,8 @@ import ServiceSection from "~/components/section/ServiceSection.vue";
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
 
-// const { data: response } = await useFetch(`${apiBase}/api/ping`)
+const { data: articles } = await useFetch(`${apiBase}/api/articles`)
 
-// const { data: response } = await useFetch(`${apiBase}/api/ping`, {
-//   server: false // ❗ только на клиенте
-//   // server: process.env.NODE_ENV === 'development' ? false : true
-// })
 
 
 </script>

@@ -1,27 +1,32 @@
 <template>
   <section class="container">
-    <div class="blog__container">
-      <h2 :class="{ headline: isMain }">{{ title }}</h2>
-      <div class="blog__grid">
-        <div
-            class="blog-card"
-            v-for="(post, i) in displayedPosts"
-            :key="i"
-        >
-          <div class="blog-card__image-wrapper">
-            <img :src="post.image" alt="" class="blog-card__image" />
-            <div class="blog-card__overlay"></div>
-          </div>
-          <small class="blog-card__date">{{ post.date }}</small>
-          <h3 class="blog-card__title">{{ post.title }}</h3>
-          <p class="blog-card__excerpt">{{ post.description }}</p>
+
+      <div class="blog__container">
+        <h2 :class="{ headline: isMain }">{{ title }}</h2>
+        <div class="blog__grid">
+
+            <div
+                class="blog-card"
+                v-for="(post, i) in displayedPosts"
+                :key="i"
+            >
+              <a :href="`/blog/${post.slug}`" class="href">
+                <div class="blog-card__image-wrapper">
+                  <img :src="getImageUrl(post.image)" alt="" class="blog-card__image" />
+                  <div class="blog-card__overlay"></div>
+                </div>
+                <small class="blog-card__date">{{ formatDate(post.date) }}</small>
+                <h3 class="blog-card__title">{{ post.title }}</h3>
+                <p class="blog-card__excerpt">{{ post.intro }}</p>
+              </a>
+            </div>
         </div>
+
       </div>
-    </div>
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 const props = defineProps({
   title: {
@@ -29,63 +34,31 @@ const props = defineProps({
     default: 'Блог',
   },
   isMain: Boolean,
+  posts: Object,
 })
 
-const posts = [
-  {
-    date: '12 марта 2024',
-    title: 'Легендарная выгода со Stardogs!',
-    description: 'Вас ждут франшизы HoReCa, услуг и ритейла с инвестициями от 1 млн до 50+ млн рублей и насыщенная программа.',
-    image: '/blog/1.png'
-  },
-  {
-    date: '12 марта 2024',
-    title: 'Как понять, что перед вами идеальный кандидат?',
-    description: 'Найти подходящего сотрудника — задача не из лёгких. Как же понять, что кандидат действительно идеален для вашей компании?',
-    image: '/blog/2.png'
-  },
-  {
-    date: '25 марта 2024',
-    title: 'Почему вакансия "висит", а откликов нет? Разбираем ошибки',
-    description: 'Ваши объявления о вакансиях долго остаются без внимания? Возможно, проблема в одном из этих пунктов:',
-    image: '/blog/3.png'
-  },
-  {
-    date: '25 марта 2024',
-    title: 'Тренды найма 2025 — на что обратить внимание работодателям?',
-    description: 'Мир работы меняется, и чтобы оставаться в игре, компаниям важно учитывать новые тенденции...',
-    image: '/blog/4.png'
-  },
-  {
-    date: '12 марта 2024',
-    title: 'Легендарная выгода со Stardogs!',
-    description: 'Вас ждут франшизы HoReCa, услуг и ритейла с инвестициями от 1 млн до 50+ млн рублей и насыщенная программа.',
-    image: '/blog/1.png'
-  },
-  {
-    date: '12 марта 2024',
-    title: 'Как понять, что перед вами идеальный кандидат?',
-    description: 'Найти подходящего сотрудника — задача не из лёгких. Как же понять, что кандидат действительно идеален для вашей компании?',
-    image: '/blog/2.png'
-  },
-  {
-    date: '25 марта 2024',
-    title: 'Почему вакансия "висит", а откликов нет? Разбираем ошибки',
-    description: 'Ваши объявления о вакансиях долго остаются без внимания? Возможно, проблема в одном из этих пунктов:',
-    image: '/blog/3.png'
-  },
-  {
-    date: '25 марта 2024',
-    title: 'Тренды найма 2025 — на что обратить внимание работодателям?',
-    description: 'Мир работы меняется, и чтобы оставаться в игре, компаниям важно учитывать новые тенденции...',
-    image: '/blog/4.png'
-  }
-]
+
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
 
 // Ограничение постов, если это главная страница
 const displayedPosts = computed(() =>
-    props.isMain ? posts.slice(0, 4) : posts
+    props.isMain ? props.posts.slice(0, 4) : props.posts
 )
+
+function getImageUrl(image?: string): string {
+  const publicHost = useRuntimeConfig().public.publicHost
+  if (!image) return '' // если нет картинки
+  return `${publicHost}/uploads/${image}`
+}
+
+
 
 </script>
 
@@ -115,6 +88,7 @@ const displayedPosts = computed(() =>
   height: 240px;
   border-radius: 24px;
   overflow: hidden;
+  margin-bottom: 8px;
 }
 
 .blog-card__image {
@@ -134,13 +108,13 @@ const displayedPosts = computed(() =>
 
 .blog-card__date {
   font-size: 14px;
+  margin-bottom: 8px;
   color: #555;
 }
 
 .blog-card__title {
   font-size: 18px;
   font-weight: 700;
-  height: 38px;
   margin: 0 0 8px 0;
 }
 
@@ -148,5 +122,10 @@ const displayedPosts = computed(() =>
   font-size: 18px;
   color: #333;
   margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
