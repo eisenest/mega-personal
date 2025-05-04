@@ -18,37 +18,22 @@
 
       <!-- Сетка логотипов -->
       <div class="partners__grid">
-        <div v-for="(logo, index) in logos" :key="index" class="logo-box">
-          <img :src="logo" alt="Партнер" />
-        </div>
+        <a :href="client.url" target="_blank" v-for="(client, index) in clients" :key="index" class="logo-box">
+            <img :src="`${config.public.publicHost}/uploads/${client.image}`" alt="Партнер" />
+        </a>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-const logos = [
-  '/partners/lenta.svg',
-  '/partners/prosveshchenie.svg',
-  '/partners/delovye.svg',
-  '/partners/fesco.svg',
-  '/partners/auchan.svg',
-  '/partners/slavyanka.svg',
-  '/partners/chersh.svg',
-  '/partners/globus.svg',
-  '/partners/iztt.svg',
-  '/partners/profresh.svg',
-  '/partners/agroprom.svg',
-  '/partners/dmitrov.svg',
-  '/partners/selgros.svg',
-  '/partners/svetlana-k.svg',
-  '/partners/delovye.svg',
-  '/partners/fesco.svg'
-]
 
+defineProps({
+  clients: Array,
+})
 
+const config = useRuntimeConfig()
 
-const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
 const activeTab = ref(1) // по умолчанию
 
 const route = useRoute()
@@ -67,6 +52,10 @@ onMounted(() => {
   background: #eef7ff;
   padding: 60px 20px;
   border-radius: 32px;
+}
+
+.logo-box:hover{
+  box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
 }
 
 .partners__container {

@@ -1,17 +1,17 @@
 <template>
   <HeroSection/>
-  <PropsSection/>
-  <GoalSection/>
+  <PropsSection :props="index.keyNumbers"/>
+  <GoalSection :advantages="index.advantages" />
   <ServiceSection/>
   <div class="resources-wrapper">
     <ResourceSection/>
   </div>
   <h2 class="headline"><span class="highlight">Нам доверяют</span></h2>
-  <PartnersSection/>
+  <PartnersSection :clients="index.clients" />
   <h2 class="headline">Ваше партнёрство с нами <span class="highlight">будет выгодным</span> благодаря</h2>
   <ValuesSection/>
-  <ReviewsSection/>
-  <CasesSection/>
+  <ReviewsSection :reviews="index.reviews" />
+  <CasesSection :cases="index.cases" />
   <FormSection/>
   <BlogSection :is-main="true" :posts="articles" />
 
@@ -35,7 +35,7 @@ const apiBase = config.public.apiBase
 
 const { data: articles } = await useFetch(`${apiBase}/api/articles`)
 
-
+const { data: index } = await useFetch(`${apiBase}/api/index`)
 
 </script>
 

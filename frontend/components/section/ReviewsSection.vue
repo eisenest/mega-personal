@@ -14,7 +14,7 @@
       <div class="review-cards">
         <div class="review-card" v-for="(item, index) in currentReviewChunk" :key="index">
           <div class="review-card__header">
-            <img :src="item.logo" alt="Логотип" class="logo" />
+            <img :src="`${config.public.publicHost}/uploads/${item.image}`" alt="Логотип" class="logo" />
             <div class="company">
               <strong>{{ item.company }}</strong>
               <small>{{ item.person }}</small>
@@ -31,11 +31,14 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import Pagination from "~/components/elements/Pagination.vue"
 
-const reviews = [
+const { reviews } = defineProps<{ reviews: any[] }>()
+
+
+const reviews2 = [
   {
     company: 'Деловые линии',
     person: 'Шеянова О.Д.',
@@ -79,6 +82,8 @@ const reviews = [
     text: 'За время работы компания зарекомендовала себя как добросовестного эффективного исполнителя. Услуги по договору оказываются на высоком уровне, сотрудники демонстрируют профессионализм и клиентоориентированность...'
   }
 ]
+
+const config = useRuntimeConfig()
 
 const currentReviewIndex = ref(0)
 const reviewsPerPage = 3

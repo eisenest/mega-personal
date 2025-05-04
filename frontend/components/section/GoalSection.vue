@@ -7,41 +7,60 @@
       <div class="goal__left">
         <h3>Аутсорсинг</h3>
         <div class="goal__points">
-           <GoalCard v-for="(point, index) in points" :key="index"
-              :number="index+1"
+          <GoalCard
+              v-for="(point, index) in currentPagePoints"
+              :key="index"
+              :number="index + 1"
               :description="point"
-           />
+          />
         </div>
 
         <Pagination
-            :current="0"
-            :total="4"
-        />
+            :current="current"
+            :total="advantages.length"
+            @next="next" @prev="prev" />
+
       </div>
 
       <!-- Правая часть -->
       <div class="goal__right">
-        <img src="/about/goal.png" alt="Цель" class="goal__image" />
+        <img :src="`${config.public.publicHost}/uploads/${currentAdvantage?.image}`" alt="Цель" class="goal__image" />
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import GoalCard from "~/components/cards/GoalCard.vue";
-import Pagination from "~/components/elements/Pagination.vue";
+import { computed, ref } from 'vue'
+import GoalCard from '~/components/cards/GoalCard.vue'
+import Pagination from '~/components/elements/Pagination.vue'
 
-const points = [
-  '5000+ сотрудников ежедневно оказывают услуги на объектах наших клиентов',
-  'Состоим в ассоциации ФМ.РАДО.РУС и соблюдаем законодательство РФ.',
-  'Зона покрытия — вся Россия',
-  'Оперативный запуск проектов'
-]
+const props = defineProps({
+  advantages: Array,
+})
+
+const config = useRuntimeConfig()
+const current = ref(0)
+
+const currentAdvantage = computed(() => props.advantages[current.value])
+const currentPagePoints = computed(() => currentAdvantage.value?.thesis || [])
+
+function next() {
+  if (current.value < props.advantages.length - 1) {
+    current.value++
+  }
+}
+
+function prev() {
+  if (current.value > 0) {
+    current.value--
+  }
+}
+
 </script>
 
 <style scoped>
-
-.goal .headline{
+.goal .headline {
   padding: 0;
 }
 
@@ -129,11 +148,11 @@ const points = [
   position: relative;
 }
 
-
 .goal__image {
   object-fit: cover;
   width: 100%;
 }
+
 @media (max-width: 960px) {
   .goal__content {
     flex-direction: column;

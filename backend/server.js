@@ -16,8 +16,8 @@ import fs from 'fs'
 import formidableMiddleware from 'express-formidable'
 import { ComponentLoader } from 'adminjs'
 import { ContactInfo } from './model/ContactInfo.js'
-
-
+import { IndexPageResources } from './admin-resources/index.resource.js'
+import { IndexClient, IndexAdvantage, IndexReview, IndexKeyNumber,IndexCase } from './model/Index.js'
 
 dotenv.config()
 
@@ -48,6 +48,7 @@ const admin = new AdminJS({
   resources: [
       { resource: User },
     ContactInfoResource,
+    ...IndexPageResources(componentLoader), // ← подключаем ресурсы
     ArticleResource(componentLoader),
     ServicePageResource
   ],
@@ -74,10 +75,8 @@ app.get('/api/articles', async (req, res) => {
   const articles = await Article.find({}, 'title slug image intro date') // ← только нужные поля
       .sort({ date: -1 }) // по дате, последние сверху
       .limit(100)         // можно ограничить
-
   res.json(articles)
 })
-
 
 // 📘 Отдача статьи по slug
 app.get('/api/articles/:slug', async (req, res) => {
@@ -105,6 +104,28 @@ app.get('/api/articles/:slug', async (req, res) => {
     next,
   })
 
+})
+
+
+app.get('/api/index', async (req, res) => {
+  try {
+    const keyNumbers = await IndexKeyNumber.find()
+    const advantages = await IndexAdvantage.find()
+    const clients = await IndexClient.find()
+    const reviews = await IndexReview.find()
+    const cases = await IndexCase.find()
+
+    res.json({
+      keyNumbers,
+      advantages,
+      clients,
+      reviews,
+      cases,
+    })
+  } catch (e) {
+    console.error('Ошибка при загрузке /api/index:', e)
+    res.status(500).json({ error: 'Ошибка при загрузке данных' })
+  }
 })
 
 // ⬆️ Ручная загрузка (если понадобится)
