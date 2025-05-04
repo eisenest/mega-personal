@@ -3,19 +3,25 @@ export const duplicateAction = {
     icon: 'Copy',
     guard: 'Вы уверены, что хотите дублировать эту запись?',
     isVisible: true,
-    component: false, // ← ключевая строка
+    component: false, // стандартный компонент, без кастомного UI
 
     handler: async (request, response, context) => {
         const { record, h, resource, currentAdmin } = context
         if (!record) throw new Error('Запись не найдена')
 
         try {
-            const data = record.toJSON()
+            // ✅ Получаем все поля как есть
+            const data = { ...record.params }
+
+            // ❌ Удаляем технические поля
             delete data._id
             delete data.id
+            delete data.createdAt
+            delete data.updatedAt
+            delete data.uploadImage // поле input[type=file], не нужно копировать
 
+            // 🔁 Генерим новый slug
             const timestamp = Date.now()
-
             if (typeof data.slug === 'string' && data.slug.length > 0) {
                 data.slug = `${data.slug}-copy-${timestamp}`
             } else {
@@ -23,9 +29,13 @@ export const duplicateAction = {
                 data.slug = `${fallback.toString().toLowerCase().replace(/\s+/g, '-')}-copy-${timestamp}`
             }
 
+            // ✏️ Добавим пометку "(копия)" к заголовку, если есть
             if (data.title) {
                 data.title = `${data.title} (копия)`
             }
+
+            // 🧪 Можно залогировать для отладки
+            // console.log('📋 Дублируем запись с полями:', data)
 
             const newDoc = await resource.create(data)
             const newRecord = resource.build(newDoc)
@@ -51,6 +61,5 @@ export const duplicateAction = {
                 },
             }
         }
-    }
-
+    },
 }
