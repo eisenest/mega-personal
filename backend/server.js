@@ -204,5 +204,3 @@ app.get('/api/partnership-faq', async (req, reply) => {
 app.listen(5050, () => {
   console.log('🚀 AdminJS доступен по адресу http://localhost:5050/admin')
 })
-
-admin.watch()
