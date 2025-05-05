@@ -69,6 +69,7 @@ const admin = new AdminJS({
   componentLoader, // ← обязателен с uploadFeature
   bundler: {
     mode: 'production',
+    bundlePath: path.join(__dirname, '.adminjs', 'bundle.js') // 👈 вот это добавь
   },
 })
 
