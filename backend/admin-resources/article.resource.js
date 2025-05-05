@@ -29,6 +29,10 @@ export const ArticleResource = (componentLoader) => {
                     mimeTypes: ['image/png', 'image/jpeg'],
                     maxSize: 10 * 1024 * 1024, // 10MB
                 },
+                components: {
+                    edit: 'UploadEditComponentCustom', // ← важно
+                    // list: 'UploadListComponent', если есть
+                },
             }),
         ],
         options: {

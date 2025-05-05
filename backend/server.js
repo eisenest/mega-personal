@@ -34,10 +34,14 @@ const __dirname = path.dirname(__filename)
 
 const componentLoader = new ComponentLoader()
 
+const uploadEditComponentPath = path.join(__dirname, 'admin-components/UploadEditComponent.jsx')
+componentLoader.add('UploadEditComponentCustom', uploadEditComponentPath)
+
 await mongoose.connect(process.env.MONGO_URI)
 
 AdminJS.registerAdapter({ Database, Resource })
 
+console.log()
 const app = express()
 
 // 📦 Обработка multipart/form-data
@@ -205,5 +209,4 @@ app.listen(5050, () => {
   console.log('🚀 AdminJS доступен по адресу http://localhost:5050/admin')
 })
 
-await admin.initialize(); // обязательно!
 admin.watch()
