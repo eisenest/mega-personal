@@ -19,7 +19,6 @@ import { IndexClient, IndexAdvantage, IndexReview, IndexKeyNumber,IndexCase } fr
 import { About } from "./model/About.js";
 import { PartnershipFAQ } from './model/PartnershipFAQ.js';
 
-
 import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
 import { ServicePageResource } from './admin-resources/servicePage.resource.js'
 import { serviceCategoryResource } from './admin-resources/serviceCategory.resource.js';
@@ -28,13 +27,11 @@ import { aboutResource } from './admin-resources/about.resource.js';
 import { IndexPageResources } from './admin-resources/index.resource.js'
 import { partnershipFAQResource } from './admin-resources/partnership-faq.resource.js';
 
-
 dotenv.config()
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// 📦 componentLoader нужен для @adminjs/upload 4.x+
 const componentLoader = new ComponentLoader()
 
 await mongoose.connect(process.env.MONGO_URI)
@@ -69,7 +66,7 @@ const admin = new AdminJS({
   componentLoader, // ← обязателен с uploadFeature
 })
 
-app.use('/admin/frontend', express.static('.adminjs')) // добавь это, если bundle не отдается
+app.use('/admin/frontend/assets', express.static(path.join(__dirname, 'admin/frontend/assets')));
 
 // 🔐 Авторизация
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
