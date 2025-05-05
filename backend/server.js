@@ -8,8 +8,10 @@ import { User } from './model/User.js'
 import { Article } from './model/Article.js'
 import { ArticleResource } from './admin-resources/article.resource.js'
 import { ServicePage } from './model/ServicePage.js'
+import {ServiceCategory} from "./model/ServiceCategory.js";
 import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
 import { ServicePageResource } from './admin-resources/servicePage.resource.js'
+import { serviceCategoryResource } from './admin-resources/serviceCategory.resource.js';
 import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
@@ -50,7 +52,8 @@ const admin = new AdminJS({
     ContactInfoResource,
     ...IndexPageResources(componentLoader), // ← подключаем ресурсы
     ArticleResource(componentLoader),
-    ServicePageResource
+    ServicePageResource,
+    serviceCategoryResource
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature
@@ -159,6 +162,17 @@ app.get('/api/services/:slug', async (req, res) => {
   }
 })
 
+
+app.get('/api/service-categories', async (req, reply) => {
+  const categories = await ServiceCategory.find({}).populate('services');
+  reply.send(categories);
+});
+
+app.get('/api/service-categories/:slug', async (req, reply) => {
+  const category = await ServiceCategory.findOne({ slug: req.params.slug, showPage: true }).populate('services');
+  if (!category) return reply.code(404).send({ error: 'Not found' });
+  reply.send(category);
+});
 
 // 🚀 Запуск сервера
 app.listen(5050, () => {

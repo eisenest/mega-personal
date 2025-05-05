@@ -1,9 +1,10 @@
 import { ServicePage } from '../model/ServicePage.js'
+import {duplicateAction} from "../actions/duplicateAction.js";
 
 export const ServicePageResource = {
     resource: ServicePage,
     options: {
-        navigation: 'Контент',
+        navigation: 'Услуги',
         listProperties: ['title', 'slug', 'description'],
         editProperties: [
             'title',
@@ -81,6 +82,9 @@ export const ServicePageResource = {
                 type: 'mixed',
                 isArray: true,
             },
-        }
+        },
+        actions: {
+            duplicate: duplicateAction,
+        },
     },
 }

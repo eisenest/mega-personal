@@ -7,29 +7,32 @@
           Наша компания предоставляет полный список услуг для поиска лучших кандидатов на рынке труда под ваши персональные запросы!
         </p>
       </div>
-
     </div>
+
     <div class="services__content">
-      <!-- Левый список -->
+      <!-- Левый список категорий -->
       <ul class="services__menu">
         <li
-            v-for="(service, index) in services"
-            :key="index"
+            v-for="(category, index) in categories"
+            :key="category.slug"
             :class="{ active: selectedIndex === index }"
             class="p24"
             @click="selectedIndex = index"
         >
-          {{ service.title }}
+          {{ category.title }}
           <span class="arrow">›</span>
         </li>
       </ul>
 
-      <!-- Контент справа -->
+      <!-- Правый блок: список услуг внутри выбранной категории -->
       <div class="services__right">
-
-        <div class="services__card">
-          <p class="card__text p24">{{ services[selectedIndex].description }}</p>
-          <a href="#" class="card__link p24">
+        <div
+            v-for="service in categories[selectedIndex]?.services || []"
+            :key="service.slug"
+            class="services__card"
+        >
+          <p class="card__text p24">{{ service.title }}</p>
+          <a :href="`/services/${service.slug}`" class="card__link p24">
             Подробнее
             <span class="icon">❯</span>
           </a>
@@ -40,28 +43,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
+
+const props = defineProps({
+  categories: {
+    type: Array,
+  }
+})
 
 const selectedIndex = ref(0)
-
-const services = [
-  {
-    title: 'Аутсорсинг',
-    description: 'Складская логистика, производство, HoReCa',
-  },
-  {
-    title: 'Рекрутмент',
-    description: 'Подбор персонала под ключ в кратчайшие сроки',
-  },
-  {
-    title: 'Предоставление персонала',
-    description: 'Выделенные сотрудники для выполнения задач на объекте',
-  },
-  {
-    title: 'Соискателям',
-    description: 'Помогаем найти стабильную и достойную работу',
-  }
-]
 </script>
 
 <style scoped>

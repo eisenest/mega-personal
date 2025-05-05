@@ -1,36 +1,38 @@
+<script setup>
+const route = useRoute()
+const apiBase = useRuntimeConfig().public.apiBase
+const { data: category, error } = await useFetch(`${apiBase}/api/service-categories/${route.params.slug}`)
+
+if (error.value || !category.value) {
+  showError({ statusCode: 404, message: 'Категория не найдена' })
+}
+</script>
+
 <template>
   <section class="container recruitment">
     <div class="recruitment__head">
-      <h1 class="highlight title">Рекрутмент</h1>
-      <h3 class="subtitle">Найдём лучших за вас!</h3>
-      <p class="text">
-        Мы подбираем только лучших специалистов, которые идеально впишутся в вашу команду,
-        и создаём мощные коллективы, способные решать самые сложные задачи.
-        Быстро, эффективно и с точным попаданием в ваши бизнес-цели!
-      </p>
+      <h1 class="highlight title">{{ category.title }}</h1>
+      <h3 class="subtitle">{{ category.subtitle }}</h3>
+      <p class="text">{{ category.description }}</p>
     </div>
 
     <div class="recruitment__cards">
-      <div class="card card--left">
+      <div
+          v-for="(service, i) in category.services"
+          :key="service.slug"
+          :class="['card', i % 2 === 0 ? 'card--left' : 'card--right']"
+      >
         <div class="card__text">
-          <h4>Поиск и подбор специалистов</h4>
-          <a href="#" class="card__link">
+          <h4>{{ service.title }}</h4>
+          <a :href="`/services/${service.slug}`" class="card__link">
             Подробнее
             <span class="icon">❯</span>
           </a>
         </div>
-        <div class="card__img" style="background-image: url('/recruitment/1.png');"></div>
-      </div>
-
-      <div class="card card--right">
-        <div class="card__text">
-          <h4>Массовый рекрутмент</h4>
-          <a href="#" class="card__link">
-            Подробнее
-            <span class="icon">❯</span>
-          </a>
-        </div>
-        <div class="card__img" style="background-image: url('/recruitment/2.png');"></div>
+        <div
+            class="card__img"
+            :style="{ backgroundImage: `url(${service.image || '/recruitment/1.png'})` }"
+        ></div>
       </div>
     </div>
   </section>

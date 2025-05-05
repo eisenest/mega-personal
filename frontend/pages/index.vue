@@ -2,7 +2,7 @@
   <HeroSection/>
   <PropsSection :props="index.keyNumbers"/>
   <GoalSection :advantages="index.advantages" />
-  <ServiceSection/>
+  <ServiceSection :categories="service"/>
   <div class="resources-wrapper">
     <ResourceSection/>
   </div>
@@ -36,6 +36,11 @@ const apiBase = config.public.apiBase
 const { data: articles } = await useFetch(`${apiBase}/api/articles`)
 
 const { data: index } = await useFetch(`${apiBase}/api/index`)
+
+const { data: service } = await useFetch(`${apiBase}/api/service-categories`)
+
+console.log(service)
+
 
 </script>
 

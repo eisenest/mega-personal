@@ -1,10 +1,11 @@
 <script setup lang="ts">
 
 import RecruitmentSection from "~/components/section/RecruitmentSection.vue";
+
 </script>
 
 <template>
-  <RecruitmentSection/>
+  <RecruitmentSection />
 </template>
 
 <style scoped>
