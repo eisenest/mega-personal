@@ -34,9 +34,6 @@ const __dirname = path.dirname(__filename)
 
 const componentLoader = new ComponentLoader()
 
-const uploadEditComponentPath = path.join(__dirname, 'admin-components/UploadEditComponentCustom.jsx')
-componentLoader.add('UploadEditComponentCustom', uploadEditComponentPath)
-
 await mongoose.connect(process.env.MONGO_URI)
 
 AdminJS.registerAdapter({ Database, Resource })
@@ -70,7 +67,12 @@ const admin = new AdminJS({
   componentLoader, // ← обязателен с uploadFeature
 })
 
-await admin.initialize(); // обязательно!
+try {
+  await admin.initialize()
+  console.log('[adminjs] initialized successfully')
+} catch (err) {
+  console.error('[adminjs] failed to initialize:', err)
+}
 
 // 🔐 Авторизация
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
