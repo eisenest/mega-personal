@@ -11,8 +11,6 @@ RUN npm install
 
 COPY . .
 
-COPY .adminjs /app/.adminjs
-
 #RUN mkdir -p /app/public/uploads
 
 EXPOSE 5050
