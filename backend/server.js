@@ -99,6 +99,9 @@ app.get('/api/articles', async (req, res) => {
   res.json(articles)
 })
 
+// отдача собранного бандла
+app.use('/admin/frontend/assets', express.static(path.join(__dirname, 'admin-bundle')))
+
 // 📘 Отдача статьи по slug
 app.get('/api/articles/:slug', async (req, res) => {
   const { slug } = req.params
