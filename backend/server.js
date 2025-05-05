@@ -66,7 +66,7 @@ const admin = new AdminJS({
   componentLoader, // ← обязателен с uploadFeature
 })
 
-app.use('/admin/frontend/assets', express.static(path.join(__dirname, 'admin/frontend/assets')));
+await admin.initialize(); // обязательно!
 
 // 🔐 Авторизация
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
@@ -205,4 +205,5 @@ app.listen(5050, () => {
   console.log('🚀 AdminJS доступен по адресу http://localhost:5050/admin')
 })
 
+await admin.initialize(); // обязательно!
 admin.watch()
