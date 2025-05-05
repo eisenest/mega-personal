@@ -4,22 +4,26 @@ import mongoose from 'mongoose'
 import AdminJS from 'adminjs'
 import AdminJSExpress from '@adminjs/express'
 import { Database, Resource } from '@adminjs/mongoose'
-import { User } from './model/User.js'
-import { Article } from './model/Article.js'
-import { ArticleResource } from './admin-resources/article.resource.js'
-import { ServicePage } from './model/ServicePage.js'
-import {ServiceCategory} from "./model/ServiceCategory.js";
-import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
-import { ServicePageResource } from './admin-resources/servicePage.resource.js'
-import { serviceCategoryResource } from './admin-resources/serviceCategory.resource.js';
 import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 import formidableMiddleware from 'express-formidable'
 import { ComponentLoader } from 'adminjs'
+
+import { User } from './model/User.js'
+import { Article } from './model/Article.js'
+import { ServicePage } from './model/ServicePage.js'
+import {ServiceCategory} from "./model/ServiceCategory.js";
 import { ContactInfo } from './model/ContactInfo.js'
-import { IndexPageResources } from './admin-resources/index.resource.js'
 import { IndexClient, IndexAdvantage, IndexReview, IndexKeyNumber,IndexCase } from './model/Index.js'
+import {About} from "./model/About.js";
+
+import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
+import { ServicePageResource } from './admin-resources/servicePage.resource.js'
+import { serviceCategoryResource } from './admin-resources/serviceCategory.resource.js';
+import { ArticleResource } from './admin-resources/article.resource.js'
+import { aboutResource } from './admin-resources/about.resource.js';
+import { IndexPageResources } from './admin-resources/index.resource.js'
 
 dotenv.config()
 
@@ -53,7 +57,8 @@ const admin = new AdminJS({
     ...IndexPageResources(componentLoader), // ← подключаем ресурсы
     ArticleResource(componentLoader),
     ServicePageResource,
-    serviceCategoryResource
+    serviceCategoryResource,
+    aboutResource
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature
@@ -172,6 +177,14 @@ app.get('/api/service-categories/:slug', async (req, reply) => {
   const category = await ServiceCategory.findOne({ slug: req.params.slug, showPage: true }).populate('services');
   if (!category) return reply.code(404).send({ error: 'Not found' });
   reply.send(category);
+});
+
+app.get('/api/about', async (req, reply) => {
+  const about = await About.findOne().sort({ updatedAt: -1 });
+  if (!about) {
+    return reply.code(404).send({ error: 'Not found' });
+  }
+  return reply.send(about);
 });
 
 // 🚀 Запуск сервера

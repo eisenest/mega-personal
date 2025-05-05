@@ -7,7 +7,7 @@
     />
 
     <div class="stats">
-      <PropsCard v-for="(item, index) in propsData"
+      <PropsCard v-for="(item, index) in about.keyNumbers"
                  :key="index"
                  :number="item.number"
                  :description="item.description"
@@ -18,8 +18,8 @@
     <CompanyValuesSection/>
     <HorizonSection/>
     <OurGoalSection/>
-    <OurServicesSection/>
-    <ReviewsSection />
+    <OurServicesSection :services="about.services" />
+    <ReviewsSection :reviews="index.reviews" />
     <FormSection />
 
 </template>
@@ -43,6 +43,12 @@ const propsData = [
 
 const mission_description = "Мы предоставляем высококачественные услуги по подбору и управлению персоналом, помогая клиентам оптимизировать бизнес-процессы, сокращать затраты и устойчиво расти.\n" +
     "Стремимся быть надёжным партнёром, снабжая компании трудовыми ресурсами, соблюдая законодательные нормы."
+
+const config = useRuntimeConfig()
+const apiBase = config.public.apiBase
+
+const { data: index } = await useFetch(`${apiBase}/api/index`)
+const { data: about } = await useFetch(`${apiBase}/api/about`)
 
 </script>
 
