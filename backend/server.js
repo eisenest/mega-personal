@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url'
 import fs from 'fs'
 import formidableMiddleware from 'express-formidable'
 import { ComponentLoader } from 'adminjs'
+import uploadFeature from '@adminjs/upload'
 
 import { User } from './model/User.js'
 import { Article } from './model/Article.js'
@@ -26,6 +27,7 @@ import { ArticleResource } from './admin-resources/article.resource.js'
 import { aboutResource } from './admin-resources/about.resource.js';
 import { IndexPageResources } from './admin-resources/index.resource.js'
 import { partnershipFAQResource } from './admin-resources/partnership-faq.resource.js';
+import { bundle } from '@adminjs/bundler';
 
 dotenv.config()
 
@@ -36,12 +38,18 @@ const componentLoader = new ComponentLoader()
 const uploadEditComponentPath = path.join(__dirname, 'admin-components/ImageUploadEditComponent.jsx')
 componentLoader.add('ImageUploadEditComponent', uploadEditComponentPath)
 
+// await bundle({
+//     componentLoader,
+//     destinationDir: 'public/assets', // relative to CWD
+//     adminJsAssetsDir: 'public/assets2'
+//   })
+
+
 
 await mongoose.connect(process.env.MONGO_URI)
 
 AdminJS.registerAdapter({ Database, Resource })
 
-console.log()
 const app = express()
 
 // 📦 Обработка multipart/form-data
@@ -53,6 +61,9 @@ app.use(formidableMiddleware({
 
 // 📁 Статика
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')))
+
+app.use('/admin/frontend/assets/components.bundle.js', express.static(path.join(__dirname, 'public/assets/components.bundle.js')))
+
 
 // 🛠️ AdminJS конфиг
 const admin = new AdminJS({
