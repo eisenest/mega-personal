@@ -1,6 +1,7 @@
 import React from 'react'
 import { BasePropertyProps } from 'adminjs'
 
+
 const UploadEditComponentCustom = (props) => {
     const { record, property, onChange } = props
 

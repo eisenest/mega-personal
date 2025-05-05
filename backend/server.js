@@ -34,7 +34,7 @@ const __dirname = path.dirname(__filename)
 
 const componentLoader = new ComponentLoader()
 
-const uploadEditComponentPath = path.join(__dirname, 'admin-components/UploadEditComponent.jsx')
+const uploadEditComponentPath = path.join(__dirname, 'admin-components/UploadEditComponentCustom.jsx')
 componentLoader.add('UploadEditComponentCustom', uploadEditComponentPath)
 
 await mongoose.connect(process.env.MONGO_URI)

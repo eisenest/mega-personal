@@ -1,5 +1,5 @@
 AdminJS.UserComponents = {}
-import UploadEditComponentCustom from '../admin-components/UploadEditComponent'
+import UploadEditComponentCustom from '../admin-components/UploadEditComponentCustom.jsx'
 AdminJS.UserComponents.UploadEditComponentCustom = UploadEditComponentCustom
 import UploadEditComponent from '../node_modules/@adminjs/upload/build/features/upload-file/components/UploadEditComponent'
 AdminJS.UserComponents.UploadEditComponent = UploadEditComponent
