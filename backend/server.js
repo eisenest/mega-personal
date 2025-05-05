@@ -67,11 +67,9 @@ const admin = new AdminJS({
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature
-  bundler: {
-    mode: 'production',
-    bundlePath: path.join(__dirname, '.adminjs', 'bundle.js') // 👈 вот это добавь
-  },
 })
+
+app.use('/admin/frontend', express.static('.adminjs')) // добавь это, если bundle не отдается
 
 // 🔐 Авторизация
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
@@ -144,6 +142,7 @@ app.get('/api/index', async (req, res) => {
     res.status(500).json({ error: 'Ошибка при загрузке данных' })
   }
 })
+
 
 // ⬆️ Ручная загрузка (если понадобится)
 app.post('/api/upload', (req, res) => {
