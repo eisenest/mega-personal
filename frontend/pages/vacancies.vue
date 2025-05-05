@@ -9,6 +9,11 @@ import CustomerReviewSection from "~/components/section/CustomerReviewSection.vu
 import PhotoSection from "~/components/section/PhotoSection.vue";
 import HelpFormSection from "~/components/section/HelpFormSection.vue";
 
+const config = useRuntimeConfig()
+const apiBase = config.public.apiBase
+
+const { data: vacancies } = await useFetch(`${apiBase}/api/vacancies`)
+
 const values = [
   {
     title: "Гарантия трудоустройства",
@@ -53,73 +58,6 @@ const steps = [
   }
 ]
 
-
-const questions = [
-  {
-    question: 'Что необходимо для сотрудничества с вами?',
-    answer:
-        'Для работы на нашей платформе вам необходимо оформить самозанятость или зарегистрировать индивидуальное предпринимательство (ИП).'
-  },
-  {
-    question: 'Какие направления существуют на вашей IT-платформе для закрытия заявки?',
-    answer: ''
-  },
-  {
-    question: 'Какие ресурсы для работы вы предоставляете?',
-    answer: ''
-  },
-  {
-    question: 'Есть ли обучение работе на вашей IT-платформе?',
-    answer: ''
-  },
-  {
-    question: 'Где мне узнавать новую информацию о проектах?',
-    answer: ''
-  },
-  {
-    question: 'Как происходит оплата за трудоустроенного кандидата?',
-    answer: ''
-  }
-]
-
-const categories = [
-  {
-    title: 'Retail',
-    subtitle: 'Различные вакансии в супермаркетах, гипермаркетах',
-    positions: ['Кассир', 'Продавец', 'Работник торгового зала', 'Сканировщик', 'Грузчик', 'Курьер']
-  },
-  {
-    title: 'Складская логистика',
-    subtitle: 'Работа на складах, на производстве',
-    positions: []
-  },
-  {
-    title: 'Строительство',
-    subtitle: 'Включает проектирование и возведение объектов',
-    positions: []
-  },
-  {
-    title: 'Гостиничный бизнес',
-    subtitle: 'Работа в отелях и гостиницах',
-    positions: []
-  },
-  {
-    title: 'Сельское хозяйство',
-    subtitle: 'Включает рабочие места на фермах и полях',
-    positions: []
-  },
-  {
-    title: 'Производство',
-    subtitle: 'Включает проектирование и возведение объектов',
-    positions: []
-  },
-  {
-    title: 'Вахтовая работа или подработка',
-    subtitle: '',
-    positions: []
-  }
-]
-
 function goTo(url: string) {
   window.open(url, '_blank')
 }
@@ -150,7 +88,7 @@ function goTo(url: string) {
 
   <VacanciesSection :title="'Вакансии'"
                     :subtitle="'Наша компания предоставляет полный список услуг для поиска лучших кандидатов на рынке труда под ваши персональные запросы!'"
-                    :categories="categories" />
+                    :categories="vacancies.vacancies" />
 
 
   <div class="services__title-content headline">
@@ -165,11 +103,11 @@ function goTo(url: string) {
 
   <HelpFormSection/>
 
-  <FaqSection :questions="questions" />
+  <FaqSection :questions="vacancies.faq" />
 
-  <CustomerReviewSection/>
+  <CustomerReviewSection :reviews="vacancies.reviews"/>
 
-  <PhotoSection/>
+  <PhotoSection :photos="vacancies.photos"/>
 
   <div class="container white register">
     <h2 class="headline"><span class="highlight">Следите за нами в социальных сетях</span></h2>

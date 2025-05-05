@@ -19,6 +19,8 @@ import { ContactInfo } from './model/ContactInfo.js'
 import { IndexClient, IndexAdvantage, IndexReview, IndexKeyNumber,IndexCase } from './model/Index.js'
 import { About } from "./model/About.js";
 import { PartnershipFAQ } from './model/PartnershipFAQ.js';
+import { vacanciesResources } from './admin-resources/vacancies.resource.js'
+import { Vacancies, VacanciesFAQ, VacanciesReview, VacanciesPhotos } from './model/Vacancies.js'
 
 import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
 import { ServicePageResource } from './admin-resources/servicePage.resource.js'
@@ -70,11 +72,12 @@ const admin = new AdminJS({
   resources: [
       { resource: User },
     ...IndexPageResources(componentLoader), // ← подключаем ресурсы
+    ...vacanciesResources(componentLoader),
     serviceCategoryResource,
     ServicePageResource,
     partnershipFAQResource,
     aboutResource,
-    ArticleResource((componentLoader)),
+    ArticleResource(componentLoader),
     ContactInfoResource,
   ],
   rootPath: '/admin',
@@ -139,6 +142,27 @@ app.get('/api/articles/:slug', async (req, res) => {
     next,
   })
 
+})
+
+app.get('/api/vacancies', async (req, res) => {
+  try {
+    const vacancies = await Vacancies.find()
+    const faq = await VacanciesFAQ.findOne().sort({ updatedAt: -1 })
+    const reviews = await VacanciesReview.find().sort({ date: -1 })
+    const photos = await VacanciesPhotos.find().sort({ updatedAt: -1 })
+
+    console.log(photos)
+
+    res.json({
+      vacancies,
+      faq: faq?.faq || [],
+      reviews,
+      photos,
+    })
+  } catch (err) {
+    console.error('Ошибка /api/vacancies:', err)
+    res.status(500).json({ error: 'Ошибка при получении данных' })
+  }
 })
 
 

@@ -39,8 +39,6 @@ const { data: index } = await useFetch(`${apiBase}/api/index`)
 
 const { data: service } = await useFetch(`${apiBase}/api/service-categories`)
 
-console.log(service)
-
 
 </script>
 

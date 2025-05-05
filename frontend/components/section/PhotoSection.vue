@@ -7,16 +7,16 @@
       <div class="photo-gallery" ref="scrollContainer">
         <div class="photo-track" ref="trackRef">
           <img
-              v-for="(img, i) in images"
+              v-for="(item, i) in photos"
               :key="'img-' + i"
-              :src="img"
+              :src="`${config.public.publicHost}/uploads/${item.image}`"
               class="photo-item"
               alt="Фото"
           />
           <img
-              v-for="(img, i) in images"
+              v-for="(item, i) in photos"
               :key="'clone-' + i"
-              :src="img"
+              :src="`${config.public.publicHost}/uploads/${item.image}`"
               class="photo-item"
               alt="Фото копия"
           />
@@ -28,17 +28,18 @@
 
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import {ref, onMounted, onUnmounted, nextTick, defineProps} from 'vue'
+
+const config = useRuntimeConfig()
+const props = defineProps({
+  photos: {
+    type: Array,
+  },
+})
 
 const galleryRef = ref(null)
 const trackRef = ref(null)
 
-const images = [
-  '/photos/photo0.jpg',
-  '/photos/photo1.jpg',
-  '/photos/photo2.jpg',
-  '/photos/photo3.jpg',
-]
 
 const scrollContainer = ref<HTMLElement | null>(null)
 let interval: ReturnType<typeof setInterval>

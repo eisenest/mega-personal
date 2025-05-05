@@ -3,16 +3,18 @@
     <div class="reviews-header">
       <h2>Отзывы</h2>
       <Pagination
-          :current="0"
-          :total="4"
+          :current="currentReviewIndex"
+          :total="reviews.length - reviewsPerPage + 1"
+          @prev="prevReview"
+          @next="nextReview"
       />
     </div>
     <div class="reviews-grid">
-      <div v-for="(review, index) in visibleReviews" :key="index" class="review-card">
+      <div v-for="(review, index) in currentReviewChunk" :key="index" class="review-card">
         <div class="review-user">
-          <img :src="review.avatar" class="avatar" />
+          <img :src="`${config.public.publicHost}/uploads/${review.image}`" class="avatar" />
           <div class="review-user-info">
-            <span class="review-date">{{ review.date }}</span>
+            <span class="review-date">{{ formatDate(review.date) }}</span>
             <strong>{{ review.name }}</strong>
             <span class="review-role">{{ review.role }}</span>
           </div>
@@ -26,55 +28,39 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import Pagination from "~/components/elements/Pagination.vue";
 
-const reviews = [
-  {
-    name: 'Anastasiya',
-    date: '25 февраля 2025',
-    role: 'Продавец',
-    avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-    advantages: 'Откликнулась на вакансию продавца через Авито в агенство Мега-Персонал. Общение по телефону было четким и понятным. Не было ни каких подводных камней, все как и написано в объявлении. Я трудоустроилась благодаря вам за 2 дня. Уже во всю работаю. Спасибо!',
-    disadvantages: 'Недостатков нет.'
-  },
-  {
-    name: 'Егор Жаворонков',
-    date: '25 февраля 2025',
-    role: 'Мерчендайзер',
-    avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-    advantages: 'Рекомендую данного работодателя. Выплаты без задержек, вся зарплата белая, дружный коллектив, есть карьерный рост, помощь и обучение! Работаю уже 3-й год.',
-    disadvantages: 'Недостатков за все время работы не обнаружила.'
-  },
-  {
-    name: 'Марина',
-    date: '25 февраля 2025',
-    role: 'Продавец',
-    avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
-    advantages: 'Добрый день, хотелось бы поделиться впечатлениями о моей новой работе: - взаимопонимание с коллегами - удобный график - своевременная заработная плата Я рада быть частью такого дружного коллектива!',
-    disadvantages: 'Не нашла недостатков.'
-  },
-]
+const { reviews } = defineProps<{ reviews: any[] }>()
 
-const currentSlide = ref(0)
+function formatDate(dateStr: string) {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
+}
+
+const config = useRuntimeConfig()
+
+const currentReviewIndex = ref(0)
 const reviewsPerPage = 3
 
-const totalSlides = computed(() => Math.ceil(reviews.length / reviewsPerPage))
-const visibleReviews = computed(() => {
-  const start = currentSlide.value * reviewsPerPage
-  return reviews.slice(start, start + reviewsPerPage)
+const currentReviewChunk = computed(() => {
+  return reviews.slice(currentReviewIndex.value, currentReviewIndex.value + reviewsPerPage)
 })
 
-const nextSlide = () => {
-  if (currentSlide.value < totalSlides.value - 1) {
-    currentSlide.value++
+function prevReview() {
+  if (currentReviewIndex.value > 0) {
+    currentReviewIndex.value--
   }
 }
 
-const prevSlide = () => {
-  if (currentSlide.value > 0) {
-    currentSlide.value--
+function nextReview() {
+  if (currentReviewIndex.value + reviewsPerPage < reviews.length) {
+    currentReviewIndex.value++
   }
 }
 </script>

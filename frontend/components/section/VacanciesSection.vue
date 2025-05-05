@@ -24,7 +24,7 @@
       </div>
       <div class="positions-grid">
         <div
-            v-for="(position, index) in categories[selectedCategoryIndex].positions"
+            v-for="(position, index) in categories[selectedCategoryIndex].services"
             :key="index"
             class="position-card"
         >
