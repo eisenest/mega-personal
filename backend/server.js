@@ -69,13 +69,13 @@ app.use('/admin/frontend/assets/components.bundle.js', express.static(path.join(
 const admin = new AdminJS({
   resources: [
       { resource: User },
-    ContactInfoResource,
     ...IndexPageResources(componentLoader), // ← подключаем ресурсы
-    ArticleResource((componentLoader)),
-    ServicePageResource,
     serviceCategoryResource,
+    ServicePageResource,
+    partnershipFAQResource,
     aboutResource,
-    partnershipFAQResource
+    ArticleResource((componentLoader)),
+    ContactInfoResource,
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature

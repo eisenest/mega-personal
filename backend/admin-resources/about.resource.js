@@ -1,9 +1,9 @@
-import { About } from '../model/About.js';
+import { About } from '../model/About.js'
 
 export const aboutResource = {
     resource: About,
     options: {
-        navigation: { name: 'О компании', icon: 'Information' },
+        navigation: { name: 'О компании'},
         listProperties: ['_id', 'updatedAt'],
         editProperties: ['keyNumber', 'services'],
         showProperties: ['keyNumber', 'services', 'createdAt', 'updatedAt'],
