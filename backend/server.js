@@ -16,7 +16,9 @@ import { ServicePage } from './model/ServicePage.js'
 import {ServiceCategory} from "./model/ServiceCategory.js";
 import { ContactInfo } from './model/ContactInfo.js'
 import { IndexClient, IndexAdvantage, IndexReview, IndexKeyNumber,IndexCase } from './model/Index.js'
-import {About} from "./model/About.js";
+import { About } from "./model/About.js";
+import { PartnershipFAQ } from './model/PartnershipFAQ.js';
+
 
 import { ContactInfoResource } from './admin-resources/contact-info.resource.js'
 import { ServicePageResource } from './admin-resources/servicePage.resource.js'
@@ -24,6 +26,8 @@ import { serviceCategoryResource } from './admin-resources/serviceCategory.resou
 import { ArticleResource } from './admin-resources/article.resource.js'
 import { aboutResource } from './admin-resources/about.resource.js';
 import { IndexPageResources } from './admin-resources/index.resource.js'
+import { partnershipFAQResource } from './admin-resources/partnership-faq.resource.js';
+
 
 dotenv.config()
 
@@ -58,7 +62,8 @@ const admin = new AdminJS({
     ArticleResource(componentLoader),
     ServicePageResource,
     serviceCategoryResource,
-    aboutResource
+    aboutResource,
+    partnershipFAQResource
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature
@@ -185,6 +190,14 @@ app.get('/api/about', async (req, reply) => {
     return reply.code(404).send({ error: 'Not found' });
   }
   return reply.send(about);
+});
+
+app.get('/api/partnership-faq', async (req, reply) => {
+  const faq = await PartnershipFAQ.findOne().sort({ updatedAt: -1 });
+  if (!faq) {
+    return reply.code(404).send({ error: 'Not found' });
+  }
+  return reply.send(faq);
 });
 
 // 🚀 Запуск сервера

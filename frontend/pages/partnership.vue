@@ -7,6 +7,10 @@ import StepRowSection from "~/components/section/StepRowSection.vue";
 import FaqSection from "~/components/section/FaqSection.vue";
 import RegistrationForm from "~/components/section/RegistrationForm.vue";
 
+const config = useRuntimeConfig()
+const apiBase = config.public.apiBase
+const { data: faq } = await useFetch(`${apiBase}/api/partnership-faq`)
+
 const cards = [
   { title: 'Гибкий график', description: 'Возможность работать из дома и планировать свой день самостоятельно.' },
   { title: 'Оперативное подтверждение', description: 'Как только кандидат отработает одну смену, наш менеджер подтверждает его трудоустройство на следующий рабочий день.' },
@@ -113,7 +117,7 @@ const questions = [
     <button>Зарегистрироваться сейчас!</button>
   </div>
 
-  <FaqSection :questions="questions" />
+  <FaqSection :questions="faq.faq" />
 
   <RegistrationForm/>
 

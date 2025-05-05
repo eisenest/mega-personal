@@ -32,7 +32,7 @@ export const ArticleResource = (componentLoader) => {
             }),
         ],
         options: {
-            navigation: 'Контент',
+            navigation: 'Блог',
             properties: {
                 content: {
                     type: 'richtext', // ← вуаля, встроенный редактор

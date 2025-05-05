@@ -3,7 +3,7 @@ import { ContactInfo } from '../model/ContactInfo.js'
 export const ContactInfoResource = {
     resource: ContactInfo,
     options: {
-        navigation: 'Контент',
+        navigation: 'Контакты',
         properties: {
             legalInfo: {
                 type: 'textarea',
