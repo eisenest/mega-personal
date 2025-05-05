@@ -67,6 +67,9 @@ const admin = new AdminJS({
   ],
   rootPath: '/admin',
   componentLoader, // ← обязателен с uploadFeature
+  bundler: {
+    mode: 'production',
+  },
 })
 
 // 🔐 Авторизация
