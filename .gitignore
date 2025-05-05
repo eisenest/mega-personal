@@ -55,7 +55,7 @@ coverage/
 backend/node_modules/
 backend/dist/
 backend/.env
-.adminjs/
+backend/.adminjs/
 
 # Frontend specific (if separate Nuxt folder)
 frontend/node_modules/

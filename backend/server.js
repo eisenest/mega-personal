@@ -33,6 +33,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const componentLoader = new ComponentLoader()
+const uploadEditComponentPath = path.join(__dirname, 'admin-components/ImageUploadEditComponent.jsx')
+componentLoader.add('ImageUploadEditComponent', uploadEditComponentPath)
+
 
 await mongoose.connect(process.env.MONGO_URI)
 
@@ -57,7 +60,7 @@ const admin = new AdminJS({
       { resource: User },
     ContactInfoResource,
     ...IndexPageResources(componentLoader), // ← подключаем ресурсы
-    ArticleResource(componentLoader),
+    ArticleResource,
     ServicePageResource,
     serviceCategoryResource,
     aboutResource,
@@ -150,16 +153,26 @@ app.get('/api/index', async (req, res) => {
 // ⬆️ Ручная загрузка (если понадобится)
 app.post('/api/upload', (req, res) => {
   const file = req.files?.file
+  const dir = req.fields?.dir || '' // ← express-formidable кладёт это в req.fields
+
   if (!file) return res.status(400).json({ error: 'Файл не найден' })
 
+  const sanitizedDir = dir.replace(/[^a-zA-Z0-9_-]/g, '') // защита от инъекций
   const fileName = `${Date.now()}-${file.name}`
-  const newPath = path.join(__dirname, 'public/uploads', fileName)
+  const uploadPath = path.join(__dirname, 'public/uploads', sanitizedDir)
+  const newPath = path.join(uploadPath, fileName)
 
-  fs.rename(file.path, newPath, err => {
-    if (err) return res.status(500).json({ error: 'Ошибка при сохранении файла' })
-    res.json({ url: `/uploads/${fileName}` })
+  fs.mkdir(uploadPath, { recursive: true }, (err) => {
+    if (err) return res.status(500).json({ error: 'Ошибка при создании папки' })
+
+    fs.rename(file.path, newPath, err => {
+      if (err) return res.status(500).json({ error: 'Ошибка при сохранении файла' })
+
+      res.json({ url: `/uploads/${sanitizedDir}/${fileName}` })
+    })
   })
 })
+
 
 app.get('/api/contact', async (req, res) => {
   const contact = await ContactInfo.findOne().sort({ createdAt: -1 })
@@ -210,3 +223,5 @@ app.get('/api/partnership-faq', async (req, reply) => {
 app.listen(5050, () => {
   console.log('🚀 AdminJS доступен по адресу http://localhost:5050/admin')
 })
+
+// admin.watch()
