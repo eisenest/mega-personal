@@ -14,10 +14,10 @@
         </div>
 
         <div class="footer__column contacts">
-          <p><strong>Отдел развития</strong><br /><a href="tel:+79151724404">+7 915 172 44 04</a></p>
-          <p><strong>Ресепшен</strong><br /><a href="tel:+74993466006">+7 499 346 60 06</a></p>
-          <p><strong>Для соискателей</strong><br /><a href="tel:+78002229939">+7 800 222 99 39</a></p>
-          <p><strong>Адрес</strong><br />г. Москва, Волгоградский проспект, 43, к3</p>
+          <p><span>Отдел развития</span><br /><a href="tel:+79151724404">+7 915 172 44 04</a></p>
+          <p><span>Ресепшен</span><br /><a href="tel:+74993466006">+7 499 346 60 06</a></p>
+          <p><span>Для соискателей</span><br /><a href="tel:+78002229939">+7 800 222 99 39</a></p>
+          <p><span>Адрес</span><br />г. Москва, Волгоградский проспект, 43, к3</p>
         </div>
 
         <div class="footer__column nav">
@@ -101,12 +101,16 @@
   height: 100%;
 }
 
+.footer__column.social button{
+  margin-top: 38px;
+}
+
 .footer__column .col-first{
-  height: 100%;
+  height: 66%;
 }
 
 .footer__column .col-second {
-  height: 50%;
+  height: 33%;
 }
 
 .footer__column .col-third {
@@ -119,11 +123,20 @@
 
 .email {
   font-weight: 600;
+  margin-top: 64px;
 }
 
 .radio {
   color: #2c3e50;
   font-weight: 700;
+  margin: auto;
+}
+
+.contacts span{
+  color: var(--grey, #797979);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
 }
 
 .nav ul, .social ul {

@@ -151,8 +151,6 @@ app.get('/api/vacancies', async (req, res) => {
     const reviews = await VacanciesReview.find().sort({ date: -1 })
     const photos = await VacanciesPhotos.find().sort({ updatedAt: -1 })
 
-    console.log(photos)
-
     res.json({
       vacancies,
       faq: faq?.faq || [],

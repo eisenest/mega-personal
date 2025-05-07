@@ -30,6 +30,13 @@ import HeroSection from "~/components/section/HeroSection.vue";
 import GoalSection from "~/components/section/GoalSection.vue";
 import ServiceSection from "~/components/section/ServiceSection.vue";
 
+useHead({
+  title: 'Главная — Mega Personal',
+  meta: [
+    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+  ],
+})
+
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
 

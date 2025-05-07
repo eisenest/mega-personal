@@ -6,6 +6,13 @@ const { data: category, error } = await useFetch(`${apiBase}/api/service-categor
 if (error.value || !category.value) {
   showError({ statusCode: 404, message: 'Категория не найдена' })
 }
+
+useHead(() => ({
+  title: category.value
+      ? `${category.value.title} — Mega Personal`
+      : 'Загрузка...'
+}))
+
 </script>
 
 <template>

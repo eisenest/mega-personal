@@ -46,7 +46,7 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const tabs = ['Работа', 'Подработка', 'Вахта']
-const activeTab = ref(1) // по умолчанию
+const activeTab = ref(0) // по умолчанию
 const route = useRoute()
 
 // Функция для установки таба

@@ -35,6 +35,13 @@ import HorizonSection from "~/components/section/HorizonSection.vue";
 import OurGoalSection from "~/components/section/OurGoalSection.vue";
 import OurServicesSection from "~/components/section/OurServicesSection.vue";
 
+useHead({
+  title: 'О компании — Mega Personal',
+  meta: [
+    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+  ],
+})
+
 const propsData = [
   { number: "10", description: "Лет опыта в индустрии" },
   { number: "30000", description: "Трудоустроенных сотрудников" },

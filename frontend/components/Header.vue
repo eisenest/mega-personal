@@ -76,7 +76,7 @@ const navItems = [
 .header {
   border-radius: 0 0 32px 32px;
   z-index: 20;
-  padding: 2.5rem 4.5rem;
+  padding: 2.0rem 4.5rem 2.5rem 4.5rem;
   position: fixed;
   width: 100%;
   top: 0;

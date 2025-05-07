@@ -5,6 +5,13 @@ import ValueCard from '~/components/cards/ValueCard.vue'
 import SafetyTablesSection from "~/components/section/SafetyTablesSection.vue";
 import AnotherGoalCard from "~/components/cards/AnotherGoalCard.vue";
 
+useHead({
+  title: 'Охрана Труда — Mega Personal',
+  meta: [
+    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+  ],
+})
+
 const showTitles = false
 
 const values = [

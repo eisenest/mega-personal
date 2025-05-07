@@ -11,6 +11,13 @@ const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
 const { data: faq } = await useFetch(`${apiBase}/api/partnership-faq`)
 
+useHead({
+  title: 'Партнерская программа — Mega Personal',
+  meta: [
+    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+  ],
+})
+
 const cards = [
   { title: 'Гибкий график', description: 'Возможность работать из дома и планировать свой день самостоятельно.' },
   { title: 'Оперативное подтверждение', description: 'Как только кандидат отработает одну смену, наш менеджер подтверждает его трудоустройство на следующий рабочий день.' },

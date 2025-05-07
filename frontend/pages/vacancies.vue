@@ -14,6 +14,13 @@ const apiBase = config.public.apiBase
 
 const { data: vacancies } = await useFetch(`${apiBase}/api/vacancies`)
 
+useHead({
+  title: 'Вакансии — Mega Personal',
+  meta: [
+    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+  ],
+})
+
 const values = [
   {
     title: "Гарантия трудоустройства",
