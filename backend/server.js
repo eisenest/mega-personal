@@ -230,31 +230,31 @@ app.get('/api/services/:slug', async (req, res) => {
 })
 
 
-app.get('/api/service-categories', async (req, reply) => {
+app.get('/api/service-categories', async (req, res) => {
   const categories = await ServiceCategory.find({}).populate('services');
-  reply.send(categories);
+  res.json(categories);
 });
 
-app.get('/api/service-categories/:slug', async (req, reply) => {
+app.get('/api/service-categories/:slug', async (req, res) => {
   const category = await ServiceCategory.findOne({ slug: req.params.slug, showPage: true }).populate('services');
-  if (!category) return reply.code(404).send({ error: 'Not found' });
-  reply.send(category);
+  if (!category) return res.status(404).json({ error: 'Not found' });
+  res.json(category);
 });
 
-app.get('/api/about', async (req, reply) => {
+app.get('/api/about', async (req, res) => {
   const about = await About.findOne().sort({ updatedAt: -1 });
   if (!about) {
-    return reply.code(404).send({ error: 'Not found' });
+    return res.status(404).json({ error: 'Not found' });
   }
-  return reply.send(about);
+  return res.json(about);
 });
 
-app.get('/api/partnership-faq', async (req, reply) => {
+app.get('/api/partnership-faq', async (req, res) => {
   const faq = await PartnershipFAQ.findOne().sort({ updatedAt: -1 });
   if (!faq) {
-    return reply.code(404).send({ error: 'Not found' });
+    return res.status(404).json({ error: 'Not found' });
   }
-  return reply.send(faq);
+  return res.json(faq);
 });
 
 // 🚀 Запуск сервера
