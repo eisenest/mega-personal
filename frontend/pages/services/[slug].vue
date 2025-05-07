@@ -11,8 +11,8 @@ import FaqSection from "~/components/section/FaqSection.vue";
 import VacanciesSection from "~/components/section/VacanciesSection.vue";
 
 const route = useRoute()
-const apiBase = useRuntimeConfig().public.apiBase
-const { data: service } = await useFetch(`${apiBase}/api/services/${route.params.slug}`)
+const config = useRuntimeConfig()
+const { data: service } = await useFetch(`${config.public.apiBase}/api/services/${route.params.slug}`)
 
 </script>
 
@@ -21,7 +21,7 @@ const { data: service } = await useFetch(`${apiBase}/api/services/${route.params
   <SecondHeroSection
       :title="service.title"
       :description="service.description"
-      image="/about/service.png"
+      :image="config.public.publicHost + '/uploads/' + service.image"
       :show-button="true"
   />
 

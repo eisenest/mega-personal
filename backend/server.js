@@ -74,7 +74,7 @@ const admin = new AdminJS({
     ...IndexPageResources(componentLoader), // ← подключаем ресурсы
     ...vacanciesResources(componentLoader),
     serviceCategoryResource,
-    ServicePageResource,
+    ServicePageResource(componentLoader),
     partnershipFAQResource,
     aboutResource,
     ArticleResource(componentLoader),
