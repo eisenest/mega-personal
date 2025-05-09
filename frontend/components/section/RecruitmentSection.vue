@@ -124,7 +124,7 @@ useHead(() => ({
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .icon {

@@ -69,7 +69,7 @@
 
         <label class="checkbox">
           <input type="checkbox" />
-          <span>Вы даете согласие на обработку персональных данных</span>
+          <span>Вы даете согласие на <a href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
         </label>
 
         <button type="submit">Зарегистрироваться</button>

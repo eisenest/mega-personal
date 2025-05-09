@@ -287,6 +287,10 @@ button:hover {
     cursor: pointer;
 }
 
+.form__box button[type='submit']:hover{
+    background: var(--light-grey, #EDF7FF);
+}
+
 @media (max-width: 768px) {
     .form__container {
         flex-direction: column;

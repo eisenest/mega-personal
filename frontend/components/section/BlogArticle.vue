@@ -325,8 +325,12 @@ onMounted(() => {
 }
 
 .article-toc a {
-  color: #3795f4;
+  color: #2C3E50;
   text-decoration: none;
+}
+
+.article-toc a:hover{
+  color: var(--main-blue, #00A2F6);
 }
 
 .article-body {

@@ -2,7 +2,7 @@
   <div class="dropdown">
     <div class="dropdown-selected" @click="toggleDropdown">
       {{ modelValue || placeholder }}
-      <span class="arrow">&#9662;</span>
+      <span class="arrow"><img src="/dropdown.svg" alt=""></span>
     </div>
 
     <ul v-if="isOpen" class="dropdown-options">
@@ -61,6 +61,7 @@ const selectOption = (option) => {
   align-items: center;
   padding: 24px;
   border-radius: 24px;
+  color: #2C3E50;
 }
 
 .dropdown-options {

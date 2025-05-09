@@ -172,7 +172,7 @@ const selectedIndex = ref(0)
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   /* margin: auto; */;
   justify-content: flex-end;
 
