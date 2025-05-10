@@ -88,16 +88,68 @@
           </div>
 
           <div class="upload-links">
-            <p v-if="entityType === 'Самозанятый'" >📎 Справка самозанятого о постановке на учет</p>
-            <p v-else-if="entityType === 'ИП'">📎 Лист записи о регистрации ИП</p>
-            <p>📎 Скан паспорта (1 страница)</p>
-            <p>📎 Скан паспорта (Регистрация)</p>
+            <!-- Самозанятый -->
+            <p
+                v-if="entityType === 'Самозанятый'"
+                @click="triggerUpload('doc1')"
+            >
+              <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+              Справка самозанятого о постановке на учет
+              <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+            </p>
+            <input
+                ref="doc1"
+                type="file"
+                @change="handleFileUpload($event, 'doc1')"
+                style="display: none"
+            />
+
+            <!-- ИП -->
+            <p
+                v-if="entityType === 'ИП'"
+                @click="triggerUpload('doc1')"
+            >
+              <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
+              Лист записи о регистрации ИП
+              <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+            </p>
+            <input
+                ref="doc1"
+                type="file"
+                @change="handleFileUpload($event, 'doc1')"
+                style="display: none"
+            />
+
+            <!-- Общие -->
+            <p @click="triggerUpload('doc2')">
+              <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
+              Скан паспорта (1 страница)
+              <span v-if="uploadedFiles.doc2"> — {{ uploadedFiles.doc2.name }}</span>
+            </p>
+            <input
+                ref="doc2"
+                type="file"
+                @change="handleFileUpload($event, 'doc2')"
+                style="display: none"
+            />
+
+            <p @click="triggerUpload('doc3')">
+              <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
+              Скан паспорта (Регистрация)
+              <span v-if="uploadedFiles.doc3"> — {{ uploadedFiles.doc3.name }}</span>
+            </p>
+            <input
+                ref="doc3"
+                type="file"
+                @change="handleFileUpload($event, 'doc3')"
+                style="display: none"
+            />
           </div>
         </template>
 
         <label class="checkbox">
           <input type="checkbox" required />
-          <span>Вы даете согласие на <a href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
+          <span>Вы даете согласие на <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
         </label>
 
         <button type="submit">Оставить заявку</button>
@@ -107,7 +159,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import {reactive, ref, watch} from 'vue'
 import { useRoute } from 'vue-router'
 import DropdownSelect from "~/components/elements/DropdownSelect.vue";
 
@@ -118,7 +170,7 @@ const { fixedTab } = defineProps({
   }
 })
 
-const entityType = ref('')
+const entityType = ref('ИП')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
 const activeTab = ref(0) // по умолчанию
 const route = useRoute()
@@ -140,6 +192,30 @@ watch(
     },
     { immediate: true }
 )
+
+const doc1 = ref(null)
+const doc2 = ref(null)
+const doc3 = ref(null)
+
+const uploadedFiles = reactive({
+  doc1: null,
+  doc2: null,
+  doc3: null,
+})
+
+const triggerUpload = (name) => {
+  if (name === 'doc1') doc1.value?.click()
+  if (name === 'doc2') doc2.value?.click()
+  if (name === 'doc3') doc3.value?.click()
+}
+
+const handleFileUpload = (event, name) => {
+  const file = event.target.files[0]
+  if (file) {
+    uploadedFiles[name] = file
+    console.log(`Загружен файл ${file.name} (${name})`)
+  }
+}
 
 
 const tabHeadlines = [
@@ -168,7 +244,16 @@ const tabHeadlines = [
 
 .upload-links p{
   color: #fff;
+  align-items: center;
+  display: flex;
+  gap: 8px;
 }
 
+
+.form__box-link{
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 500;
+}
 
 </style>

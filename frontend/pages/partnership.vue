@@ -6,6 +6,7 @@ import ExpectationsSection from "~/components/section/ExpectationsSection.vue";
 import StepRowSection from "~/components/section/StepRowSection.vue";
 import FaqSection from "~/components/section/FaqSection.vue";
 import RegistrationForm from "~/components/section/RegistrationForm.vue";
+import FormSection from "~/components/section/FormSection.vue";
 
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
@@ -126,7 +127,7 @@ const questions = [
 
   <FaqSection :questions="faq.faq" />
 
-  <RegistrationForm/>
+  <FormSection :fixed-tab="2"/>
 
 </template>
 
