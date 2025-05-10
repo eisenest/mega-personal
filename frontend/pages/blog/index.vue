@@ -4,9 +4,9 @@ import BlogSection from "~/components/section/BlogSection.vue";
 import SubscribeSection from "~/components/section/SubscribeSection.vue";
 
 useHead({
-  title: 'Блог — Mega Personal',
+  title: 'Блог Mega-Personal: полезные статьи об аутстаффинге и управлении персоналом',
   meta: [
-    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+    { name: 'description', content: 'Читайте наш блог для получения актуальных советов по аутстаффингу, оптимизации кадровых процессов и снижению трудовых рисков. Полезные материалы для вашего бизнеса от Mega-Personal.' },
   ],
 })
 

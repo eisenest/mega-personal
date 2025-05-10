@@ -6,9 +6,9 @@ import SafetyTablesSection from "~/components/section/SafetyTablesSection.vue";
 import AnotherGoalCard from "~/components/cards/AnotherGoalCard.vue";
 
 useHead({
-  title: 'Охрана Труда — Mega Personal',
+  title: 'Охрана труда с Mega-Personal – безопасность на рабочих местах',
   meta: [
-    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+    { name: 'description', content: 'Мы помогаем компаниям обеспечивать безопасные условия труда, соблюдая все требования законодательства и стандартов безопасности. Наши услуги обеспечат вам защиту интересов сотрудников и предотвратят риски на рабочем месте.' },
   ],
 })
 

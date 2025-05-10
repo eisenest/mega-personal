@@ -31,9 +31,9 @@ import GoalSection from "~/components/section/GoalSection.vue";
 import ServiceSection from "~/components/section/ServiceSection.vue";
 
 useHead({
-  title: 'Главная — Mega Personal',
+  title: 'Mega-Personal – компания по подбору и предоставлению персонала по всей России',
   meta: [
-    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+    { name: 'description', content: 'Mega-Personal предоставляет решения по подбору и аутсорсингу персонала для различных сфер бизнеса. Мы помогаем находить квалифицированных специалистов по всей России, гарантируя стабильность и оптимизацию кадровых процессов.' },
   ],
 })
 

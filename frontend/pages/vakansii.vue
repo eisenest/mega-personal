@@ -15,9 +15,9 @@ const apiBase = config.public.apiBase
 const { data: vacancies } = await useFetch(`${apiBase}/api/vacancies`)
 
 useHead({
-  title: 'Вакансии — Mega Personal',
+  title: 'Вакансии от Mega-Personal – работа по всей России в различных отраслях',
   meta: [
-    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+    { name: 'description', content: 'Мы предлагаем более 1000 вакансий по всей России, включая различные отрасли. Найдите работу, которая подходит именно вам, и получите стабильный доход с гарантиями надежности.' },
   ],
 })
 

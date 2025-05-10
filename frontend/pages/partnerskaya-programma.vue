@@ -12,9 +12,9 @@ const apiBase = config.public.apiBase
 const { data: faq } = await useFetch(`${apiBase}/api/partnership-faq`)
 
 useHead({
-  title: 'Партнерская программа — Mega Personal',
+  title: 'Партнерская программа Mega-Personal – сотрудничество и новые возможности для соискателей',
   meta: [
-    { name: 'description', content: 'Узнайте больше о нашей команде и миссии.' },
+    { name: 'description', content: 'Присоединяйтесь к партнерской программе Mega-Personal и помогите другим найти работу по всей России, получая доход от сотрудничества с нашей компанией.' },
   ],
 })
 
@@ -92,7 +92,7 @@ const questions = [
 
 <template>
   <SecondHeroSection
-      title="Уникальное партнерство, которое работает!"
+      title="Партнерская программа"
       description="Зарабатывайте на поборе сотрудников онлайн через удобную IT-платформу. Подбирайте сотрудников в штат и получайте неограниченный доход. "
       image="/about/partnership.png"
       :show-button="true"
