@@ -110,8 +110,8 @@ onMounted(() => {
         </p>
         <div class="share-links">
           <span>Поделиться</span>
-          <a href="#"><img src="/icon/tg2.svg" alt="Telegram" /></a>
-          <a href="#"><img src="/icon/vk2.svg" alt="VK" /></a>
+          <a href="#"><img src="/icon/tg-white.svg" alt="Telegram" /></a>
+          <a href="#"><img src="/icon/vk-white.svg" alt="VK" /></a>
         </div>
       </div>
 
@@ -351,8 +351,18 @@ onMounted(() => {
   font-weight: 700;
 }
 
+.share-links a{
+  width: 40px;
+  height: 40px;
+  background-color: #6700D1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+}
+
 .share-links img{
-  width: 32px;
+  width: 20px;
 }
 
 

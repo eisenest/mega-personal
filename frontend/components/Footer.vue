@@ -58,7 +58,11 @@
               </a>
             </li>
           </ul>
-          <button>Вход в кабинет</button>
+          <a href="https://mega-personal.ru/#/ui/index" target="_blank">
+            <button>
+                Вход в кабинет
+            </button>
+          </a>
         </div>
       </div>
 

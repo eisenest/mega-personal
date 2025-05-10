@@ -135,6 +135,11 @@ a{
     text-decoration: none;
 }
 
+a:hover{
+    color: #00A2F6 !important;
+}
+
+
 button{
     background: #5c1ce0;
     color: #fff;

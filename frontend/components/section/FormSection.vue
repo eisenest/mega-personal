@@ -14,15 +14,15 @@
               <button
                   v-for="(tab, i) in tabs"
                   :key="i"
-                  :class="{ active: activeTab === i }"
-                  @click="activeTab = i"
+                  :class="{ active: internalTab === i }"
+                  @click="internalTab = i"
               >
                 {{ tab }}
               </button>
             </template>
           </div>
           <h3>
-            {{ tabHeadlines[activeTab].text }}<span class="highlight">{{ tabHeadlines[activeTab].highlight }}</span>
+            {{ tabHeadlines[internalTab].text }}<span class="highlight">{{ tabHeadlines[internalTab].highlight }}</span>
           </h3>
         </div>
         <div class="form__info-bottom">
@@ -32,7 +32,7 @@
 
       <!-- Правая часть -->
       <form class="form__box">
-        <template v-if="activeTab === 0">
+        <template v-if="internalTab === 0">
           <div class="form__row">
             <input placeholder="Телефон" />
             <input placeholder="email" />
@@ -44,7 +44,7 @@
           <textarea placeholder="Комментарий"></textarea>
         </template>
 
-        <template v-else-if="activeTab === 1">
+        <template v-else-if="internalTab === 1">
           <input placeholder="Имя и фамилия" />
           <div class="form__row">
             <input placeholder="Телефон" />
@@ -162,6 +162,7 @@
 import {reactive, ref, watch} from 'vue'
 import { useRoute } from 'vue-router'
 import DropdownSelect from "~/components/elements/DropdownSelect.vue";
+import { computed } from 'vue'
 
 const { fixedTab } = defineProps({
   fixedTab: {
@@ -172,13 +173,16 @@ const { fixedTab } = defineProps({
 
 const entityType = ref('ИП')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
-const activeTab = ref(0) // по умолчанию
+// const activeTab = ref(0) // по умолчанию
 const route = useRoute()
+
+const activeTab = computed(() => fixedTab !== null ? fixedTab : internalTab)
+const internalTab = ref(0)
 
 const setTabFromRoute = () => {
   const tab = Number(route.query.tab)
   if (!isNaN(tab)) {
-    activeTab.value = tab
+    internalTab.value = tab
   }
 }
 

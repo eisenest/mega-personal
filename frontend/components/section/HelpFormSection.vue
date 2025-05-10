@@ -33,7 +33,7 @@
         </div>
         <label class="checkbox">
           <input type="checkbox" required />
-          <span>Вы даете согласие на обработку персональных данных</span>
+          <span>Вы даете согласие на <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
         </label>
         <button type="submit">Оставить заявку</button>
       </form>

@@ -21,8 +21,6 @@ const { data: article }= await useFetch(`${apiBase}/api/articles/${route.params.
 
 const { data: articles } = await useFetch(`${apiBase}/api/articles`)
 
-console.log(article)
-
 useHead(() => ({
   title: article.value
       ? `${article.value.title} — Блог — Mega Personal`
