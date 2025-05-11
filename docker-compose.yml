@@ -4,6 +4,8 @@ services:
       context: ./backend
       args:
         NODE_ENV: ${NODE_ENV}
+    environment:
+      PORT: 5050
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -22,6 +24,7 @@ services:
       args:
         MODE: ${NODE_ENV} # пробросим в Dockerfile
     environment:
+      PORT: 3000
       NODE_ENV: ${NODE_ENV} # пробросим в рантайм
 #    volumes:
 #      - ./frontend:/app
