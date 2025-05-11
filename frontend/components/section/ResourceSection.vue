@@ -58,7 +58,6 @@ onUnmounted(() => {
 .resources-section {
   display: flex;
   flex-direction: column;
-  gap: 24px;
   margin-bottom: 100px;
 }
 

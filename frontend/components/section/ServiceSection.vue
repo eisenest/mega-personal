@@ -20,7 +20,7 @@
             @click="selectedIndex = index"
         >
           {{ category.title }}
-          <span class="arrow">›</span>
+          <span class="arrow"><img src="/icon/expand.svg" alt=""></span>
         </li>
       </ul>
 
@@ -34,7 +34,7 @@
           <p class="card__text p24">{{ service.title }}</p>
           <a :href="`/services/${service.slug}`" class="card__link p24">
             Подробнее
-            <span class="icon">❯</span>
+            <span class="icon"><img src="/icon/expand-link.svg" alt=""></span>
           </a>
         </div>
       </div>
@@ -179,17 +179,8 @@ const selectedIndex = ref(0)
 }
 
 .icon {
-  width: 21px;
-  height: 21px;
-  text-align: center;
   display: flex;
   align-items: center;
-  font-size: 12px;
-  border-radius: 71px;
-  background: var(--violet, #6700D1);
-  color: white;
-  padding: 8px;
-  font-weight: 100;
 }
 
 

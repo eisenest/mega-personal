@@ -16,7 +16,7 @@
 
 .card{
   display: flex;
-  height: 200px;
+  max-height: 200px;
   padding: 24px;
   //flex-wrap: wrap;
   gap: 20px;              /* отступ между карточками */

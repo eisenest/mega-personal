@@ -8,7 +8,9 @@
             class="cta-link"
         >
 
-          Оставить заявку <span>&rarr;</span>
+          Оставить заявку <span>
+          <img src="/icon/arrow-right-white.svg" alt="">
+        </span>
         </NuxtLink>
         <div class="stat">
           <strong>90%</strong>
@@ -96,7 +98,6 @@ onMounted(() => {
 }
 
 .stat p {
-  font-size: 24px;
   color: white;
   font-weight: 400;
   line-height: 150%;

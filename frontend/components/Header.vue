@@ -156,7 +156,7 @@ const baseItems = [
 
 .nav {
   display: flex;
-  gap: 24px;
+  gap: 16px;
   flex-grow: 1;
   justify-content: center;
   transition: all 0.3s ease;
@@ -178,7 +178,7 @@ const baseItems = [
   margin-left: 4px;
   color: inherit;
   display: inline-block;
-  vertical-align: sub;
+  vertical-align: text-top;
   height: 1em;
   width: auto;
 }
@@ -211,7 +211,7 @@ const baseItems = [
 .actions {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
   z-index: 30;
 }
 

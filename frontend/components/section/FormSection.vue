@@ -21,17 +21,18 @@
               </button>
             </template>
           </div>
-          <h3>
+          <h3 v-if="!isSubmitted">
             {{ tabHeadlines[internalTab].text }}<span class="highlight">{{ tabHeadlines[internalTab].highlight }}</span>
           </h3>
+          <h3 v-else>Спасибо! <span class="highlight"> Заявка отправлена </span></h3>
         </div>
-        <div class="form__info-bottom">
+        <div class="form__info-bottom" v-if="!isSubmitted">
           <p>Заполните форму, и наш специалист свяжется с вами.</p>
         </div>
       </div>
 
       <!-- Правая часть -->
-      <form class="form__box" @submit.prevent="submitForm">
+      <form class="form__box" @submit.prevent="submitForm" v-if="!isSubmitted">
         <template v-if="internalTab === 0">
           <div class="form__row">
             <input v-model="form.phone" placeholder="Телефон" />
@@ -53,7 +54,11 @@
         </template>
 
         <template v-else>
-          <input v-model="form.first_name" placeholder="Имя, Фамилия, Отчество" />
+          <div class="form__row">
+            <input v-model="form.first_name" placeholder="Имя" />
+            <input v-model="form.last_name" placeholder="Фамилия" />
+          </div>
+          <input v-model="form.middle_name" placeholder="Отчество" />
           <div class="form__row">
             <input v-model="form.email" placeholder="Почта" />
             <input v-model="form.date_of_birth" type="date" placeholder="Дата Рождения" />
@@ -62,93 +67,117 @@
             <input v-model="form.phone" placeholder="Телефон" />
             <DropdownSelect v-model="entityType" placeholder="Тип юридического лица" :options="['ИП', 'Самозанятый']" />
           </div>
+
           <div class="form__row">
-            <input placeholder="Серия паспорта" />
-            <input placeholder="Номер паспорта" />
+            <input
+                :placeholder="'Серия паспорта'"
+                v-if="labelToIdMap['Серия паспорта']"
+                v-model="form.fields[labelToIdMap['Серия паспорта']]"
+            />
+            <input
+                :placeholder="'Номер паспорта'"
+                v-if="labelToIdMap['Номер паспорта']"
+                v-model="form.fields[labelToIdMap['Номер паспорта']]"
+            />
           </div>
           <div class="form__row">
-            <input placeholder="Наименование банка" />
-            <input placeholder="БИК банка" />
+            <input
+                :placeholder="'Наименование банка'"
+                v-if="labelToIdMap['Наименование банка']"
+                v-model="form.fields[labelToIdMap['Наименование банка']]"
+            />
+            <input
+                :placeholder="'БИК банка'"
+                v-if="labelToIdMap['БИК банка']"
+                v-model="form.fields[labelToIdMap['БИК банка']]"
+            />
           </div>
           <div class="form__row">
-            <input placeholder="Корреспондентский счет" />
-            <input placeholder="Расчетный счет" />
+            <input
+                :placeholder="'Корреспондентский счет'"
+                v-if="labelToIdMap['Корреспондентский счет']"
+                v-model="form.fields[labelToIdMap['Корреспондентский счет']]"
+            />
+            <input
+                :placeholder="'Расчетный счет'"
+                v-if="labelToIdMap['Расчетный счет']"
+                v-model="form.fields[labelToIdMap['Расчетный счет']]"
+            />
           </div>
           <div class="form__row" v-if="entityType === 'Самозанятый'">
-            <input placeholder="Адрес регистрации" />
-            <input placeholder="ИНН банка" />
+            <input
+                :placeholder="'Адрес регистрации'"
+                v-if="labelToIdMap['Адрес регистрации']"
+                v-model="form.fields[labelToIdMap['Адрес регистрации']]"
+            />
+            <input
+                :placeholder="'ИНН банка'"
+                v-if="labelToIdMap['ИНН банка']"
+                v-model="form.fields[labelToIdMap['ИНН банка']]"
+            />
           </div>
           <div class="form__row" v-else-if="entityType === 'ИП'">
-            <input placeholder="ИНН" />
-            <input placeholder="КПП" />
+            <input
+                :placeholder="'ИНН'"
+                v-if="labelToIdMap['ИНН']"
+                v-model="form.fields[labelToIdMap['ИНН']]"
+            />
+            <input
+                :placeholder="'КПП'"
+                v-if="labelToIdMap['КПП']"
+                v-model="form.fields[labelToIdMap['КПП']]"
+            />
           </div>
           <div class="form__row" v-if="entityType === 'ИП'">
-            <input placeholder="ОРГН" />
-            <input placeholder="Адрес регистрации" />
+            <input
+                :placeholder="'ОГРН'"
+                v-if="labelToIdMap['ОГРН']"
+                v-model="form.fields[labelToIdMap['ОГРН']]"
+            />
+            <input
+                :placeholder="'Адрес регистрации'"
+                v-if="labelToIdMap['Адрес регистрации']"
+                v-model="form.fields[labelToIdMap['Адрес регистрации']]"
+            />
           </div>
+
           <div class="upload-links">
-            <!-- Самозанятый -->
-            <p
-                v-if="entityType === 'Самозанятый'"
-                @click="triggerUpload('doc1')"
-            >
+            <p v-if="entityType === 'Самозанятый' && labelToIdMap['Справка самозанятого о постановке на учет']" @click="triggerUpload('doc1')">
               <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
               Справка самозанятого о постановке на учет
               <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
             </p>
-            <input
-                ref="doc1"
-                type="file"
-                @change="handleFileUpload($event, 'doc1')"
-                style="display: none"
-            />
+            <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
 
-            <!-- ИП -->
-            <p
-                v-if="entityType === 'ИП'"
-                @click="triggerUpload('doc1')"
-            >
+            <p v-if="entityType === 'ИП' && labelToIdMap['Лист записи о регистрации ИП']" @click="triggerUpload('doc1')">
               <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
               Лист записи о регистрации ИП
               <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
             </p>
-            <input
-                ref="doc1"
-                type="file"
-                @change="handleFileUpload($event, 'doc1')"
-                style="display: none"
-            />
+            <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
 
-            <!-- Общие -->
-            <p @click="triggerUpload('doc2')">
+            <p v-if="labelToIdMap['Скан паспорта (1 страница)']" @click="triggerUpload('doc2')">
               <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
               Скан паспорта (1 страница)
               <span v-if="uploadedFiles.doc2"> — {{ uploadedFiles.doc2.name }}</span>
             </p>
-            <input
-                ref="doc2"
-                type="file"
-                @change="handleFileUpload($event, 'doc2')"
-                style="display: none"
-            />
+            <input ref="doc2" type="file" @change="handleFileUpload($event, 'doc2')" style="display: none" />
 
-            <p @click="triggerUpload('doc3')">
+            <p v-if="labelToIdMap['Скан паспорта (Регистрация)']" @click="triggerUpload('doc3')">
               <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
               Скан паспорта (Регистрация)
               <span v-if="uploadedFiles.doc3"> — {{ uploadedFiles.doc3.name }}</span>
             </p>
-            <input
-                ref="doc3"
-                type="file"
-                @change="handleFileUpload($event, 'doc3')"
-                style="display: none"
-            />
+            <input ref="doc3" type="file" @change="handleFileUpload($event, 'doc3')" style="display: none" />
           </div>
         </template>
 
         <label class="checkbox">
           <input type="checkbox" required />
-          <span>Вы даете согласие на <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
+          <span>
+            Вы даете согласие на
+            <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a>
+          </span>
         </label>
 
         <button type="submit">Оставить заявку</button>
@@ -157,8 +186,9 @@
   </section>
 </template>
 
+
 <script setup lang="ts">
-import { reactive, ref, watch, computed, onMounted } from 'vue'
+import { reactive, ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import DropdownSelect from "~/components/elements/DropdownSelect.vue"
 
@@ -169,14 +199,14 @@ const { fixedTab } = defineProps({
   }
 })
 
-const publicHost = useRuntimeConfig().public.publicHost
-
-
 const entityType = ref('ИП')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
 const route = useRoute()
+const publicHost = useRuntimeConfig().public.publicHost
 const activeTab = computed(() => fixedTab !== null ? fixedTab : internalTab.value)
 const internalTab = ref(0)
+const isSubmitted = ref(false)
+
 
 const form = reactive({
   phone: '',
@@ -189,13 +219,15 @@ const form = reactive({
   date_of_birth: '',
   last_name: '',
   middle_name: '',
-  fields: {}
+  fields: {} // сюда попадут значения из динамических полей
 })
 
 const selectedTypeObject = ref(null)
-
+const labelToIdMap = reactive<Record<string, string>>({})
 const submitForm = async () => {
   let payload = {}
+  let url = ''
+
   if (activeTab.value === 0) {
     payload = {
       phone: form.phone,
@@ -204,6 +236,7 @@ const submitForm = async () => {
       address: form.address,
       comment: form.comment
     }
+    url = 'https://api-1.beta.mega-personal.ru/omega/project_request'
   } else if (activeTab.value === 1) {
     payload = {
       first_name: form.first_name,
@@ -211,7 +244,12 @@ const submitForm = async () => {
       city: form.city,
       date_of_birth: form.date_of_birth
     }
+    url = 'https://api-1.beta.mega-personal.ru/omega/person_worker_request'
   } else if (activeTab.value === 2 && selectedTypeObject.value) {
+    const fieldData: Record<string, string> = {}
+    for (const field of selectedTypeObject.value.form?.fields || []) {
+      fieldData[field.id] = form.fields[field.id] || ''
+    }
     payload = {
       first_name: form.first_name,
       last_name: form.last_name,
@@ -221,13 +259,15 @@ const submitForm = async () => {
       phone: form.phone,
       type: selectedTypeObject.value,
       formEntry: {
-        data: form.fields
+        data: fieldData
       }
     }
+    url = 'https://api-1.beta.mega-personal.ru/omega/registration_request'
   }
+  console.log(payload)
 
   try {
-    const res = await fetch('https://omega-gamma.turningtide.ru/registration_request', {
+    const res = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -236,7 +276,7 @@ const submitForm = async () => {
     })
     const result = await res.json()
     console.log('Форма отправлена', result)
-    alert('Спасибо! Заявка отправлена.')
+    isSubmitted.value = true
   } catch (e) {
     console.error('Ошибка отправки', e)
     alert('Ошибка при отправке формы.')
@@ -250,7 +290,6 @@ const setTabFromRoute = () => {
   }
 }
 
-// Следим за табом в query только если fixedTab не передан
 watch(
     () => route.query.tab,
     () => {
@@ -260,6 +299,25 @@ watch(
     },
     { immediate: true }
 )
+
+watch([activeTab, entityType], async ([newTab, newEntity]) => {
+  if (newTab === 2) {
+    try {
+      const res = await fetch('https://api-1.beta.mega-personal.ru/omega/registration_request')
+      const types = await res.json()
+      selectedTypeObject.value = types.find(t => t.name === newEntity)
+
+      if (selectedTypeObject.value?.form?.fields) {
+        selectedTypeObject.value.form.fields.forEach(field => {
+          form.fields[field.id] = ''
+          labelToIdMap[field.label] = field.id
+        })
+      }
+    } catch (e) {
+      console.error('Ошибка загрузки типов самозанятости:', e)
+    }
+  }
+}, { immediate: true })
 
 const doc1 = ref(null)
 const doc2 = ref(null)
@@ -271,38 +329,52 @@ const uploadedFiles = reactive({
   doc3: null,
 })
 
-const triggerUpload = (name) => {
+const triggerUpload = (name: 'doc1' | 'doc2' | 'doc3') => {
   if (name === 'doc1') doc1.value?.click()
   if (name === 'doc2') doc2.value?.click()
   if (name === 'doc3') doc3.value?.click()
 }
 
-const handleFileUpload = (event, name) => {
+
+const handleFileUpload = async (event, name) => {
   const file = event.target.files[0]
-  if (file) {
-    uploadedFiles[name] = file
-    console.log(`Загружен файл ${file.name} (${name})`)
+  if (!file) return
+
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('dir', 'crm') // если хочешь группировать папки
+
+  try {
+    const res = await fetch(`${publicHost}/api/upload`, {
+      method: 'POST',
+      body: formData
+    })
+    const { url } = await res.json()
+
+    console.log(url)
+
+    const labelToFieldMap = {
+      doc1: entityType.value === 'ИП'
+          ? 'Лист записи о регистрации ИП'
+          : 'Справка самозанятого о постановке на учет',
+      doc2: 'Скан паспорта (1 страница)',
+      doc3: 'Скан паспорта (Регистрация)',
+    }
+
+    const label = labelToFieldMap[name]
+    const fieldId = labelToIdMap[label]
+
+    if (fieldId) {
+      form.fields[fieldId] = url
+      uploadedFiles[name] = file
+    }
+
+  } catch (err) {
+    console.error('Ошибка при загрузке файла', err)
+    alert('Ошибка при загрузке файла')
   }
 }
 
-watch([activeTab, entityType], async ([newTab, newEntity]) => {
-  if (newTab === 2) {
-    try {
-      const res = await fetch('https://omega-gamma.turningtide.ru/registration_request')
-      const types = await res.json()
-      selectedTypeObject.value = types.find(t => t.name === newEntity)
-      console.log(types)
-
-      if (selectedTypeObject.value?.form?.fields) {
-        selectedTypeObject.value.form.fields.forEach(field => {
-          form.fields[field.id] = ''
-        })
-      }
-    } catch (e) {
-      console.error('Ошибка загрузки типов самозанятости:', e)
-    }
-  }
-}, { immediate: true })
 
 const tabHeadlines = [
   {
@@ -318,8 +390,6 @@ const tabHeadlines = [
     highlight: 'неограниченный доход за трудоустроенных кандидатов'
   }
 ]
-
-
 </script>
 
 <style scoped>

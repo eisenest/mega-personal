@@ -55,7 +55,7 @@ backend/node_modules/
 backend/dist/
 backend/.env
 backend/.adminjs/
-backend/public/uploads/*
+#backend/public/uploads/*
 
 # Frontend specific (if separate Nuxt folder)
 frontend/node_modules/

@@ -2,17 +2,19 @@
   <section class="container white hero">
     <div class="hero__container">
       <div class="hero__content">
-        <div class="hero__content-block">
-          <h1><span class="highlight">Mega Personal</span></h1>
-          <h3>
-            {{ slides[currentSlide].title }}
-          </h3>
+        <transition name="fade" mode="out-in">
+          <div class="hero__content-block" :key="currentSlide">
+            <h1><span class="highlight">Mega Personal</span></h1>
+            <h3>
+              {{ slides[currentSlide].title }}
+            </h3>
 
-          <p>
-            {{ slides[currentSlide].description }}
-          </p>
-          <button @click="handleClick(slides[currentSlide].formTab)" class="hero__cta">Оставить заявку</button>
-        </div>
+            <p>
+              {{ slides[currentSlide].description }}
+            </p>
+            <button @click="handleClick(slides[currentSlide].formTab)" class="hero__cta">Оставить заявку</button>
+          </div>
+        </transition>
 
         <Pagination
             :current="currentSlide"
@@ -22,10 +24,13 @@
         />
       </div>
       <div class="hero__images">
-        <div
-            class="img-wrapper"
-            :style="{ backgroundImage: `url(${slides[currentSlide].main})` }"
-        />
+        <transition name="fade" mode="out-in">
+          <div
+              class="img-wrapper"
+              :key="currentSlide"
+              :style="{ backgroundImage: `url(${slides[currentSlide].main})` }"
+          />
+        </transition>
       </div>
     </div>
   </section>
@@ -122,7 +127,29 @@
   height: 425px;
 }
 
-/* Верхнее правое */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.hero__content {
+  position: relative;
+}
+
+.hero__images {
+  position: relative;
+}
+
+.img-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 
 </style>
 <script setup lang="ts">
@@ -177,7 +204,7 @@ function nextSlide() {
 let interval: any = null
 
 onMounted(() => {
-  interval = setInterval(nextSlide, 5000) // авто-смена каждые 5 секунд
+  interval = setInterval(nextSlide, 10000) // авто-смена каждые 5 секунд
 })
 
 onBeforeUnmount(() => {

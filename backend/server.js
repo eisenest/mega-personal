@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url'
 import fs from 'fs'
 import formidableMiddleware from 'express-formidable'
 import { ComponentLoader } from 'adminjs'
+import cors from 'cors'
 import uploadFeature from '@adminjs/upload'
 
 import { User } from './model/User.js'
@@ -53,6 +54,11 @@ await mongoose.connect(process.env.MONGO_URI)
 AdminJS.registerAdapter({ Database, Resource })
 
 const app = express()
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}))
 
 // 📦 Обработка multipart/form-data
 app.use(formidableMiddleware({

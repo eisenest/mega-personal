@@ -1,7 +1,12 @@
+# Dockerfile
+
 FROM node:18
 
 WORKDIR /app
 COPY . .
+
+ARG MODE=production
+ENV NODE_ENV=$MODE
 
 RUN npm install
 
