@@ -7,8 +7,8 @@ export const serviceCategoryResource = {
     options: {
         navigation: { name: 'Услуги' },
         listProperties: ['title', 'slug', 'showPage'],
-        editProperties: ['title', 'slug', 'showPage', 'services', 'description', 'subtitle'],
-        showProperties: ['title', 'slug', 'showPage', 'services', 'description', 'subtitle'],
+        editProperties: ['title', 'slug', 'showPage', 'services', 'description', 'subtitle', 'metaTitle', 'metaDescription'],
+        showProperties: ['title', 'slug', 'showPage', 'services', 'description', 'subtitle', 'metaTitle', 'metaDescription'],
         filterProperties: ['title', 'slug', 'showPage'],
         properties: {
             slug: { isTitle: true },

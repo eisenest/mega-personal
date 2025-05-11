@@ -2,9 +2,9 @@
   <header class="header">
     <div class="header__container">
       <!-- Логотип -->
-      <NuxtLink to="/" class="logo-link" @click="isMenuOpen = false">
+      <a href="/" class="logo-link" @click="isMenuOpen = false">
         <img src="/logo.svg" alt="Mega Personal" class="logo" />
-      </NuxtLink>
+      </a>
 
       <!-- Бургер и навигация -->
       <button class="burger" @click="isMenuOpen = !isMenuOpen">
@@ -14,20 +14,38 @@
       </button>
 
       <nav :class="['nav', { open: isMenuOpen }]">
-        <NuxtLink
+        <div
             v-for="(item, index) in navItems"
             :key="index"
-            :to="item.href"
-            class="nav-link"
-            :class="{
-    active: route.path === item.href,
-    disabled: item.disabled
-  }"
-            @click="isMenuOpen = false"
-            :tabindex="item.disabled ? -1 : 0"
+            class="nav-link-wrapper"
+            @mouseenter="hoveredIndex = index"
+            @mouseleave="hoveredIndex = null"
         >
-          {{ item.label }}
-        </NuxtLink>
+          <a
+              :href="item.href"
+              class="nav-link"
+              :class="{
+              active: route.path === item.href,
+              disabled: item.disabled,
+              'has-children': item.children && item.children.length > 0
+            }"
+              :tabindex="item.disabled ? -1 : 0"
+              @click="isMenuOpen = false"
+          >
+            {{ item.label }}
+          </a>
+          <div v-if="item.children && hoveredIndex === index" class="submenu">
+            <a
+                v-for="(child, cIdx) in item.children"
+                :key="cIdx"
+                :href="child.href"
+                class="submenu-link"
+                @click="isMenuOpen = false"
+            >
+              {{ child.label }}
+            </a>
+          </div>
+        </div>
       </nav>
 
       <!-- Правый блок -->
@@ -37,9 +55,7 @@
             <path d="M8.38028 9.35323C9.07627 10.8028 10.0251 12.1615 11.2266 13.3631C12.4282 14.5646 13.7869 15.5134 15.2365 16.2094C15.3612 16.2693 15.4235 16.2992 15.5024 16.3222C15.7828 16.404 16.127 16.3453 16.3644 16.1752C16.4313 16.1274 16.4884 16.0702 16.6027 15.9559C16.9523 15.6063 17.1271 15.4315 17.3029 15.3172C17.9658 14.8862 18.8204 14.8862 19.4833 15.3172C19.6591 15.4315 19.8339 15.6063 20.1835 15.9559L20.3783 16.1508C20.9098 16.6822 21.1755 16.948 21.3198 17.2333C21.6069 17.8009 21.6069 18.4712 21.3198 19.0387C21.1755 19.3241 20.9098 19.5898 20.3783 20.1213L20.2207 20.2789C19.6911 20.8085 19.4263 21.0733 19.0662 21.2756C18.6667 21.5 18.0462 21.6614 17.588 21.66C17.1751 21.6588 16.8928 21.5787 16.3284 21.4185C13.295 20.5575 10.4326 18.933 8.04466 16.545C5.65668 14.1571 4.03221 11.2947 3.17124 8.26131C3.01103 7.69687 2.93092 7.41464 2.9297 7.0017C2.92833 6.54347 3.08969 5.92298 3.31411 5.52348C3.51636 5.16345 3.78117 4.89863 4.3108 4.36901L4.46843 4.21138C4.99987 3.67993 5.2656 3.41421 5.55098 3.26987C6.11854 2.9828 6.7888 2.9828 7.35636 3.26987C7.64174 3.41421 7.90747 3.67993 8.43891 4.21138L8.63378 4.40625C8.98338 4.75585 9.15819 4.93065 9.27247 5.10643C9.70347 5.76932 9.70347 6.6239 9.27247 7.28679C9.15819 7.46257 8.98338 7.63738 8.63378 7.98698C8.51947 8.10129 8.46231 8.15845 8.41447 8.22526C8.24446 8.46269 8.18576 8.80695 8.26748 9.0873C8.29048 9.1662 8.32041 9.22854 8.38028 9.35323Z" stroke="#6700D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-        <a href="https://mega-personal.ru/#/ui/index" target="_blank" class="login">
-          Вход
-        </a>
+        <a href="https://mega-personal.ru/#/ui/index" target="_blank" class="login">Вход</a>
         <button @click="handleClick" class="cta-button">Оставить заявку</button>
       </div>
     </div>
@@ -47,30 +63,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { inject } from 'vue'
 
-// Получаем функцию из layout
 const openPopupForm = inject('openPopupForm')
-
 function handleClick() {
-  openPopupForm(0) // Можно передать таб
+  openPopupForm(0)
 }
-
 
 const route = useRoute()
 const isMenuOpen = ref(false)
+const hoveredIndex = ref(null)
+const navItems = ref([])
+const config = useRuntimeConfig()
+const apiBase = config.public.apiBase
 
-const navItems = [
-  { label: 'О компании', href: '/about' },
-  { label: 'Аутсорсинг', href: '#', disabled: true },
-  { label: 'Рекрутмент', href: '/recruitment' },
-  { label: 'Предоставление персонала', href: '#', disabled: true },
-  { label: 'Соискателям', href: '#', disabled: true },
+const { data: services } = await useFetch(`${apiBase}/api/service-categories`)
+
+const dropdownItems = services.value
+    .filter(cat => cat.showPage) // ← добавлено условие
+    .map(cat => ({
+      label: cat.title,
+      href: `/category/${cat.slug}`,
+      children: (cat.services || []).map(s => ({
+        label: s.title,
+        href: `/services/${s.slug}`
+      }))
+    }))
+
+const baseItems = [
+  { label: 'О компании', href: '/o-kompanii' },
+  { label: 'Аутсорсинг', href: '/services/autsorsing' },
   { label: 'Блог', href: '/blog' },
-  { label: 'Контакты', href: '#', disabled: true }
+  { label: 'Контакты', href: '/kontakty'}
 ]
+
+  navItems.value = [
+    baseItems[0],
+    baseItems[1],
+    ...dropdownItems,
+    ...baseItems.slice(2)
+  ]
 
 </script>
 
@@ -91,7 +125,6 @@ const navItems = [
   display: flex;
   align-items: center;
   justify-content: space-between;
-  //gap: 32px;
   flex-wrap: wrap;
   border-radius: 24px;
   background: var(--white, #FFF);
@@ -129,10 +162,50 @@ const navItems = [
   transition: all 0.3s ease;
 }
 
-.nav a {
+.nav-link-wrapper {
+  position: relative;
+}
+
+.nav-link {
   color: #2b3645;
   text-decoration: none;
   white-space: nowrap;
+  position: relative;
+}
+
+.nav-link.has-children::after {
+  content: url("/dropdown.svg");
+  margin-left: 4px;
+  color: inherit;
+  display: inline-block;
+  vertical-align: sub;
+  height: 1em;
+  width: auto;
+}
+
+.submenu {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  padding: 12px 0;
+  min-width: 220px;
+  z-index: 100;
+}
+
+.submenu-link {
+  display: block;
+  padding: 10px 20px;
+  white-space: nowrap;
+  color: #2b3645;
+  text-decoration: none;
+}
+
+.submenu-link:hover {
+  background: #f5f5f5;
 }
 
 .actions {
@@ -152,7 +225,7 @@ const navItems = [
 }
 
 .phone-icon:hover path {
-  stroke: #00A2F6; /* меняется цвет при ховере */
+  stroke: #00A2F6;
 }
 
 .cta-button {
@@ -170,35 +243,16 @@ const navItems = [
   background: #4712b8;
 }
 
-.icon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-
 .nav-link.active {
   font-weight: 700;
   color: #5c1ce0;
   position: relative;
 }
 
-.nav-link.active::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #5c1ce0;
-  border-radius: 2px;
-}
-
 .nav-link.disabled {
   pointer-events: none;
   opacity: 0.4;
 }
-
-
 
 @media (max-width: 1024px) {
   .burger {
@@ -226,7 +280,6 @@ const navItems = [
 
   .header__container {
     flex-wrap: nowrap;
-
   }
 }
 </style>

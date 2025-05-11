@@ -35,6 +35,8 @@ export const ServicePageResource = (componentLoader) => {
             editProperties: [
                 'title',
                 'description',
+                'metaTitle',
+                'metaDescription',
                 'uploadImage',
                 'slug',
                 'problems',
@@ -49,6 +51,8 @@ export const ServicePageResource = (componentLoader) => {
             showProperties: [
                 'title',
                 'description',
+                'metaTitle',
+                'metaDescription',
                 'uploadImage',
                 'slug',
                 'problems',

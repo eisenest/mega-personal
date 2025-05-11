@@ -15,9 +15,12 @@ const config = useRuntimeConfig()
 const { data: service } = await useFetch(`${config.public.apiBase}/api/services/${route.params.slug}`)
 
 useHead(() => ({
-  title: service.value
-      ? `${service.value.title} — Mega Personal`
-      : 'Загрузка...'
+  title: service.value.metaTitle
+      ? `${service.value.metaTitle} — Mega Personal`
+      : 'Загрузка...',
+  meta: [
+    { name: 'description', content: service.value.metaDescription ? service.value.metaDescription : '' },
+  ],
 }))
 
 </script>

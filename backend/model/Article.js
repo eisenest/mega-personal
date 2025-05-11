@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 const ArticleSchema = new mongoose.Schema({
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true }, // для URL
+    metaTitle: String,
+    metaDescription: String,
     image: String,
     date: Date,
     intro: String,

@@ -21,7 +21,7 @@ function formatDate(dateStr: string) {
 
 const publicHost = useRuntimeConfig().public.publicHost
 const fullImageUrl = computed(() =>
-    article?.image ? `${publicHost}${article.image}` : ''
+    article?.image ? `${publicHost}/uploads/${article.image}` : ''
 )
 
 function extractHeadings(html: string) {

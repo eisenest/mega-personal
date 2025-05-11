@@ -8,6 +8,8 @@ const ServiceCategorySchema = new mongoose.Schema({
     slug: { type: String, required: true, unique: true },
     showPage: { type: Boolean, default: true },
     services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ServicePage' }],
+    metaTitle: String,
+    metaDescription: String,
 });
 
 export const ServiceCategory = mongoose.model('ServiceCategory', ServiceCategorySchema);

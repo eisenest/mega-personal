@@ -22,9 +22,12 @@ const { data: article }= await useFetch(`${apiBase}/api/articles/${route.params.
 const { data: articles } = await useFetch(`${apiBase}/api/articles`)
 
 useHead(() => ({
-  title: article.value
-      ? `${article.value.title} — Блог — Mega Personal`
-      : 'Загрузка...'
+  title: article.value.metaTitle
+      ? `${article.value.metaTitle} — Блог — Mega Personal`
+      : 'Загрузка...',
+  meta: [
+    { name: 'description', content: article.value.metaDescription ? article.value.metaDescription : '' },
+  ],
 }))
 
 </script>

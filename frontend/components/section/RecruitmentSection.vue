@@ -8,9 +8,12 @@ if (error.value || !category.value) {
 }
 
 useHead(() => ({
-  title: category.value
-      ? `${category.value.title} — Mega Personal`
-      : 'Загрузка...'
+  title: category.value.metaTitle
+      ? `${category.value.metaTitle} — Mega Personal`
+      : 'Загрузка...',
+  meta: [
+    { name: 'description', content: category.value.metaDescription ? category.value.metaDescription : '' },
+  ],
 }))
 
 </script>
