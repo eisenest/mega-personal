@@ -31,35 +31,35 @@
       </div>
 
       <!-- Правая часть -->
-      <form class="form__box">
+      <form class="form__box" @submit.prevent="submitForm">
         <template v-if="internalTab === 0">
           <div class="form__row">
-            <input placeholder="Телефон" />
-            <input placeholder="email" />
+            <input v-model="form.phone" placeholder="Телефон" />
+            <input v-model="form.email" placeholder="email" />
           </div>
           <div class="form__row">
-            <input placeholder="Организация" />
-            <input placeholder="Город проекта" />
+            <input v-model="form.company_name" placeholder="Организация" />
+            <input v-model="form.address" placeholder="Город проекта" />
           </div>
-          <textarea placeholder="Комментарий"></textarea>
+          <textarea v-model="form.comment" placeholder="Комментарий"></textarea>
         </template>
 
         <template v-else-if="internalTab === 1">
-          <input placeholder="Имя и фамилия" />
+          <input v-model="form.first_name" placeholder="Имя и фамилия" />
           <div class="form__row">
-            <input placeholder="Телефон" />
-            <input placeholder="Город" />
+            <input v-model="form.phone" placeholder="Телефон" />
+            <input v-model="form.city" placeholder="Город" />
           </div>
         </template>
 
         <template v-else>
-          <input placeholder="Имя, Фамилия, Отчество" />
+          <input v-model="form.first_name" placeholder="Имя, Фамилия, Отчество" />
           <div class="form__row">
-            <input placeholder="Почта" />
-            <input type="date" placeholder="Дата Рождения" />
+            <input v-model="form.email" placeholder="Почта" />
+            <input v-model="form.date_of_birth" type="date" placeholder="Дата Рождения" />
           </div>
           <div class="form__row">
-            <input placeholder="Телефон" />
+            <input v-model="form.phone" placeholder="Телефон" />
             <DropdownSelect v-model="entityType" placeholder="Тип юридического лица" :options="['ИП', 'Самозанятый']" />
           </div>
           <div class="form__row">
@@ -86,7 +86,6 @@
             <input placeholder="ОРГН" />
             <input placeholder="Адрес регистрации" />
           </div>
-
           <div class="upload-links">
             <!-- Самозанятый -->
             <p
@@ -158,11 +157,10 @@
   </section>
 </template>
 
-<script setup>
-import {reactive, ref, watch} from 'vue'
+<script setup lang="ts">
+import { reactive, ref, watch, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import DropdownSelect from "~/components/elements/DropdownSelect.vue";
-import { computed } from 'vue'
+import DropdownSelect from "~/components/elements/DropdownSelect.vue"
 
 const { fixedTab } = defineProps({
   fixedTab: {
@@ -171,13 +169,79 @@ const { fixedTab } = defineProps({
   }
 })
 
+const publicHost = useRuntimeConfig().public.publicHost
+
+
 const entityType = ref('ИП')
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
-// const activeTab = ref(0) // по умолчанию
 const route = useRoute()
-
-const activeTab = computed(() => fixedTab !== null ? fixedTab : internalTab)
+const activeTab = computed(() => fixedTab !== null ? fixedTab : internalTab.value)
 const internalTab = ref(0)
+
+const form = reactive({
+  phone: '',
+  email: '',
+  company_name: '',
+  address: '',
+  comment: '',
+  first_name: '',
+  city: '',
+  date_of_birth: '',
+  last_name: '',
+  middle_name: '',
+  fields: {}
+})
+
+const selectedTypeObject = ref(null)
+
+const submitForm = async () => {
+  let payload = {}
+  if (activeTab.value === 0) {
+    payload = {
+      phone: form.phone,
+      email: form.email,
+      company_name: form.company_name,
+      address: form.address,
+      comment: form.comment
+    }
+  } else if (activeTab.value === 1) {
+    payload = {
+      first_name: form.first_name,
+      phone: form.phone,
+      city: form.city,
+      date_of_birth: form.date_of_birth
+    }
+  } else if (activeTab.value === 2 && selectedTypeObject.value) {
+    payload = {
+      first_name: form.first_name,
+      last_name: form.last_name,
+      middle_name: form.middle_name,
+      email: form.email,
+      date_of_birth: form.date_of_birth,
+      phone: form.phone,
+      type: selectedTypeObject.value,
+      formEntry: {
+        data: form.fields
+      }
+    }
+  }
+
+  try {
+    const res = await fetch('https://omega-gamma.turningtide.ru/registration_request', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    const result = await res.json()
+    console.log('Форма отправлена', result)
+    alert('Спасибо! Заявка отправлена.')
+  } catch (e) {
+    console.error('Ошибка отправки', e)
+    alert('Ошибка при отправке формы.')
+  }
+}
 
 const setTabFromRoute = () => {
   const tab = Number(route.query.tab)
@@ -221,6 +285,24 @@ const handleFileUpload = (event, name) => {
   }
 }
 
+watch([activeTab, entityType], async ([newTab, newEntity]) => {
+  if (newTab === 2) {
+    try {
+      const res = await fetch('https://omega-gamma.turningtide.ru/registration_request')
+      const types = await res.json()
+      selectedTypeObject.value = types.find(t => t.name === newEntity)
+      console.log(types)
+
+      if (selectedTypeObject.value?.form?.fields) {
+        selectedTypeObject.value.form.fields.forEach(field => {
+          form.fields[field.id] = ''
+        })
+      }
+    } catch (e) {
+      console.error('Ошибка загрузки типов самозанятости:', e)
+    }
+  }
+}, { immediate: true })
 
 const tabHeadlines = [
   {
@@ -241,23 +323,20 @@ const tabHeadlines = [
 </script>
 
 <style scoped>
-#form{
+#form {
   scroll-margin-top: 150px;
 }
 
-
-.upload-links p{
+.upload-links p {
   color: #fff;
   align-items: center;
   display: flex;
   gap: 8px;
 }
 
-
-.form__box-link{
+.form__box-link {
   color: #fff;
   text-decoration: underline;
   font-weight: 500;
 }
-
 </style>
