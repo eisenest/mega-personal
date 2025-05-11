@@ -8,6 +8,8 @@ ENV NODE_ENV=$MODE
 
 RUN npm install
 
+COPY .env .env
+
 RUN if [ "$NODE_ENV" = "production" ]; then npm run build; fi
 
 EXPOSE 3000
