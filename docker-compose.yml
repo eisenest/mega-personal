@@ -19,6 +19,10 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        MODE: ${NODE_ENV} # пробросим в Dockerfile
+    environment:
+      NODE_ENV: ${NODE_ENV} # пробросим в рантайм
     volumes:
       - ./frontend:/app
       - /app/node_modules  # чтобы node_modules не перезаписывался

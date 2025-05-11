@@ -55,8 +55,18 @@ AdminJS.registerAdapter({ Database, Resource })
 
 const app = express()
 
+const allowedOrigins = ['http://localhost:3000', 'http://89.169.2.131']
+
+
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: (origin, callback) => {
+    // Разрешаем запросы без origin (например, curl, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true
 }))
 
