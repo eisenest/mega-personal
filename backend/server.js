@@ -59,7 +59,8 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://89.169.2.131',
   'http://89.169.2.131:5050',
-  'http://89.169.2.131:3000'
+  'http://89.169.2.131:3000',
+  'http://localhost:5050'
 ]
 
 

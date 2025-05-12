@@ -17,8 +17,8 @@ export const ContactInfoResource = {
             },
         },
         actions: {
-            new: { isAccessible: false }, // запрещаем создавать новые записи
-            delete: { isAccessible: false }, // запрещаем удаление
+            new: { isAccessible: true }, // запрещаем создавать новые записи
+            delete: { isAccessible: true }, // запрещаем удаление
         },
     },
 }
