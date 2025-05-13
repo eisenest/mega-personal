@@ -49,7 +49,12 @@ componentLoader.add('ImageUploadEditComponent', uploadEditComponentPath)
 
 
 
-await mongoose.connect(process.env.MONGO_URI)
+// await mongoose.connect(process.env.MONGO_URI)
+
+await mongoose.connect('mongodb://mega-root-admin-personal:sEcV55Od_G@mongo:27017/megapersonal?authSource=megapersonal', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 AdminJS.registerAdapter({ Database, Resource })
 
