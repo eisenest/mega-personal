@@ -5,12 +5,16 @@
         <span class="highlight">{{ title }}</span>
       </h1>
       <p>{{ description }}</p>
-      <button
-          v-if="showButton"
-          class="cta-button"
+      <NuxtLink
+          :to="{query: { tab: 0 }, hash: '#form' }"
       >
-        Оставить заявку
-      </button>
+        <button
+            v-if="showButton"
+            class="cta-button"
+        >
+          Оставить заявку
+        </button>
+      </NuxtLink>
     </div>
 
     <div class="about-hero__image-wrapper">
@@ -39,6 +43,21 @@ defineProps({
     default: false
   }
 })
+
+const config = useRuntimeConfig()
+
+const activeTab = ref(1) // по умолчанию
+
+const route = useRoute()
+
+onMounted(() => {
+  const tabFromQuery = Number(route.hash?.split('?tab=')[1])
+  if (!isNaN(tabFromQuery)) {
+    activeTab.value = tabFromQuery
+  }
+})
+
+
 </script>
 
 <style scoped>

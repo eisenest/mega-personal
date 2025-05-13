@@ -7,6 +7,16 @@ const ServicePageSchema = new mongoose.Schema({
     metaTitle: String,
     metaDescription: String,
     image: { type: String, required: true },
+    imageMimeType: String,
+    imageFilename: String,
+    imagePath: String,
+    imageFilesToDelete: [String],
+
+    previewImage: String,
+    previewMimeType: String,
+    previewFilename: String,
+    previewPath: String,
+    previewFilesToDelete: [String],
     slug: { type: String, required: true, unique: true },
     hero: {
         title: String,

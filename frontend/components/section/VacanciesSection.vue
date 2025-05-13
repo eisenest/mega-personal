@@ -20,11 +20,12 @@
         >
           <p class="category-title">{{ category.title }}</p>
           <p v-if="category.subtitle !== null" class="category-subtitle">{{ category.subtitle }}</p>
+          <span class="arrow"><img src="/icon/expand-white.svg" alt=""></span>
         </button>
       </div>
       <div class="positions-grid">
         <div
-            v-for="(position, index) in categories[selectedCategoryIndex].services"
+            v-for="(position, index) in categories[selectedCategoryIndex].positions"
             :key="index"
             class="position-card"
         >
@@ -44,6 +45,7 @@ defineProps({
   subtitle: String,
   categories: Array
 })
+
 
 const selectedCategoryIndex = ref(0)
 
@@ -107,6 +109,13 @@ function selectCategory(index) {
 .category-button.active {
   background: #3795f4;
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow{
+  display: flex;
 }
 
 .category-button.active .category-subtitle,

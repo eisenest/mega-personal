@@ -33,7 +33,10 @@
         </div>
         <label class="checkbox">
           <input type="checkbox" required />
-          <span>Вы даете согласие на <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
+          <span class="form_checkbox">
+            Вы даете согласие на
+            <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a>
+          </span>
         </label>
         <button type="submit">Оставить заявку</button>
       </form>
@@ -77,6 +80,12 @@ watch(
 
 .form__container {
   height: 483px;
+}
+
+.form__box-link {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 500;
 }
 
 </style>

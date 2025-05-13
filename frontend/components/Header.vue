@@ -95,6 +95,10 @@ const dropdownItems = services.value
 const baseItems = [
   { label: 'О компании', href: '/o-kompanii' },
   { label: 'Аутсорсинг', href: '/services/autsorsing' },
+  { label: 'Соискателям', href: '/category/soiskatelyam', children: [
+      { label: "Вакансии", href: '/vakansii' },
+      { label: "Партнерская программа", href: '/partnerskaya-programma' },
+    ] },
   { label: 'Блог', href: '/blog' },
   { label: 'Контакты', href: '/kontakty'}
 ]

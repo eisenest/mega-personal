@@ -48,9 +48,8 @@ useHead(() => ({
       />
     </div>
   </div>
-
   <VacanciesSection
-      v-if="service.employees"
+      v-if="service.employees.length > 0"
       :title="'Каких сотрудников мы регулярно набираем'"
       :categories=service.employees
   />
@@ -81,12 +80,12 @@ useHead(() => ({
     />
   </div>
 
-  <div v-if="service.recruitmentSteps">
+  <div v-if="service.recruitmentSteps.length > 0">
     <h2 class="headline"><span class="highlight">Как происходит рекрутинг для вашей  компании?</span></h2>
     <StepRowSection class="service" :steps="service.recruitmentSteps" />
   </div>
 
-  <FourStepSection v-if="service.resultSteps" :steps="service.resultSteps"/>
+  <FourStepSection v-if="service.resultSteps.length > 0" :steps="service.resultSteps"/>
 
   <FormSection :fixed-tab="0"/>
 

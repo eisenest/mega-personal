@@ -12,23 +12,49 @@ export const ServicePageResource = (componentLoader) => {
         resource: ServicePage,
         features: [
             uploadFeature({
-                componentLoader, // ← обязательно передаём
+                componentLoader,
                 provider: {
                     local: {
                         bucket: path.join(__dirname, '../public/uploads'),
                     },
                 },
                 properties: {
-                    key: 'image',  // куда сохраняется путь в Mongo
-                    file: 'uploadImage', // имя поля input[type=file]
+                    key: 'image',
+                    file: 'uploadImage',
+                    mimeType: 'imageMimeType',
+                    filename: 'imageFilename',
+                    filePath: 'imagePath',
+                    filesToDelete: 'imageFilesToDelete',
                 },
                 uploadPath: (record, filename) => `service-page/${Date.now()}-${filename}`,
                 validation: {
                     mimeTypes: ['image/png', 'image/jpeg'],
-                    maxSize: 10 * 1024 * 1024, // 10MB
+                    maxSize: 10 * 1024 * 1024,
+                },
+            }),
+            uploadFeature({
+                componentLoader,
+                provider: {
+                    local: {
+                        bucket: path.join(__dirname, '../public/uploads'),
+                    },
+                },
+                properties: {
+                    key: 'previewImage',
+                    file: 'uploadPreviewImage',
+                    mimeType: 'previewMimeType',
+                    filename: 'previewFilename',
+                    filePath: 'previewPath',
+                    filesToDelete: 'previewFilesToDelete',
+                },
+                uploadPath: (record, filename) => `service-page/preview-${Date.now()}-${filename}`,
+                validation: {
+                    mimeTypes: ['image/png', 'image/jpeg'],
+                    maxSize: 10 * 1024 * 1024,
                 },
             }),
         ],
+
         options: {
             navigation: 'Услуги',
             listProperties: ['title', 'slug', 'description'],
@@ -38,6 +64,7 @@ export const ServicePageResource = (componentLoader) => {
                 'metaTitle',
                 'metaDescription',
                 'uploadImage',
+                'uploadPreviewImage',
                 'slug',
                 'problems',
                 'employees',
@@ -54,6 +81,9 @@ export const ServicePageResource = (componentLoader) => {
                 'metaTitle',
                 'metaDescription',
                 'uploadImage',
+                'image',
+                'uploadPreviewImage',
+                'previewImage',
                 'slug',
                 'problems',
                 'employees',
@@ -68,68 +98,32 @@ export const ServicePageResource = (componentLoader) => {
             ],
             properties: {
                 uploadImage: {
-                    isVisible: {
-                        list: false,
-                        show: false,
-                        edit: true,
-                        filter: false,
-                    },
+                    isVisible: { list: false, show: false, edit: true, filter: false },
                 },
                 image: {
-                    isVisible: {
-                        list: true,
-                        show: true,
-                        edit: false, // путь не редактируется руками
-                        filter: false,
-                    },
+                    isVisible: { list: true, show: true, edit: false, filter: false },
+                },
+                uploadPreviewImage: {
+                    isVisible: { list: false, show: false, edit: true, filter: false },
+                },
+                previewImage: {
+                    isVisible: { list: true, show: true, edit: false, filter: false },
                 },
                 slug: {
                     isTitle: true,
                 },
-                problems: {
-                    type: 'mixed',
-                    isArray: true,
-                    props: {
-                        max: 6
-                    }
-                },
-                employees: {
-                    type: 'mixed',
-                    isArray: true
-                },
-                advantages: {
-                    type: 'mixed',
-                    isArray: true,
-                    props: {
-                        max: 6
-                    }
-                },
+                problems: { type: 'mixed', isArray: true, props: { max: 6 } },
+                employees: { type: 'mixed', isArray: true },
+                advantages: { type: 'mixed', isArray: true, props: { max: 6 } },
                 mission: {
                     type: 'textarea',
                     isVisible: { list: false, show: true, edit: true, filter: false },
                     label: 'Юридическая информация',
                 },
-                missionCards: {
-                    type: 'mixed',
-                    isArray: true,
-                    props: {
-                        max: 6
-                    }
-                },
-                recruitmentSteps:{
-                    type: 'mixed',
-                    isArray: true,
-                },
-                resultSteps: {
-                    type: Array,
-                    props: {
-                        max: 6
-                    }
-                },
-                faq: {
-                    type: 'mixed',
-                    isArray: true,
-                },
+                missionCards: { type: 'mixed', isArray: true, props: { max: 6 } },
+                recruitmentSteps: { type: 'mixed', isArray: true },
+                resultSteps: { type: Array, props: { max: 6 } },
+                faq: { type: 'mixed', isArray: true },
             },
             actions: {
                 duplicate: duplicateAction,

@@ -174,7 +174,7 @@
 
         <label class="checkbox">
           <input type="checkbox" required />
-          <span>
+          <span class="form_checkbox">
             Вы даете согласие на
             <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a>
           </span>

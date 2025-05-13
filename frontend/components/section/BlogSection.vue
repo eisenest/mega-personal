@@ -64,6 +64,10 @@ function getImageUrl(image?: string): string {
 
 <style scoped>
 
+.blog-card:hover h3 {
+  color: var(--main-blue, #00A2F6);
+}
+
 .blog__container h2{
   padding: 0;
 }

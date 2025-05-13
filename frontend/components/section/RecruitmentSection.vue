@@ -1,6 +1,8 @@
 <script setup>
 const route = useRoute()
 const apiBase = useRuntimeConfig().public.apiBase
+const config = useRuntimeConfig()
+
 const { data: category, error } = await useFetch(`${apiBase}/api/service-categories/${route.params.slug}`)
 
 if (error.value || !category.value) {
@@ -41,7 +43,7 @@ useHead(() => ({
         </div>
         <div
             class="card__img"
-            :style="{ backgroundImage: `url(${service.image || '/recruitment/1.png'})` }"
+            :style="{ backgroundImage: `url(${config.public.publicHost}/uploads/${service.previewImage || '/recruitment/1.png'})` }"
         ></div>
       </div>
     </div>
@@ -64,17 +66,11 @@ useHead(() => ({
 }
 
 .title {
-  //font-size: 48px;
-  //font-weight: 800;
-  //color: #3398ff;
   margin-bottom: 16px;
   margin-top: 0;
 }
 
 .subtitle {
-  //font-size: 28px;
-  //font-weight: 800;
-  //color: #2c3e50;
   margin: 16px 0;
 }
 
@@ -99,7 +95,7 @@ useHead(() => ({
   overflow: hidden;
   gap: 16px;
   position: relative;
-  min-height: 280px;
+  min-height: 200px;
 }
 
 .card__text {
@@ -113,7 +109,6 @@ useHead(() => ({
 }
 
 .card__text h4 {
-  font-size: 32px;
   font-weight: 800;
   color: #2c3e50;
   margin-bottom: 12px;
@@ -137,9 +132,11 @@ useHead(() => ({
 .card__img {
   width: 50%;
   height: 100%;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  background-position-x: right;
+  background-repeat: no-repeat;
 }
 </style>
