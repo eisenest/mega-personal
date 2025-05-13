@@ -26,17 +26,20 @@
 
       <!-- Правый блок: список услуг внутри выбранной категории -->
       <div class="services__right">
-        <div
+        <a
             v-for="service in categories[selectedIndex]?.services || []"
             :key="service.slug"
+            :href="`/services/${service.slug}`"
             class="services__card"
         >
           <p class="card__text p24">{{ service.title }}</p>
-          <a :href="`/services/${service.slug}`" class="card__link p24">
-            Подробнее
-            <span class="icon"><img src="/icon/expand-link.svg" alt=""></span>
-          </a>
-        </div>
+          <div>
+            <a class="card__link p24">
+              Подробнее
+              <span class="icon"><img src="/icon/expand-link.svg" alt=""></span>
+            </a>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -183,6 +186,12 @@ const selectedIndex = ref(0)
   align-items: center;
 }
 
+.services__card:hover .card__link {
+  color: #00A2F6 !important;
+}
 
+.services__card:hover{
+  box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
+}
 
 </style>

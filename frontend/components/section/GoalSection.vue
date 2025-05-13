@@ -5,7 +5,9 @@
     <div class="goal__content">
       <!-- Левая часть -->
       <div class="goal__left">
-        <h3>Аутсорсинг</h3>
+        <a :href="currentAdvantage.slug">
+          <h3 class="goal__left-title">{{ currentAdvantage.title }}</h3>
+        </a>
         <div class="goal__points">
           <GoalCard
               v-for="(point, index) in currentPagePoints"
@@ -151,6 +153,10 @@ function prev() {
 .goal__image {
   object-fit: cover;
   width: 100%;
+}
+
+.goal__left-title:hover{
+  color: #00A2F6 !important;
 }
 
 @media (max-width: 960px) {

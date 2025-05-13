@@ -27,23 +27,26 @@ const services = [
       </div>
 
       <div class="recruitment__cards">
-        <div
+        <a
             v-for="(service, i) in services"
             :key="service.slug"
+            :href="service.slug"
             :class="['card', i % 2 === 0 ? 'card--left' : 'card--right']"
         >
           <div class="card__text">
             <h4>{{ service.title }}</h4>
-            <a :href="service.slug" class="card__link">
+            <a class="card__link">
               Подробнее
-              <span class="icon">❯</span>
+              <span class="icon">
+                <img src="/icon/expand-link.svg" alt="">
+              </span>
             </a>
           </div>
           <div
               class="card__img"
               :style="{ backgroundImage: `url(${service.image})` }"
           ></div>
-        </div>
+        </a>
       </div>
     </section>
   </template>
@@ -138,4 +141,14 @@ const services = [
   background-position-x: right;
   background-repeat: no-repeat;
 }
+
+.card:hover{
+  box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
+}
+
+span.icon {
+  display: flex
+;
+}
+
 </style>

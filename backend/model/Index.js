@@ -10,6 +10,8 @@ export const IndexKeyNumber = mongoose.model('IndexKeyNumber', IndexKeyNumberSch
 
 // models/IndexAdvantage.js
 const IndexAdvantageSchema = new mongoose.Schema({
+    title: String,
+    slug: String,
     image: String,
     thesis: [String],
 }, { timestamps: true })

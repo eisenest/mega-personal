@@ -193,19 +193,30 @@ const baseItems = [
   top: 100%;
   left: 0;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 24px;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
-  padding: 12px 0;
   min-width: 220px;
   z-index: 100;
 }
 
 .submenu-link {
   display: block;
-  padding: 10px 20px;
+  padding: 16px 24px;
   white-space: nowrap;
   color: #2b3645;
   text-decoration: none;
+}
+
+/* Первый элемент */
+.submenu-link:first-of-type {
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
+
+/* Последний элемент */
+.submenu-link:last-of-type {
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
 }
 
 .submenu-link:hover {
