@@ -378,12 +378,12 @@ const handleFileUpload = async (event, name) => {
 
 const tabHeadlines = [
   {
-    text: 'Мы поможем вам найти ',
-    highlight: 'работу!'
-  },
-  {
     text: 'Оставьте заявку — мы поможем вам ',
     highlight: 'найти сотрудников!'
+  },
+  {
+    text: 'Мы поможем вам найти ',
+    highlight: 'работу!'
   },
   {
     text: 'Зарегистрируйтесь на нашей партнерской платформе — получайте ',

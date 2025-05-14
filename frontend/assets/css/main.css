@@ -76,6 +76,10 @@ p, ul, ol, button, input, select, textarea {
     line-height: 150%;
 }
 
+input:focus-visible {
+    outline: none !important;
+}
+
 .form_checkbox{
     font-size: clamp(15px, 1vw, 18px);
     font-style: normal;

@@ -121,7 +121,11 @@ const questions = [
     <p class="p24">
       Мы уверены, что сотрудничество с нами станет для вас выгодным и плодотворным.
     </p>
-    <button>Зарегистрироваться сейчас!</button>
+    <NuxtLink
+        :to="{query: { tab: 0 }, hash: '#form' }"
+    >
+      <button>Зарегистрироваться сейчас!</button>
+    </NuxtLink>
   </div>
 
   <FaqSection :questions="faq.faq" />

@@ -18,8 +18,10 @@
             :class="['category-button', { active: selectedCategoryIndex === index }]"
             @click="selectCategory(index)"
         >
-          <p class="category-title">{{ category.title }}</p>
-          <p v-if="category.subtitle !== null" class="category-subtitle">{{ category.subtitle }}</p>
+          <div>
+            <p class="category-title">{{ category.title }}</p>
+            <p v-if="category.subtitle !== null" class="category-subtitle">{{ category.subtitle }}</p>
+          </div>
           <span class="arrow"><img src="/icon/expand-white.svg" alt=""></span>
         </button>
       </div>

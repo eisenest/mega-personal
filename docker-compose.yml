@@ -21,14 +21,9 @@ services:
   frontend:
     build:
       context: ./frontend
-      args:
-        MODE: ${NODE_ENV} # пробросим в Dockerfile
-    environment:
-      PORT: 3000
-      NODE_ENV: ${NODE_ENV} # пробросим в рантайм
-#    volumes:
-#      - ./frontend:/app
-#      - /app/node_modules  # чтобы node_modules не перезаписывался
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # чтобы node_modules не перезаписывался
     container_name: mega-frontend
     ports:
       - '3000:3000'

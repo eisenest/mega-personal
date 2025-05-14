@@ -22,18 +22,18 @@
 
         <div class="footer__column nav">
           <ul class="col-first">
-            <li>Аутсорсинг</li>
-            <li>Рекрутмент</li>
-            <li>Предоставление персонала</li>
-            <li>Вакансии</li>
-            <li>Партнерская программа</li>
+            <li><a href="/services/autsorsing">Аутсорсинг</a></li>
+            <li><a href="/category/rekrutment">Рекрутмент</a></li>
+            <li><a href="category/predostavleniye-personala">Предоставление персонала</a></li>
+            <li><a href="/vakansii">Вакансии</a></li>
+            <li><a href="/partnerskaya-programma">Партнерская программа</a></li>
           </ul>
         </div>
         <div class="footer__column nav">
           <ul class="col-second">
-            <li>Блог</li>
-            <li>Контакты</li>
-            <li>Охрана труда</li>
+            <li><a href="/blog">Блог</a></li>
+            <li><a href="/kontakty">Контакты</a></li>
+            <li><a href="/okhrana-truda">Охрана труда</a></li>
           </ul>
         </div>
 
@@ -67,9 +67,9 @@
       </div>
 
       <div class="footer__bottom">
-        <p>Политика обработки персональных данных</p>
-        <p>Согласие на обработку персональных данных для работодателей</p>
-        <p>Согласие на обработку персональных данных для соискателей</p>
+        <a href="/docs/personal_data_policy.pdf">Политика обработки персональных данных</a>
+        <a href="/docs/client_agreement.pdf">Согласие на обработку персональных данных для работодателей</a>
+        <a href="/docs/applicant_agreement.pdf">Согласие на обработку персональных данных для соискателей</a>
       </div>
       <div class="footer__bottom">
         <p class="copyright">© 2025 Mega-Personal</p>
@@ -111,6 +111,10 @@
 
 .footer__column .col-first{
   height: 66%;
+}
+
+.col-first a, .col-second a{
+  color: black;
 }
 
 .footer__column .col-second {
@@ -159,13 +163,13 @@
   justify-content: space-between;
   font-size: 13px;
   color: #555;
-  border-top: 1px solid #eee;
 }
 
-.footer__bottom p{
+.footer__bottom a {
+  color: #2c3e50;
+  font-weight: 300;
   font-size: clamp(14px, 0.5vw, 18px);
 }
-
 .creator {
   margin-left: auto;
   color: #999;

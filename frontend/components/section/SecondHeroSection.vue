@@ -68,7 +68,9 @@ onMounted(() => {
   gap: 40px;
   border-radius: 24px;
   background: white;
-  overflow: hidden;}
+  overflow: hidden;
+  max-height: 460px;
+}
 
 .about-hero h1{
   margin: 0;
