@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 const IndexKeyNumberSchema = new mongoose.Schema({
     number: String,
     description: String,
+    position: Number, // ← добавлено
 }, { timestamps: true })
 
 export const IndexKeyNumber = mongoose.model('IndexKeyNumber', IndexKeyNumberSchema)
@@ -14,6 +15,7 @@ const IndexAdvantageSchema = new mongoose.Schema({
     slug: String,
     image: String,
     thesis: [String],
+    position: Number, // ← добавлено
 }, { timestamps: true })
 
 export const IndexAdvantage = mongoose.model('IndexAdvantage', IndexAdvantageSchema)
@@ -22,6 +24,7 @@ export const IndexAdvantage = mongoose.model('IndexAdvantage', IndexAdvantageSch
 const IndexClientSchema = new mongoose.Schema({
     image: String,
     url: String,
+    position: Number, // ← добавлено
 }, { timestamps: true })
 
 export const IndexClient = mongoose.model('IndexClient', IndexClientSchema)
@@ -33,6 +36,7 @@ const IndexReviewSchema = new mongoose.Schema({
     person: String,
     role: String,
     text: String,
+    position: Number, // ← добавлено
 }, { timestamps: true })
 
 export const IndexReview = mongoose.model('IndexReview', IndexReviewSchema)
@@ -43,6 +47,7 @@ const IndexCaseSchema = new mongoose.Schema({
     task: String,
     decision: String,
     summary: String,
+    position: Number, // ← добавлено
 }, { timestamps: true })
 
 export const IndexCase = mongoose.model('IndexCase', IndexCaseSchema)

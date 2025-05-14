@@ -173,10 +173,10 @@ app.get('/api/articles/:slug', async (req, res) => {
 
 app.get('/api/vacancies', async (req, res) => {
   try {
-    const vacancies = await Vacancies.find()
+    const vacancies = await Vacancies.find().sort({ position: 1 })
     const faq = await VacanciesFAQ.findOne().sort({ updatedAt: -1 })
-    const reviews = await VacanciesReview.find().sort({ date: -1 })
-    const photos = await VacanciesPhotos.find().sort({ updatedAt: -1 })
+    const reviews = await VacanciesReview.find().sort({ position: 1 })
+    const photos = await VacanciesPhotos.find().sort({ position: 1 })
 
     res.json({
       vacancies,
@@ -193,11 +193,11 @@ app.get('/api/vacancies', async (req, res) => {
 
 app.get('/api/index', async (req, res) => {
   try {
-    const keyNumbers = await IndexKeyNumber.find()
-    const advantages = await IndexAdvantage.find()
-    const clients = await IndexClient.find()
-    const reviews = await IndexReview.find()
-    const cases = await IndexCase.find()
+    const keyNumbers = await IndexKeyNumber.find().sort({ position: 1 })
+    const advantages = await IndexAdvantage.find().sort({ position: 1 })
+    const clients = await IndexClient.find().sort({ position: 1 })
+    const reviews = await IndexReview.find().sort({ position: 1 })
+    const cases = await IndexCase.find().sort({ position: 1 })
 
     res.json({
       keyNumbers,
@@ -256,8 +256,15 @@ app.get('/api/services/:slug', async (req, res) => {
 
 
 app.get('/api/service-categories', async (req, res) => {
-  const categories = await ServiceCategory.find({}).populate('services');
-  res.json(categories);
+  try {
+    const categories = await ServiceCategory.find({})
+        .sort({ position: 1 })
+        .populate('services');
+    res.json(categories);
+  } catch (e) {
+    console.error('Ошибка при загрузке /api/service-categories:', e)
+    res.status(500).json({ error: 'Ошибка при загрузке данных' })
+  }
 });
 
 app.get('/api/service-categories/:slug', async (req, res) => {

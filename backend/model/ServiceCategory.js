@@ -10,6 +10,7 @@ const ServiceCategorySchema = new mongoose.Schema({
     services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ServicePage' }],
     metaTitle: String,
     metaDescription: String,
+    position: Number,
 });
 
 export const ServiceCategory = mongoose.model('ServiceCategory', ServiceCategorySchema);
