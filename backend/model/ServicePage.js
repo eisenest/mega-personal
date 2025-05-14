@@ -24,6 +24,7 @@ const ServicePageSchema = new mongoose.Schema({
         buttonText: String,
     },
 
+    problemsTitle: { type: String },
     problems: {
         type: [
             {
@@ -33,6 +34,8 @@ const ServicePageSchema = new mongoose.Schema({
         ],
         validate: [arr => arr.length <= 6, 'Максимум 6 проблем'],
     },
+
+    employeesTitle: String,
 
     employees: [
         {
@@ -59,6 +62,7 @@ const ServicePageSchema = new mongoose.Schema({
         },
     ],
 
+    recruitmentStepsTitle: String,
     recruitmentSteps: [
         {
             title: String,
@@ -66,6 +70,7 @@ const ServicePageSchema = new mongoose.Schema({
         },
     ],
 
+    resultStepsTitle: String,
     resultSteps: [String],
 
     faq: [

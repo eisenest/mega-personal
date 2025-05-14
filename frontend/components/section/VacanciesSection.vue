@@ -41,7 +41,10 @@
 import { ref } from 'vue'
 
 defineProps({
-  title: String,
+  title: {
+    type: String,
+    default: 'Каких сотрудников мы регулярно набираем',
+  },
   subtitle: String,
   categories: Array
 })

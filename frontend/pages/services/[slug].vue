@@ -35,7 +35,7 @@ useHead(() => ({
   />
 
   <div v-if="service.problems">
-    <h2  class="center headline"><span class="highlight">Ситуации, когда мы вам необходимы</span></h2>
+    <h2  class="center headline"><span class="highlight">{{ service.problemsTitle || 'Ситуации, когда мы вам необходимы' }}</span></h2>
     <div class="values__grid">
       <ValueCard
           v-for="(item, index) in service.problems"
@@ -50,7 +50,7 @@ useHead(() => ({
   </div>
   <VacanciesSection
       v-if="service.employees.length > 0"
-      :title="'Каких сотрудников мы регулярно набираем'"
+      :title="service.employeesTitle"
       :categories=service.employees
   />
 
@@ -81,11 +81,15 @@ useHead(() => ({
   </div>
 
   <div v-if="service.recruitmentSteps.length > 0">
-    <h2 class="headline"><span class="highlight">Как происходит рекрутинг для вашей  компании?</span></h2>
+    <h2 class="headline"><span class="highlight">{{ service.recruitmentStepsTitle|| 'Как происходит рекрутинг для вашей  компании ?' }}</span></h2>
     <StepRowSection class="service" :steps="service.recruitmentSteps" />
   </div>
 
-  <FourStepSection v-if="service.resultSteps.length > 0" :steps="service.resultSteps"/>
+  <FourStepSection
+      v-if="service.resultSteps.length > 0"
+      :title="service.resultStepsTitle"
+      :steps="service.resultSteps"
+  />
 
   <FormSection :fixed-tab="0"/>
 

@@ -1,6 +1,6 @@
 <template>
   <section class="steps-section container white">
-    <h2 class="steps-title"><span class="highlight">Решим вопрос с кадрами в 4 шага</span></h2>
+    <h2 class="steps-title"><span class="highlight">{{ title }}</span></h2>
     <div class="steps-grid">
       <div class="step-box" v-for="(step, index) in steps" :key="index">
         <span class="step-number">{{ index + 1 }} <span class="dot">∙</span></span>
@@ -12,6 +12,10 @@
 
 <script setup>
 defineProps({
+  title: {
+    type: String,
+    default: 'Решим вопрос с кадрами в 4 шага'
+  },
   steps: Array,
 })
 </script>
