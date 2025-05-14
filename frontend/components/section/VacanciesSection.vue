@@ -25,7 +25,18 @@
           <span class="arrow"><img src="/icon/expand-white.svg" alt=""></span>
         </button>
       </div>
-      <div class="positions-grid">
+      <div class="positions-grid" v-if="route.href === '/vakansii'">
+        <div
+            v-for="(position, index) in categories[selectedCategoryIndex].services"
+            :key="index"
+            class="position-card"
+        >
+          <span class="dot">▪</span>
+          {{ position }}
+        </div>
+      </div>
+
+      <div class="positions-grid" v-else>
         <div
             v-for="(position, index) in categories[selectedCategoryIndex].positions"
             :key="index"
@@ -35,12 +46,16 @@
           {{ position }}
         </div>
       </div>
+
+
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+
+const route = useRoute()
 
 defineProps({
   title: {
