@@ -21,155 +21,279 @@
               </button>
             </template>
           </div>
-          <h3 v-if="!isSubmitted">
-            {{ tabHeadlines[internalTab].text }}<span class="highlight">{{ tabHeadlines[internalTab].highlight }}</span>
-          </h3>
-          <h3 v-else>Спасибо! <span class="highlight"> Заявка отправлена </span></h3>
+
+          <template v-if="!isSubmitted">
+            <h3>
+              {{ tabHeadlines[internalTab].text }}
+              <span class="highlight">{{ tabHeadlines[internalTab].highlight }}</span>
+            </h3>
+          </template>
+
+          <template v-else>
+            <h3>Спасибо за <span class="highlight">оставленную заявку! </span></h3>
+          </template>
         </div>
-        <div class="form__info-bottom" v-if="!isSubmitted">
-          <p>Заполните форму, и наш специалист свяжется с вами.</p>
+
+        <div class="form__info-bottom">
+          <template v-if="!isSubmitted">
+            <p>Заполните форму, и наш специалист свяжется с вами.</p>
+          </template>
+
+          <template v-else>
+            <p v-if="activeTab === 0">
+              Наш менеджер свяжется с вами в ближайшее время, чтобы обсудить ваши потребности и предложить оптимальные решения.
+            </p>
+            <p v-else-if="activeTab === 1">
+              Наш HR-менеджер свяжется с вами в ближайшее время для обсуждения дальнейших шагов.
+            </p>
+            <p v-else>
+              Наш менеджер свяжется с вами в ближайшее время для обсуждения возможных вариантов партнерства.
+            </p>
+          </template>
         </div>
       </div>
+
 
       <!-- Правая часть -->
       <form class="form__box" @submit.prevent="submitForm" v-if="!isSubmitted">
         <template v-if="activeTab === 0">
           <div class="form__row">
-            <input v-model="form.phone" placeholder="Телефон" />
-            <input v-model="form.email" placeholder="email" />
+            <input
+                v-model="form.phone"
+                :placeholder="errors.phone ? 'Введите телефон' : 'Телефон'"
+                :class="{ 'input--error': errors.phone }"
+                v-phone-mask
+            />
+            <input
+                v-model="form.email"
+                :placeholder="errors.email ? 'Введите email' : 'email'"
+                :class="{ 'input--error': errors.email }"
+            />
           </div>
           <div class="form__row">
-            <input v-model="form.company_name" placeholder="Организация" />
-            <input v-model="form.address" placeholder="Город проекта" />
+            <input
+                v-model="form.company_name"
+                :placeholder="errors.company_name ? 'Введите организацию' : 'Организация'"
+                :class="{ 'input--error': errors.company_name }"
+            />
+            <input
+                v-model="form.address"
+                :placeholder="errors.address ? 'Введите город проекта' : 'Город проекта'"
+                :class="{ 'input--error': errors.address }"
+            />
           </div>
-          <textarea v-model="form.comment" placeholder="Комментарий"></textarea>
+          <textarea
+              v-model="form.comment"
+              :placeholder="errors.comment ? 'Введите комментарий' : 'Комментарий'"
+              :class="{ 'input--error': errors.comment }"
+          ></textarea>
         </template>
 
         <template v-else-if="activeTab === 1">
-          <input v-model="form.first_name" placeholder="Имя и фамилия" />
+          <input
+              v-model="form.first_name"
+              :placeholder="errors.first_name ? 'Введите имя и фамилию' : 'Имя и фамилия'"
+              :class="{ 'input--error': errors.first_name }"
+          />
           <div class="form__row">
-            <input v-model="form.phone" placeholder="Телефон" />
-            <input v-model="form.city" placeholder="Город" />
+            <input
+                v-model="form.phone"
+                :placeholder="errors.phone ? 'Введите телефон' : 'Телефон'"
+                :class="{ 'input--error': errors.phone }"
+                v-phone-mask
+            />
+            <input
+                v-model="form.city"
+                :placeholder="errors.city ? 'Введите город' : 'Город'"
+                :class="{ 'input--error': errors.city }"
+            />
           </div>
         </template>
 
         <template v-else>
           <div class="form__row">
-            <input v-model="form.first_name" placeholder="Имя" />
-            <input v-model="form.last_name" placeholder="Фамилия" />
+            <input
+                v-model="form.first_name"
+                :placeholder="errors.first_name ? 'Введите имя' : 'Имя'"
+                :class="{ 'input--error': errors.first_name }"
+            />
+            <input
+                v-model="form.last_name"
+                :placeholder="errors.last_name ? 'Введите фамилию' : 'Фамилия'"
+                :class="{ 'input--error': errors.last_name }"
+            />
           </div>
-          <input v-model="form.middle_name" placeholder="Отчество" />
+          <input
+              v-model="form.middle_name"
+              :placeholder="errors.middle_name ? 'Введите отчество' : 'Отчество'"
+              :class="{ 'input--error': errors.middle_name }"
+          />
           <div class="form__row">
-            <input v-model="form.email" placeholder="Почта" />
-            <input v-model="form.date_of_birth" type="date" placeholder="Дата Рождения" />
+            <input
+                v-model="form.email"
+                :placeholder="errors.email ? 'Введите почту' : 'Почта'"
+                :class="{ 'input--error': errors.email }"
+            />
+            <input
+                v-model="form.date_of_birth"
+                type="date"
+                :placeholder="errors.date_of_birth ? 'Введите дату рождения' : 'Дата рождения'"
+                :class="{ 'input--error': errors.date_of_birth }"
+            />
           </div>
           <div class="form__row">
-            <input v-model="form.phone" placeholder="Телефон" />
-            <DropdownSelect v-model="entityType" placeholder="Тип юридического лица" :options="['ИП', 'Самозанятый']" />
+            <input
+                v-model="form.phone"
+                :placeholder="errors.phone ? 'Введите телефон' : 'Телефон'"
+                :class="{ 'input--error': errors.phone }"
+                v-phone-mask
+            />
+            <DropdownSelect
+                v-model="entityType"
+                placeholder="Тип юридического лица"
+                :options="['ИП', 'Самозанятый']"
+            />
           </div>
 
           <div class="form__row">
             <input
-                :placeholder="'Серия паспорта'"
                 v-if="labelToIdMap['Серия паспорта']"
+                :placeholder="errors[labelToIdMap['Серия паспорта']] ? 'Введите серию паспорта' : 'Серия паспорта'"
                 v-model="form.fields[labelToIdMap['Серия паспорта']]"
+                :class="{ 'input--error': errors[labelToIdMap['Серия паспорта']] }"
             />
             <input
-                :placeholder="'Номер паспорта'"
                 v-if="labelToIdMap['Номер паспорта']"
+                :placeholder="errors[labelToIdMap['Номер паспорта']] ? 'Введите номер паспорта' : 'Номер паспорта'"
                 v-model="form.fields[labelToIdMap['Номер паспорта']]"
+                :class="{ 'input--error': errors[labelToIdMap['Номер паспорта']] }"
             />
           </div>
+
           <div class="form__row">
             <input
-                :placeholder="'Наименование банка'"
                 v-if="labelToIdMap['Наименование банка']"
+                :placeholder="errors[labelToIdMap['Наименование банка']] ? 'Введите наименование банка' : 'Наименование банка'"
                 v-model="form.fields[labelToIdMap['Наименование банка']]"
+                :class="{ 'input--error': errors[labelToIdMap['Наименование банка']] }"
             />
             <input
-                :placeholder="'БИК банка'"
                 v-if="labelToIdMap['БИК банка']"
+                :placeholder="errors[labelToIdMap['БИК банка']] ? 'Введите БИК банка' : 'БИК банка'"
                 v-model="form.fields[labelToIdMap['БИК банка']]"
+                :class="{ 'input--error': errors[labelToIdMap['БИК банка']] }"
             />
           </div>
+
           <div class="form__row">
             <input
-                :placeholder="'Корреспондентский счет'"
                 v-if="labelToIdMap['Корреспондентский счет']"
+                :placeholder="errors[labelToIdMap['Корреспондентский счет']] ? 'Введите корреспондентский счёт' : 'Корреспондентский счет'"
                 v-model="form.fields[labelToIdMap['Корреспондентский счет']]"
+                :class="{ 'input--error': errors[labelToIdMap['Корреспондентский счет']] }"
             />
             <input
-                :placeholder="'Расчетный счет'"
                 v-if="labelToIdMap['Расчетный счет']"
+                :placeholder="errors[labelToIdMap['Расчетный счет']] ? 'Введите расчётный счёт' : 'Расчетный счет'"
                 v-model="form.fields[labelToIdMap['Расчетный счет']]"
+                :class="{ 'input--error': errors[labelToIdMap['Расчетный счет']] }"
             />
           </div>
+
           <div class="form__row" v-if="entityType === 'Самозанятый'">
             <input
-                :placeholder="'Адрес регистрации'"
                 v-if="labelToIdMap['Адрес регистрации']"
+                :placeholder="errors[labelToIdMap['Адрес регистрации']] ? 'Введите адрес регистрации' : 'Адрес регистрации'"
                 v-model="form.fields[labelToIdMap['Адрес регистрации']]"
+                :class="{ 'input--error': errors[labelToIdMap['Адрес регистрации']] }"
             />
             <input
-                :placeholder="'ИНН банка'"
-                v-if="labelToIdMap['ИНН банка']"
-                v-model="form.fields[labelToIdMap['ИНН банка']]"
+                v-if="labelToIdMap['ИНН']"
+                :placeholder="errors[labelToIdMap['ИНН']] ? 'Введите ИНН' : 'ИНН'"
+                v-model="form.fields[labelToIdMap['ИНН']]"
+                :class="{ 'input--error': errors[labelToIdMap['ИНН']] }"
             />
           </div>
           <div class="form__row" v-else-if="entityType === 'ИП'">
             <input
-                :placeholder="'ИНН'"
                 v-if="labelToIdMap['ИНН']"
+                :placeholder="errors[labelToIdMap['ИНН']] ? 'Введите ИНН' : 'ИНН'"
                 v-model="form.fields[labelToIdMap['ИНН']]"
+                :class="{ 'input--error': errors[labelToIdMap['ИНН']] }"
             />
             <input
-                :placeholder="'КПП'"
                 v-if="labelToIdMap['КПП']"
+                :placeholder="errors[labelToIdMap['КПП']] ? 'Введите КПП' : 'КПП'"
                 v-model="form.fields[labelToIdMap['КПП']]"
+                :class="{ 'input--error': errors[labelToIdMap['КПП']] }"
             />
           </div>
+
           <div class="form__row" v-if="entityType === 'ИП'">
             <input
-                :placeholder="'ОГРН'"
                 v-if="labelToIdMap['ОГРН']"
+                :placeholder="errors[labelToIdMap['ОГРН']] ? 'Введите ОГРН' : 'ОГРН'"
                 v-model="form.fields[labelToIdMap['ОГРН']]"
+                :class="{ 'input--error': errors[labelToIdMap['ОГРН']] }"
             />
             <input
-                :placeholder="'Адрес регистрации'"
                 v-if="labelToIdMap['Адрес регистрации']"
+                :placeholder="errors[labelToIdMap['Адрес регистрации']] ? 'Введите адрес регистрации' : 'Адрес регистрации'"
                 v-model="form.fields[labelToIdMap['Адрес регистрации']]"
+                :class="{ 'input--error': errors[labelToIdMap['Адрес регистрации']] }"
             />
           </div>
-
+          <!-- Загрузка файлов (upload-links) -->
           <div class="upload-links">
-            <p v-if="entityType === 'Самозанятый' && labelToIdMap['Справка самозанятого о постановке на учет']" @click="triggerUpload('doc1')">
-              <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
-              Справка самозанятого о постановке на учет
-              <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
-            </p>
-            <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
+            <div v-if="entityType === 'Самозанятый' && labelToIdMap['Справка самозанятого о постановке на учет']">
+              <p
+                  @click="triggerUpload('doc1')"
+                  :class="{ 'input--error': errors[labelToIdMap['Справка самозанятого о постановке на учет']] }"
+              >
+                <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+                Справка самозанятого о постановке на учет
+                <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+              </p>
+              <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
+            </div>
 
-            <p v-if="entityType === 'ИП' && labelToIdMap['Лист записи о регистрации ИП']" @click="triggerUpload('doc1')">
-              <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-              Лист записи о регистрации ИП
-              <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
-            </p>
-            <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
+            <div v-if="entityType === 'ИП' && labelToIdMap['Лист записи о регистрации ИП']">
+              <p
+                  @click="triggerUpload('doc1')"
+                  :class="{ 'input--error': errors[labelToIdMap['Лист записи о регистрации ИП']] }"
+              >
+                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
+                Лист записи о регистрации ИП
+                <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+              </p>
+              <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
+            </div>
 
-            <p v-if="labelToIdMap['Скан паспорта (1 страница)']" @click="triggerUpload('doc2')">
-              <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-              Скан паспорта (1 страница)
-              <span v-if="uploadedFiles.doc2"> — {{ uploadedFiles.doc2.name }}</span>
-            </p>
-            <input ref="doc2" type="file" @change="handleFileUpload($event, 'doc2')" style="display: none" />
+            <div v-if="labelToIdMap['Скан паспорта (1 страница)']">
+              <p
+                  @click="triggerUpload('doc2')"
+                  :class="{ 'input--error': errors[labelToIdMap['Скан паспорта (1 страница)']] }"
+              >
+                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
+                Скан паспорта (1 страница)
+                <span v-if="uploadedFiles.doc2"> — {{ uploadedFiles.doc2.name }}</span>
+              </p>
+              <input ref="doc2" type="file" @change="handleFileUpload($event, 'doc2')" style="display: none" />
+            </div>
 
-            <p v-if="labelToIdMap['Скан паспорта (Регистрация)']" @click="triggerUpload('doc3')">
-              <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-              Скан паспорта (Регистрация)
-              <span v-if="uploadedFiles.doc3"> — {{ uploadedFiles.doc3.name }}</span>
-            </p>
-            <input ref="doc3" type="file" @change="handleFileUpload($event, 'doc3')" style="display: none" />
+            <div v-if="labelToIdMap['Скан паспорта (Регистрация)']">
+              <p
+                  @click="triggerUpload('doc3')"
+                  :class="{ 'input--error': errors[labelToIdMap['Скан паспорта (Регистрация)']] }"
+              >
+                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
+                Скан паспорта (Регистрация)
+                <span v-if="uploadedFiles.doc3"> — {{ uploadedFiles.doc3.name }}</span>
+              </p>
+              <input ref="doc3" type="file" @change="handleFileUpload($event, 'doc3')" style="display: none" />
+            </div>
           </div>
+
         </template>
 
         <label class="checkbox">
@@ -224,7 +348,24 @@ const form = reactive({
 
 const selectedTypeObject = ref(null)
 const labelToIdMap = reactive<Record<string, string>>({})
+const errors = reactive<Record<string, string>>({})
+
+const normalizePhone = (raw: string): string => {
+  const digits = raw.replace(/\D/g, '')
+  return '+7' + digits.slice(-10) // берём последние 10 цифр
+}
+
+const sendYandexGoal = () => {
+  if (typeof window !== 'undefined' && typeof ym === 'function') {
+    const goals = ['client_lead', 'worker_lead', 'freelance_lead']
+    const goal = goals[activeTab.value]
+    ym(90744296, 'reachGoal', goal)
+    console.log('Yandex goal sent:', goal)
+  }
+}
+
 const submitForm = async () => {
+  form.phone = normalizePhone(form.phone)
   let payload = {}
   let url = ''
 
@@ -275,8 +416,28 @@ const submitForm = async () => {
       body: JSON.stringify(payload)
     })
     const result = await res.json()
-    console.log('Форма отправлена', result)
+
+    if (result.errors) {
+      Object.keys(result.errors).forEach((key) => {
+        const errorMessage = result.errors[key][0] || 'Ошибка валидации'
+
+        // Простые поля (first_name, email, и т.д.)
+        if (key in form) {
+          errors[key] = errorMessage
+        }
+
+        // Поля formEntry.data.{id}
+        if (key.startsWith('formEntry.data.')) {
+          const id = key.replace('formEntry.data.', '')
+          errors[id] = errorMessage
+        }
+      })
+
+      console.warn('Валидация не пройдена', errors)
+      return // Не продолжаем — неуспешная отправка
+    }
     isSubmitted.value = true
+    sendYandexGoal()
   } catch (e) {
     console.error('Ошибка отправки', e)
     alert('Ошибка при отправке формы.')
@@ -313,6 +474,7 @@ watch([activeTab, entityType], async ([newTab, newEntity]) => {
           labelToIdMap[field.label] = field.id
         })
       }
+      console.log(labelToIdMap)
     } catch (e) {
       console.error('Ошибка загрузки типов самозанятости:', e)
     }
@@ -409,4 +571,14 @@ const tabHeadlines = [
   text-decoration: underline;
   font-weight: 500;
 }
+
+.input--error {
+  border: 1px solid #F44336 !important;
+  outline: none;
+}
+.input--error::placeholder {
+  color: #F44336;
+  opacity: 1;
+}
+
 </style>
