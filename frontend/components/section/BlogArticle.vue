@@ -94,7 +94,11 @@ onMounted(() => {
   toc?.addEventListener('click', scrollToIfAnchorClick)
 })
 
+const shareUrl = window.location.href
+const shareTitle = document.title
+
 </script>
+
 <template>
   <section class="blog-article container">
     <!-- Header -->
@@ -110,8 +114,22 @@ onMounted(() => {
         </p>
         <div class="share-links">
           <span>Поделиться</span>
-          <a href="#"><img src="/icon/tg-white.svg" alt="Telegram" /></a>
-          <a href="#"><img src="/icon/vk-white.svg" alt="VK" /></a>
+          <a
+              :href="`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`"
+              target="_blank"
+              rel="noopener"
+          >
+            <img src="/icon/tg-white.svg" alt="Telegram" />
+          </a>
+
+          <a
+              :href="`https://vk.com/share.php?url=${encodeURIComponent(shareUrl)}`"
+              target="_blank"
+              rel="noopener"
+          >
+            <img src="/icon/vk-white.svg" alt="VK" />
+          </a>
+
         </div>
       </div>
 

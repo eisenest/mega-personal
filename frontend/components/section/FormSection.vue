@@ -33,7 +33,7 @@
 
       <!-- Правая часть -->
       <form class="form__box" @submit.prevent="submitForm" v-if="!isSubmitted">
-        <template v-if="internalTab === 0">
+        <template v-if="activeTab === 0">
           <div class="form__row">
             <input v-model="form.phone" placeholder="Телефон" />
             <input v-model="form.email" placeholder="email" />
@@ -45,7 +45,7 @@
           <textarea v-model="form.comment" placeholder="Комментарий"></textarea>
         </template>
 
-        <template v-else-if="internalTab === 1">
+        <template v-else-if="activeTab === 1">
           <input v-model="form.first_name" placeholder="Имя и фамилия" />
           <div class="form__row">
             <input v-model="form.phone" placeholder="Телефон" />

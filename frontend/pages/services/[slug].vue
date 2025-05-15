@@ -44,7 +44,7 @@ useHead(() => ({
           :title="item.title"
           :description="item.description"
           :showTitle="true"
-          :class="{ 'shifted': index === 3 }"
+          :class="{ shifted: service.problems.length === 5 && index === 3 }"
       />
     </div>
   </div>
@@ -112,7 +112,6 @@ useHead(() => ({
 .advantages-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  //grid-template-rows: repeat(2, 300px);
   gap: 24px;
 }
 

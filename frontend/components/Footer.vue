@@ -102,7 +102,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  gap: 24px;
 }
 
 .footer__column.social button{
@@ -198,7 +198,7 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 16px !important;
 }
 
 .social-links li {

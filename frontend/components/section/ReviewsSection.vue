@@ -86,7 +86,7 @@ function nextReview() {
   flex-direction: column;
   gap: 16px;
   max-width: 576px;
-  height: 440px;
+  height: 100%;
   justify-content: space-between;
 }
 
