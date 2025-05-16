@@ -202,16 +202,16 @@
 
           <div class="form__row" v-if="entityType === 'Самозанятый'">
             <input
+                v-if="labelToIdMap['ИНН банка']"
+                :placeholder="errors[labelToIdMap['ИНН банка']] ? 'Введите ИНН банка' : 'ИНН банка'"
+                v-model="form.fields[labelToIdMap['ИНН банка']]"
+                :class="{ 'input--error': errors[labelToIdMap['ИНН банка']] }"
+            />
+            <input
                 v-if="labelToIdMap['Адрес регистрации']"
                 :placeholder="errors[labelToIdMap['Адрес регистрации']] ? 'Введите адрес регистрации' : 'Адрес регистрации'"
                 v-model="form.fields[labelToIdMap['Адрес регистрации']]"
                 :class="{ 'input--error': errors[labelToIdMap['Адрес регистрации']] }"
-            />
-            <input
-                v-if="labelToIdMap['ИНН']"
-                :placeholder="errors[labelToIdMap['ИНН']] ? 'Введите ИНН' : 'ИНН'"
-                v-model="form.fields[labelToIdMap['ИНН']]"
-                :class="{ 'input--error': errors[labelToIdMap['ИНН']] }"
             />
           </div>
           <div class="form__row" v-else-if="entityType === 'ИП'">
@@ -243,6 +243,14 @@
                 :class="{ 'input--error': errors[labelToIdMap['Адрес регистрации']] }"
             />
           </div>
+
+          <input
+              v-if="labelToIdMap['ИНН физ. лица']"
+              :placeholder="errors[labelToIdMap['ИНН физ. лица']] ? 'Введите ИНН физ. лица' : 'ИНН физ. лица'"
+              v-model="form.fields[labelToIdMap['ИНН физ. лица']]"
+              :class="{ 'input--error': errors[labelToIdMap['ИНН физ. лица']] }"
+          />
+
           <!-- Загрузка файлов (upload-links) -->
           <div class="upload-links">
             <div v-if="entityType === 'Самозанятый' && labelToIdMap['Справка самозанятого о постановке на учет']">
@@ -250,7 +258,7 @@
                   @click="triggerUpload('doc1')"
                   :class="{ 'input--error': errors[labelToIdMap['Справка самозанятого о постановке на учет']] }"
               >
-                <img src="/icon/upload.svg" alt="Upload" class="upload-icon" />
+                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
                 Справка самозанятого о постановке на учет
                 <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
               </p>
@@ -466,6 +474,7 @@ watch([activeTab, entityType], async ([newTab, newEntity]) => {
     try {
       const res = await fetch('https://api-1.beta.mega-personal.ru/omega/registration_request')
       const types = await res.json()
+      console.log(types)
       selectedTypeObject.value = types.find(t => t.name === newEntity)
 
       if (selectedTypeObject.value?.form?.fields) {
@@ -512,8 +521,6 @@ const handleFileUpload = async (event, name) => {
       body: formData
     })
     const { url } = await res.json()
-
-    console.log(url)
 
     const labelToFieldMap = {
       doc1: entityType.value === 'ИП'
