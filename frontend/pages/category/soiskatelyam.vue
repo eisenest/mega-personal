@@ -4,7 +4,7 @@ import RecruitmentSection from "~/components/section/RecruitmentSection.vue";
 
 const services = [
   {
-    slug: '/vacansii',
+    slug: '/vakansii',
     title: 'Вакансии',
     image: "/previews/vac.png"
   },
