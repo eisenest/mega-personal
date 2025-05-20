@@ -8,7 +8,8 @@ body {
     background: var(--light-grey, #EDF7FF);
     font-family: 'Inter', sans-serif;
     padding: 2.5rem 4.5rem;
-    margin: 120px 0 0 0;
+    margin: 120px auto 0;
+    max-width: 1680px;
 }
 
 

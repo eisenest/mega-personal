@@ -121,6 +121,8 @@ const baseItems = [
   width: 100%;
   top: 0;
   left: 0;
+  max-width: 1680px;
+  justify-self: anchor-center;
 }
 
 .header__container {
