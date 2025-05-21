@@ -36,22 +36,23 @@ const agree = ref(false)
 async function submitForm() {
   if (!agree.value || !email.value) return
 
-  const payload = new URLSearchParams()
-  payload.append('api_key', '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo')
-  payload.append('list_ids', '7504418')
-  payload.append('fields[email]', email.value)
-  payload.append('double_optin', '1') // double opt-in с подтверждением по почте
-  payload.append('request_ip', window.location.hostname)
-  payload.append('request_time', Math.floor(Date.now() / 1000).toString())
+  const baseUrl = 'https://api.unisender.com/ru/api/subscribe?format=json'
+
+  const queryParams = new URLSearchParams({
+    api_key: '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo',
+    list_ids: '7504418',
+    'fields[email]': email.value,
+    double_optin: '1', // либо '3', если не нужно подтверждение
+    request_ip: window.location.hostname,
+    request_time: Math.floor(Date.now() / 1000).toString()
+  })
+
+  const url = `${baseUrl}&${queryParams.toString()}`
 
   try {
-    const res = await fetch('https://api.unisender.com/ru/api/subscribe?format=json', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: payload.toString()
-    })
-
+    const res = await fetch(url)
     const result = await res.json()
+
     if (result.result) {
       alert('Вы успешно подписались! Проверьте почту для подтверждения.')
       email.value = ''
@@ -64,6 +65,7 @@ async function submitForm() {
     console.error(err)
   }
 }
+
 </script>
 
 <style scoped>
