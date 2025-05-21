@@ -159,6 +159,12 @@ function prev() {
   color: #00A2F6 !important;
 }
 
+@media (max-width: 480px){
+  .goal__right{
+    flex: 1 1;
+  }
+}
+
 @media (max-width: 960px) {
   .goal__content {
     flex-direction: column-reverse;

@@ -418,4 +418,10 @@ if (process.client) {
   }
 }
 
+@media (max-width: 768px) {
+  .article-toc {
+    position: static;
+  }
+}
+
 </style>
