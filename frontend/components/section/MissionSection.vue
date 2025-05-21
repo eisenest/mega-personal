@@ -84,6 +84,7 @@ p.mission__text {
     height: auto;
     flex-direction: column-reverse;
     padding: 1rem;
+    margin-top: 100px;
   }
 
   .mission__content{

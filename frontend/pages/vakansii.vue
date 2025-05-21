@@ -216,6 +216,14 @@ function goTo(url: string) {
     grid-template-columns: repeat(1, 1fr);
   }
 
+  .services__title-content{
+    gap: 0;
+  }
+
+  .services__description p{
+    width: 100%;
+  }
+
   .social-buttons{
     grid-template-columns: repeat(1, 1fr);
     gap: 12px;

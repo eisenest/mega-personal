@@ -53,5 +53,11 @@ defineProps({
   background: var(--violet, #6700D1);
 }
 
+@media screen and (max-width: 480px) {
+  .outsource-card{
+    padding: 16px;
+  }
+}
+
 
 </style>

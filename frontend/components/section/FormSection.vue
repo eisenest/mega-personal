@@ -584,4 +584,5 @@ const tabHeadlines = [
   opacity: 1;
 }
 
+
 </style>

@@ -579,4 +579,15 @@ textarea {
   opacity: 1;
 }
 
+@media screen and (max-width:480px ){
+  .form-row {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .modal{
+    padding: 1rem;
+  }
+
+}
+
 </style>

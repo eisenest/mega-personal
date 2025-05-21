@@ -4,6 +4,7 @@
       <div class="reviews__header">
         <h2>Отзывы</h2>
         <Pagination
+            v-if="isDesktop"
             :current="currentReviewIndex"
             :total="reviews.length - reviewsPerPage + 1"
             @prev="prevReview"
@@ -27,12 +28,21 @@
           </div>
         </div>
       </div>
+
+      <div class="mobile-pagination" v-if="!isDesktop">
+        <Pagination
+            :current="currentReviewIndex"
+            :total="reviews.length"
+            @prev="prevReview"
+            @next="nextReview"
+        />
+      </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Pagination from "~/components/elements/Pagination.vue"
 
 const { reviews } = defineProps<{ reviews: any[] }>()
@@ -40,10 +50,12 @@ const { reviews } = defineProps<{ reviews: any[] }>()
 const config = useRuntimeConfig()
 
 const currentReviewIndex = ref(0)
-const reviewsPerPage = 3
+const isDesktop = ref(true)
+
+const reviewsPerPage = computed(() => isDesktop.value ? 3 : 1)
 
 const currentReviewChunk = computed(() => {
-  return reviews.slice(currentReviewIndex.value, currentReviewIndex.value + reviewsPerPage)
+  return reviews.slice(currentReviewIndex.value, currentReviewIndex.value + reviewsPerPage.value)
 })
 
 function prevReview() {
@@ -53,10 +65,18 @@ function prevReview() {
 }
 
 function nextReview() {
-  if (currentReviewIndex.value + reviewsPerPage < reviews.length) {
+  if (currentReviewIndex.value + reviewsPerPage.value < reviews.length) {
     currentReviewIndex.value++
   }
 }
+
+onMounted(() => {
+  const checkWidth = () => {
+    isDesktop.value = window.innerWidth > 480
+  }
+  checkWidth()
+  window.addEventListener('resize', checkWidth)
+})
 </script>
 
 <style scoped>
@@ -132,5 +152,11 @@ function nextReview() {
 .text {
   line-height: 1.5;
   color: #333;
+}
+
+.mobile-pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 </style>

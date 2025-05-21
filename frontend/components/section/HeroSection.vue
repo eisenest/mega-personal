@@ -157,6 +157,10 @@
     display: none;
   }
 
+  .hero__content{
+    padding: 16px;
+  }
+
   .hero__cta{
     width: 100%;
     margin-bottom: 64px !important;

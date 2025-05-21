@@ -4,6 +4,7 @@
       <div class="cases__header">
         <h2>Кейсы</h2>
         <Pagination
+            v-if="isDesktop"
             :current="currentCaseIndex"
             :total="cases.length"
             @prev="prevCase"
@@ -17,7 +18,7 @@
         </div>
 
         <div class="cases__right">
-          <div class="case-block" >
+          <div class="case-block">
             <h5>Задачи</h5>
             <div v-html="currentCase.task"></div>
           </div>
@@ -25,29 +26,39 @@
             <h5>Решение</h5>
             <div v-html="currentCase.decision"></div>
           </div>
-          <div class="case-block" >
+          <div class="case-block">
             <h5>Вывод</h5>
             <div v-html="currentCase.summary"></div>
           </div>
         </div>
+      </div>
+
+      <div class="mobile-pagination" v-if="!isDesktop">
+        <Pagination
+            :current="currentCaseIndex"
+            :total="cases.length"
+            @prev="prevCase"
+            @next="nextCase"
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Pagination from "~/components/elements/Pagination.vue"
 
 const { cases } = defineProps<{ cases: any[] }>()
 
-
-// const cases = Array.from({ length: 4 }, () => JSON.parse(JSON.stringify(baseCase)))
 const currentCaseIndex = ref(0)
+const isDesktop = ref(true)
+
 const currentCase = computed(() => {
   if (!cases || !Array.isArray(cases) || cases.length === 0) return {}
   return cases[currentCaseIndex.value] || {}
 })
+
 function prevCase() {
   if (currentCaseIndex.value > 0) {
     currentCaseIndex.value--
@@ -59,6 +70,14 @@ function nextCase() {
     currentCaseIndex.value++
   }
 }
+
+onMounted(() => {
+  const checkWidth = () => {
+    isDesktop.value = window.innerWidth > 480
+  }
+  checkWidth()
+  window.addEventListener('resize', checkWidth)
+})
 </script>
 
 <style scoped>
@@ -78,10 +97,9 @@ function nextCase() {
   padding: 0;
 }
 
-.case-block li p{
+.case-block li p {
   margin: 0;
 }
-
 
 .cases__content {
   display: grid;
@@ -118,5 +136,22 @@ function nextCase() {
   .cases__left {
     margin-bottom: 24px;
   }
+}
+
+@media screen and (max-width: 480px) {
+  .cases__header{
+    margin-top: 80px;
+    margin-bottom: 16px;
+  }
+
+  .cases__left h4{
+    margin: 0;
+  }
+}
+
+.mobile-pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
 }
 </style>

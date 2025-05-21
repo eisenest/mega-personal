@@ -95,6 +95,8 @@ const values = [
   .values__header{
     flex-direction: column;
     display: flex;
+    gap: 0;
+    margin-bottom: 16px;
   }
 
   .values__grid{

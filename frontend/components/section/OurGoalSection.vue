@@ -104,5 +104,10 @@ const goals = [
   .goal-header h2 {
     font-size: 32px;
   }
+
+  .goal-section{
+    margin-top: 80px;
+    gap: 16px;
+  }
 }
 </style>

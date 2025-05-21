@@ -20,21 +20,23 @@
           <p><span>Адрес</span><br />г. Москва, Волгоградский проспект, 43, к3</p>
         </div>
 
-        <div class="footer__column nav">
-          <ul class="col-first">
-            <li><a href="/services/autsorsing">Аутсорсинг</a></li>
-            <li><a href="/category/rekrutment">Рекрутмент</a></li>
-            <li><a href="category/predostavleniye-personala">Предоставление персонала</a></li>
-            <li><a href="/vakansii">Вакансии</a></li>
-            <li><a href="/partnerskaya-programma">Партнерская программа</a></li>
-          </ul>
-        </div>
-        <div class="footer__column nav">
-          <ul class="col-second">
-            <li><a href="/blog">Блог</a></li>
-            <li><a href="/kontakty">Контакты</a></li>
-            <li><a href="/okhrana-truda">Охрана труда</a></li>
-          </ul>
+        <div class="footer__nav-wrapper">
+          <div class="footer__column nav">
+            <ul class="col-first">
+              <li><a href="/services/autsorsing">Аутсорсинг</a></li>
+              <li><a href="/category/rekrutment">Рекрутмент</a></li>
+              <li><a href="category/predostavleniye-personala">Предоставление персонала</a></li>
+              <li><a href="/vakansii">Вакансии</a></li>
+              <li><a href="/partnerskaya-programma">Партнерская программа</a></li>
+            </ul>
+          </div>
+          <div class="footer__column nav">
+            <ul class="col-second">
+              <li><a href="/blog">Блог</a></li>
+              <li><a href="/kontakty">Контакты</a></li>
+              <li><a href="/okhrana-truda">Охрана труда</a></li>
+            </ul>
+          </div>
         </div>
 
         <div class="footer__column social">
@@ -228,6 +230,47 @@
   align-items: center;
   justify-content: center;
 }
+
+
+@media (max-width: 480px) {
+  .contacts p{
+    margin: 6px 0;
+  }
+
+  .footer__column.social button{
+    width: 100%;
+  }
+
+}
+
+.footer__nav-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 16px; /* или сколько нужно */
+}
+
+@media (max-width: 768px) {
+  .footer{
+    margin-top: 80px;
+  }
+
+  .footer__top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer__nav-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .footer__column.nav {
+    flex: 1;
+  }
+}
+
+
 </style>
 <script setup lang="ts">
 </script>

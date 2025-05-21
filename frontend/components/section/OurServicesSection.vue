@@ -72,10 +72,11 @@ defineProps({
 @media (max-width: 600px) {
   .services-title {
     font-size: 24px;
-    text-align: center;
+    margin: 90px 0 24px;
   }
   .services-grid {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
 </style>
