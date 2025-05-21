@@ -13,11 +13,11 @@
       </div>
 
       <!-- Правая часть -->
-      <form class="newsletter-form">
-        <input type="email" placeholder="Ваш email" required />
+      <form class="newsletter-form" @submit.prevent="submitForm">
+        <input type="email" v-model="email" placeholder="Ваш email" required />
 
         <label class="checkbox-wrapper">
-          <input type="checkbox" required />
+          <input type="checkbox" v-model="agree" required />
           <span>Вы даете согласие на <a href="#">рекламную рассылку</a></span>
         </label>
 
@@ -26,6 +26,45 @@
     </div>
   </section>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+
+const email = ref('')
+const agree = ref(false)
+
+async function submitForm() {
+  if (!agree.value || !email.value) return
+
+  const payload = new URLSearchParams()
+  payload.append('api_key', '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo')
+  payload.append('list_ids', '7504418')
+  payload.append('fields[email]', email.value)
+  payload.append('double_optin', '1') // double opt-in с подтверждением по почте
+  payload.append('request_ip', window.location.hostname)
+  payload.append('request_time', Math.floor(Date.now() / 1000).toString())
+
+  try {
+    const res = await fetch('https://api.unisender.com/ru/api/subscribe?format=json', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: payload.toString()
+    })
+
+    const result = await res.json()
+    if (result.result) {
+      alert('Вы успешно подписались! Проверьте почту для подтверждения.')
+      email.value = ''
+      agree.value = false
+    } else {
+      alert('Ошибка: ' + result.error)
+    }
+  } catch (err) {
+    alert('Произошла ошибка при отправке формы')
+    console.error(err)
+  }
+}
+</script>
 
 <style scoped>
 .newsletter-banner {
@@ -115,7 +154,7 @@
 }
 
 @media (max-width: 480px) {
-  .newsletter-left{
+  .newsletter-left {
     max-width: 100%;
   }
 
@@ -123,9 +162,8 @@
     padding: 16px;
   }
 
-  .newsletter-form{
+  .newsletter-form {
     padding: 16px;
   }
 }
-
 </style>
