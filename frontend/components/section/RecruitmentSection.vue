@@ -58,7 +58,7 @@ useHead(() => ({
   display: flex;
   flex-direction: column;
   gap: 32px;
-  //padding: 64px 0;
+  margin: 2rem 0;
 }
 
 .recruitment__head {
@@ -148,8 +148,13 @@ useHead(() => ({
 }
 
 span.icon {
-  display: flex
-;
+  display: flex;
+}
+
+@media (max-width: 480px) {
+  .recruitment__head{
+    padding: 24px 0;
+  }
 }
 
 </style>

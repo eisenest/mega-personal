@@ -94,8 +94,13 @@ onMounted(() => {
   toc?.addEventListener('click', scrollToIfAnchorClick)
 })
 
-const shareUrl = window.location.href
-const shareTitle = document.title
+const shareUrl = ref('')
+const shareTitle = ref('')
+
+if (process.client) {
+  shareUrl.value = window.location.href
+  shareTitle.value = document.title
+}
 
 </script>
 
@@ -381,6 +386,13 @@ const shareTitle = document.title
 
 .share-links img{
   width: 20px;
+}
+
+@media only screen and (max-width: 480px) {
+  .article-content {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 }
 
 

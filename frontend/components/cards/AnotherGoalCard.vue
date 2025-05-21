@@ -39,4 +39,11 @@ defineProps({
 .goal-card p {
   margin: 0;
 }
+
+@media (max-width: 480px) {
+  .goal-card {
+    padding: 16px;
+  }
+}
+
 </style>

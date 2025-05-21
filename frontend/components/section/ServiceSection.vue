@@ -194,4 +194,10 @@ const selectedIndex = ref(0)
   box-shadow: 0px 1px 24px 0px rgba(0, 150, 202, 0.14);
 }
 
+@media (max-width: 480px) {
+  .services {
+    display: none;
+  }
+}
+
 </style>

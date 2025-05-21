@@ -130,6 +130,12 @@ onMounted(() => {
   margin: auto;
 }
 
+@media (max-width: 480px) {
+  .partners__grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 1024px) {
   .partners__container {
     grid-template-columns: 1fr;

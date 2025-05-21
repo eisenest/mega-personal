@@ -163,5 +163,12 @@ const questions = [
 }
 
 
+@media screen and (max-width: 480px) {
+  .partnership-grid{
+    grid-template-columns: repeat(1, 1fr);
+
+  }
+}
+
 
 </style>

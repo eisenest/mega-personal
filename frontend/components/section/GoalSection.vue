@@ -161,15 +161,27 @@ function prev() {
 
 @media (max-width: 960px) {
   .goal__content {
-    flex-direction: column;
+    flex-direction: column-reverse;
+    padding: 16px;
   }
 
   .goal__points {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .goal__image {
     max-width: 100%;
   }
+
+  .outsource-card{
+    height: unset;
+    justify-content: flex-start;
+  }
+
+  .outsource-card h5{
+    margin-bottom: 8px;
+  }
+
+
 }
 </style>

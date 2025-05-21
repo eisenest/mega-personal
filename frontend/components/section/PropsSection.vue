@@ -28,5 +28,11 @@ defineProps({
   gap: 20px;
 }
 
+@media (max-width: 480px) {
+  .container.card-block {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 
 </style>

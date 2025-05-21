@@ -8,9 +8,7 @@
 
       <!-- Бургер и навигация -->
       <button class="burger" @click="isMenuOpen = !isMenuOpen">
-        <span></span>
-        <span></span>
-        <span></span>
+        <img src="/icon/burger.svg" alt="">
       </button>
 
       <nav :class="['nav', { open: isMenuOpen }]">
@@ -47,6 +45,70 @@
           </div>
         </div>
       </nav>
+
+      <div class="mobile-menu" v-if="isMenuOpen">
+        <div class="mobile-menu__header">
+          <a href="/" class="logo-link">
+            <img src="/logo.svg" alt="Mega Personal" class="logo" />
+          </a>
+          <button class="mobile-close" @click="isMenuOpen = false">
+            <img src="/icon/close-burger.svg" alt="">
+          </button>
+        </div>
+
+        <div class="mobile-menu__inner">
+          <!-- Основное меню -->
+          <div
+              v-for="(item, index) in navItems"
+              :key="'mobile-' + index"
+              class="mobile-link-group"
+          >
+            <div class="mobile-link-row">
+              <a
+                  :href="item.href"
+                  class="mobile-link"
+                  @click="isMenuOpen = false"
+              >
+                {{ item.label }}
+              </a>
+              <button
+                  v-if="item.children && item.children.length"
+                  class="submenu-toggle"
+                  @click.prevent="openSubIndex = openSubIndex === index ? null : index"
+                  :class="{ rotated: openSubIndex === index }"
+              ></button>
+            </div>
+
+            <div
+                v-if="item.children && item.children.length && openSubIndex === index"
+                class="mobile-submenu"
+            >
+              <a
+                  v-for="(child, cIdx) in item.children"
+                  :key="'mobile-child-' + cIdx"
+                  :href="child.href"
+                  class="mobile-sublink"
+                  @click="isMenuOpen = false"
+              >
+                {{ child.label }}
+              </a>
+            </div>
+          </div>
+
+          <!-- Телефон и вход -->
+          <div class="mobile-contacts">
+            <a href="tel:+74952341264" class="mobile-phone">
+              <svg class="phone-icon" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="..." stroke="#6700D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>+7 (495) 234-12-64</span>
+            </a>
+            <a href="https://mega-personal.ru/#/ui/index" target="_blank" class="mobile-login">Вход</a>
+          </div>
+
+          <button @click="handleClick" class="mobile-cta">Оставить заявку</button>
+        </div>
+      </div>
 
       <!-- Правый блок -->
       <div class="actions">
@@ -110,6 +172,8 @@ const baseItems = [
     ...baseItems.slice(2)
   ]
 
+const openSubIndex = ref(null);
+
 </script>
 
 <style scoped>
@@ -145,12 +209,11 @@ const baseItems = [
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 24px;
-  height: 18px;
   background: transparent;
   border: none;
   cursor: pointer;
   z-index: 30;
+  padding: 0;
 }
 
 .burger span {
@@ -271,6 +334,170 @@ const baseItems = [
   opacity: 0.4;
 }
 
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 1000;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0 0 24px 24px;
+}
+
+.mobile-menu__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  height: 24px;
+}
+
+.mobile-close {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  color: #2b3645;
+}
+
+.mobile-menu__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 2rem;
+}
+
+.mobile-link-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-link-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-link {
+  font-size: 18px;
+  color: #2b3645;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.submenu-toggle:after{
+  color: inherit;
+  content: url("/dropdown.svg");
+  display: inline-block;
+  height: 1em;
+  margin-left: 4px;
+  vertical-align: text-top;
+  width: auto;
+}
+
+.submenu-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #2b3645;
+  transition: transform 0.3s ease;
+}
+
+.submenu-toggle.rotated {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.mobile-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 1rem;
+}
+
+.mobile-sublink {
+  font-size: 16px;
+  color: #2b3645;
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.mobile-contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.mobile-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5c1ce0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mobile-login {
+  color: #5c1ce0;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.mobile-cta {
+  background: #5c1ce0;
+  color: #fff;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: 45px;
+  border: none;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 1.5rem;
+}
+
+/* Mobile First (по умолчанию стили для мобилок) */
+
+/* ≥ 480px — Мелкие устройства (например, большие телефоны) */
+@media (max-width: 480px) {
+  .header {
+    width: 100vw;              /* Растягиваем строго на ширину экрана */
+    max-width: none;           /* Убираем ограничение */
+    padding: 1.5rem 1rem 2rem; /* Умеренные отступы */
+    box-sizing: border-box;    /* Чтобы паддинги входили в ширину */
+    left: 0;
+    right: 0;
+  }
+
+  .header__container {
+    padding: 1.5;                /* Или минимальный отступ */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+}
+
+
+/* ≥ 768px — Планшеты */
+@media (min-width: 768px) {
+  /* Ваши стили */
+}
+
+
 @media (max-width: 1024px) {
   .burger {
     display: flex;
@@ -298,5 +525,25 @@ const baseItems = [
   .header__container {
     flex-wrap: nowrap;
   }
+
+  .actions {
+    display: none;
+  }
 }
+
+/* ≥ 1280px — Средние десктопы */
+@media (min-width: 1280px) {
+  /* Ваши стили */
+}
+
+/* ≥ 1440px — Большие десктопы */
+@media (min-width: 1440px) {
+  /* Ваши стили */
+}
+
+/* ≥ 1920px — FullHD и выше */
+@media (min-width: 1920px) {
+  /* Ваши стили */
+}
+
 </style>

@@ -122,5 +122,20 @@ useHead(() => ({
   gap: 24px;
 }
 
+@media screen and (max-width: 480px) {
+  .values__grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .advantages-grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .mission__grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+}
+
 
 </style>

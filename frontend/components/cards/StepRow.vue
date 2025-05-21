@@ -51,6 +51,16 @@ defineProps({
 }
 
 
+@media (max-width: 480px) {
+  .service .step-row {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .step-row p{
+    margin: 0px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .step-row {

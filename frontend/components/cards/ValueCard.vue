@@ -65,4 +65,19 @@ defineProps({
   color: #2c3e50;
   line-height: 1.5;
 }
+
+@media screen and  (max-width: 480px) {
+  .value-card.shifted{
+    grid-column: 1;
+  }
+  .value-card{
+    padding: 16px;
+  }
+
+  .value-card__title{
+    margin-top: 8px 0 16px;
+  }
+
+}
+
 </style>

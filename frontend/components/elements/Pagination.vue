@@ -49,4 +49,11 @@ const emit = defineEmits<{
   width: 56px;
   height: 16px;
 }
+
+@media (max-width: 480px){
+  .pagination{
+    justify-content: space-between;
+  }
+}
+
 </style>

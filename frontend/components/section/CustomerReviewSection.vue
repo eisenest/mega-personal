@@ -140,4 +140,11 @@ function nextReview() {
   line-height: 1.5;
   color: #2c3e50;
 }
+
+@media screen and (max-width: 480px) {
+  .reviews-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 </style>

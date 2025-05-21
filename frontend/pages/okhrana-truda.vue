@@ -115,5 +115,16 @@ const goalCards = [
 }
 
 
+@media screen and (max-width: 480px) {
+  .values__grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .goal-grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+}
+
 
 </style>

@@ -150,6 +150,28 @@
   left: 0;
 }
 
+/* ≥ 480px — Мелкие устройства (например, большие телефоны) */
+@media (max-width: 480px) {
+  /* Ваши стили */
+  .hero__images{
+    display: none;
+  }
+
+  .hero__cta{
+    width: 100%;
+    margin-bottom: 64px !important;
+  }
+
+  .hero__content-block *{
+    margin-bottom: 16px ;
+    margin-top: 0;
+  }
+
+  .hero__container{
+    height: 100%;
+  }
+}
+
 
 </style>
 <script setup lang="ts">

@@ -106,4 +106,11 @@ const toggle = (index) => {
   max-height: 200px;
   opacity: 1;
 }
+
+@media screen and (max-width: 480px) {
+  .faq-item{
+    padding: 16px;
+  }
+}
+
 </style>

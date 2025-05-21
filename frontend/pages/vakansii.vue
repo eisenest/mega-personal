@@ -211,5 +211,17 @@ function goTo(url: string) {
   margin-right: 8px;
 }
 
+@media screen and (max-width: 480px) {
+  .values__grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .social-buttons{
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
+
+}
+
 
 </style>

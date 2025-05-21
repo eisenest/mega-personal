@@ -65,4 +65,14 @@ defineProps({
   line-height: 1.4;
 }
 
+@media screen and (max-width: 480px) {
+  .steps-section{
+    padding: 16px;
+  }
+
+  .step-box{
+    width: 100%;
+  }
+}
+
 </style>

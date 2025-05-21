@@ -1,8 +1,7 @@
 <template>
   <section class="goal-section container">
     <div class="goal-header">
-      <h2>
-        Наша цель — <span class="highlight">ваш успех!</span>
+      <h2>Наша цель — <span class="highlight">ваш успех!</span>
       </h2>
       <p>
         Мы предлагаем комплексное решение, которое гарантирует достижение этой цели.

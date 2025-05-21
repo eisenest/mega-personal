@@ -79,4 +79,16 @@ p.mission__text {
   margin-bottom: 0;
 }
 
+@media screen and (max-width: 480px) {
+  .mission{
+    height: auto;
+    flex-direction: column-reverse;
+    padding: 1rem;
+  }
+
+  .mission__content{
+    flex: 1 1 100%;
+  }
+}
+
 </style>

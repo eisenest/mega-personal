@@ -7,7 +7,7 @@
           Подпишитесь на наши новости, <br />кейсы и исследования!
         </h3>
         <p>Или читайте последние обновления в нашем блоге</p>
-        <a href="#" class="read-news">
+        <a href="/blog" class="read-news">
           Читать новости <span>&rarr;</span>
         </a>
       </div>
@@ -98,25 +98,6 @@
   color: #2c3e50;
 }
 
-/*.checkbox-wrapper input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #4aa5f8;
-  border-radius: 4px;
-  appearance: none;
-  position: relative;
-}
-
-.checkbox-wrapper input[type="checkbox"]:checked::before {
-  content: '\2713';
-  background-color: #4aa5f8;
-  text-align: center;
-  line-height: 18px;
-  font-size: 14px;
-  display: block;
-  border-radius: 4px;
-}*/
-
 .checkbox-wrapper a {
   color: #4aa5f8;
   text-decoration: underline;
@@ -132,4 +113,19 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+@media (max-width: 480px) {
+  .newsletter-left{
+    max-width: 100%;
+  }
+
+  .newsletter-banner {
+    padding: 16px;
+  }
+
+  .newsletter-form{
+    padding: 16px;
+  }
+}
+
 </style>

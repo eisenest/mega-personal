@@ -413,8 +413,6 @@ const submitForm = async () => {
     }
     url = 'https://api-1.beta.mega-personal.ru/omega/registration_request'
   }
-  console.log(payload)
-
   try {
     const res = await fetch(url, {
       method: 'POST',
@@ -474,7 +472,6 @@ watch([activeTab, entityType], async ([newTab, newEntity]) => {
     try {
       const res = await fetch('https://api-1.beta.mega-personal.ru/omega/registration_request')
       const types = await res.json()
-      console.log(types)
       selectedTypeObject.value = types.find(t => t.name === newEntity)
 
       if (selectedTypeObject.value?.form?.fields) {
@@ -483,7 +480,6 @@ watch([activeTab, entityType], async ([newTab, newEntity]) => {
           labelToIdMap[field.label] = field.id
         })
       }
-      console.log(labelToIdMap)
     } catch (e) {
       console.error('Ошибка загрузки типов самозанятости:', e)
     }

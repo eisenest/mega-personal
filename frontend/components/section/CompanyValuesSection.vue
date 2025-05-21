@@ -90,4 +90,25 @@ const values = [
   gap: 24px;
 }
 
+@media (max-width: 480px) {
+
+  .values__header{
+    flex-direction: column;
+    display: flex;
+  }
+
+  .values__grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .values {
+    margin: 80px 0;
+  }
+
+  .values__intro {
+    flex: none;
+  }
+
+}
+
 </style>

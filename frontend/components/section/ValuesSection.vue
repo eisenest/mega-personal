@@ -95,4 +95,10 @@ const cards = [
 .card-content h4{
   margin-bottom: 16px;
 }
+
+@media (max-width: 480px) {
+  .value-card{
+    height: 200px;
+  }
+}
 </style>

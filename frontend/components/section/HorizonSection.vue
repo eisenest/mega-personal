@@ -53,6 +53,21 @@
   display: block;
 }
 
+@media (max-width: 480px) {
+  .map-section {
+    padding: 1rem;
+  }
+
+  .map-section__image{
+    flex: none;
+  }
+
+  .map-section__image img{
+    height: fit-content;
+  }
+
+}
+
 @media (max-width: 768px) {
   .map-section {
     flex-direction: column;
@@ -62,5 +77,6 @@
   .map-section__image {
     justify-content: flex-start;
   }
+
 }
 </style>

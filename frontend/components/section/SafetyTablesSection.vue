@@ -5,7 +5,8 @@
       Зарегистрировано на: МЦОТ Экспертиза<br />
       Перечень рекомендуемых мероприятий по улучшению условий труда
     </h4>
-    <table class="custom-table">
+    <div class="table">
+      <table class="custom-table">
       <thead>
       <tr>
         <th>Наименование подразделения, рабочего места</th>
@@ -90,13 +91,15 @@
       </tr>
       </tbody>
     </table>
+    </div>
 
     <!-- Таблица 2 -->
     <h4>
       Зарегистрировано на: МЦОТ Экспертиза<br />
       Сводная ведомость результатов проведения специальной оценки условий труда
     </h4>
-    <table class="custom-table">
+    <div class="table">
+      <table class="custom-table">
       <thead>
       <tr>
         <th rowspan="2">Наименование позиции</th>
@@ -190,7 +193,7 @@
       </tr>
       </tbody>
     </table>
-
+    </div>
 
   </section>
 </template>
@@ -234,6 +237,14 @@
   display: block;
   padding: 8px 0;
 }
+
+
+@media screen and (max-width: 480px) {
+  .table {
+    overflow-x: scroll;
+  }
+}
+
 </style>
 <script setup lang="ts">
 </script>

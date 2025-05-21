@@ -79,6 +79,8 @@ function getImageUrl(image?: string): string {
   row-gap: 4rem;
 }
 
+
+
 .blog-card {
   display: flex;
   flex-direction: column;
@@ -132,4 +134,11 @@ function getImageUrl(image?: string): string {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@media (max-width: 480px) {
+  .blog__grid{
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 </style>

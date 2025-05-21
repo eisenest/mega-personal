@@ -118,4 +118,23 @@ onMounted(() => {
   object-position: left;
 }
 
+@media (max-width: 480px) {
+  .about-hero__image-wrapper{
+    display: none;
+  }
+
+  .cta-button{
+    width: 100%;
+  }
+
+  .about-hero__content{
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .about-hero{
+    max-height: none;
+  }
+}
+
 </style>
