@@ -159,4 +159,12 @@ onMounted(() => {
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 480px) {
+  .reviews__header{
+    margin-top: 80px;
+    margin-bottom: 16px;
+  }
+}
+
 </style>

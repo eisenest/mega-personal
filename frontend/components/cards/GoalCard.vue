@@ -56,7 +56,13 @@ defineProps({
 @media screen and (max-width: 480px) {
   .outsource-card{
     padding: 16px;
+    min-height: 160px;
   }
+
+  .outsource-card h5{
+    margin-bottom: 8px;
+  }
+
 }
 
 

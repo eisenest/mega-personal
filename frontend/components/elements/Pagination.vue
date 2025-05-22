@@ -57,4 +57,9 @@ const emit = defineEmits<{
   }
 }
 
+.arrow:hover svg path {
+  stroke: #3399ff; /* цвет при наведении */
+  transition: stroke 0.2s ease;
+}
+
 </style>

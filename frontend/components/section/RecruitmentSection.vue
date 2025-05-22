@@ -78,7 +78,7 @@ useHead(() => ({
 }
 
 .text {
-  font-size: 24px;
+  font-size: clamp(16px, 0.5vw, 24px);
   margin: 16px auto;
   width: 70%;
 }
@@ -152,9 +152,30 @@ span.icon {
 }
 
 @media (max-width: 480px) {
-  .recruitment__head{
-    padding: 24px 0;
+
+  .card__img{
+    background-size: cover;
+    background-position: left;
   }
+
+  .recruitment__head{
+    padding: 24px 16px;
+
+  }
+
+  .text{
+    margin: 0;
+    width: 100%;
+  }
+
+  .recruitment{
+    gap: 8px;
+  }
+
+  .card__text{
+    padding: 16px;
+  }
+
 }
 
 </style>

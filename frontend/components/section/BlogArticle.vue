@@ -204,7 +204,7 @@ if (process.client) {
 }
 
 .article-title {
-  font-size: 32px;
+  font-size: clamp(28px, 1vw, 32px);
   font-weight: 700;
   margin-top: 12px;
 }

@@ -5,9 +5,9 @@
         <img src="/icon/close.svg" alt="Закрыть" />
       </button>
 
-      <h2 class="modal-title" v-html="`${currentTitle.title}<br>${currentTitle.subtitle}`"></h2>
+      <h2 v-if="!isSubmitted" class="modal-title" v-html="`${currentTitle.title}<br>${currentTitle.subtitle}`"></h2>
 
-      <div class="tabs">
+      <div class="tabs" v-if="!isSubmitted">
         <button
             v-for="(tab, i) in tabs"
             :key="i"
@@ -207,7 +207,12 @@
 
           <label class="checkbox">
             <input type="checkbox" required />
-            <span>Вы даете согласие на <a href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a></span>
+            <span>Вы даете согласие на
+              <a class="form__box-link"
+                 :href=" activeTab === 0 ? '/docs/client_agreement.pdf'  :  '/docs/applicant_agreement.pdf'"
+                 target="_blank">обработку персональных данных
+              </a>
+            </span>
           </label>
 
           <button type="submit" class="submit">Оставить заявку</button>
@@ -216,14 +221,8 @@
 
       <div v-else>
         <h3>Спасибо за <span class="highlight">оставленную заявку!</span></h3>
-        <p v-if="activeTab === 0">
-          Наш менеджер свяжется с вами в ближайшее время, чтобы обсудить ваши потребности и предложить оптимальные решения.
-        </p>
-        <p v-else-if="activeTab === 1">
-          Наш HR-менеджер свяжется с вами в ближайшее время для обсуждения дальнейших шагов.
-        </p>
-        <p v-else>
-          Наш менеджер свяжется с вами в ближайшее время для обсуждения возможных вариантов партнерства.
+        <p>
+          Наш менеджер свяжется с вами в ближайшее время.
         </p>
       </div>
     </div>

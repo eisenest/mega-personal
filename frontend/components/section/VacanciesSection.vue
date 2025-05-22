@@ -182,6 +182,7 @@ onMounted(() => {
 }
 .arrow {
   display: block;
+  margin: auto 0;
 }
 
 .category-title {
@@ -246,6 +247,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 8px;
     width: 100%;
     background: #3795f4;
   }
@@ -259,10 +261,16 @@ onMounted(() => {
     flex-direction: row;
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .category-button.active {
+    padding-bottom: 0;
   }
 
   .positions-grid {
-    padding: 16px;
+    padding: 0 16px 16px;
     margin: 0;
   }
 

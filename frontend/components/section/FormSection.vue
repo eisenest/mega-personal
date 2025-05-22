@@ -308,7 +308,10 @@
           <input type="checkbox" required />
           <span class="form_checkbox">
             Вы даете согласие на
-            <a class="form__box-link" href="/docs/applicant_agreement.pdf" target="_blank">обработку персональных данных</a>
+            <a class="form__box-link"
+               :href=" activeTab === 0 ? '/docs/client_agreement.pdf'  :  '/docs/applicant_agreement.pdf'"
+               target="_blank">обработку персональных данных
+            </a>
           </span>
         </label>
 
@@ -582,6 +585,10 @@ const tabHeadlines = [
 .input--error::placeholder {
   color: #F44336;
   opacity: 1;
+}
+
+a:hover{
+  color: #5c1ce0 !important;
 }
 
 

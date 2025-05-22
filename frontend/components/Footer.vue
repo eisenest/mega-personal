@@ -3,7 +3,9 @@
     <div class="footer__container">
       <div class="footer__top">
         <div class="footer__column logo">
-          <img src="/logo.svg" alt="Mega Personal" class="logo__image" />
+          <a href="/">
+            <img src="/logo.svg" alt="Mega Personal" class="logo__image" />
+          </a>
           <p class="email"><a href="mailto:info@mega-personal.ru">info@mega-personal.ru</a></p>
           <div class="radio-badge">
             <a href="https://инфоресурсфм.рус/reestr/card/?id=18515" target="_blank">
@@ -134,6 +136,10 @@
 .email {
   font-weight: 600;
   margin-top: 64px;
+}
+
+a:hover .radio{
+  color: #00A2F6 !important
 }
 
 .radio {

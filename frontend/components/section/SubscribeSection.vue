@@ -22,6 +22,8 @@
         </label>
 
         <button type="submit">Оставить заявку</button>
+
+        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
       </form>
     </div>
   </section>
@@ -32,6 +34,7 @@ import { ref } from 'vue'
 
 const email = ref('')
 const agree = ref(false)
+const successMessage = ref('')
 
 async function submitForm() {
   if (!agree.value || !email.value) return
@@ -42,7 +45,7 @@ async function submitForm() {
     api_key: '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo',
     list_ids: '7504418',
     'fields[email]': email.value,
-    double_optin: '1', // либо '3', если не нужно подтверждение
+    double_optin: '1',
     request_ip: window.location.hostname,
     request_time: Math.floor(Date.now() / 1000).toString()
   })
@@ -54,7 +57,7 @@ async function submitForm() {
     const result = await res.json()
 
     if (result.result) {
-      alert('Вы успешно подписались! Проверьте почту для подтверждения.')
+      successMessage.value = 'Спасибо! Отправили вам письмо для подтверждения подписки на указанную электронную почту.'
       email.value = ''
       agree.value = false
     } else {
@@ -65,7 +68,6 @@ async function submitForm() {
     console.error(err)
   }
 }
-
 </script>
 
 <style scoped>
@@ -153,6 +155,13 @@ async function submitForm() {
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+}
+
+.success-message {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
 }
 
 @media (max-width: 480px) {

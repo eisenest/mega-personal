@@ -99,11 +99,8 @@
 
           <!-- Телефон и вход -->
           <div class="mobile-contacts">
-            <a href="tel:+74952341264" class="mobile-phone">
-              <svg class="phone-icon" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.38028 9.35323C9.07627 10.8028 10.0251 12.1615 11.2266 13.3631C12.4282 14.5646 13.7869 15.5134 15.2365 16.2094C15.3612 16.2693 15.4235 16.2992 15.5024 16.3222C15.7828 16.404 16.127 16.3453 16.3644 16.1752C16.4313 16.1274 16.4884 16.0702 16.6027 15.9559C16.9523 15.6063 17.1271 15.4315 17.3029 15.3172C17.9658 14.8862 18.8204 14.8862 19.4833 15.3172C19.6591 15.4315 19.8339 15.6063 20.1835 15.9559L20.3783 16.1508C20.9098 16.6822 21.1755 16.948 21.3198 17.2333C21.6069 17.8009 21.6069 18.4712 21.3198 19.0387C21.1755 19.3241 20.9098 19.5898 20.3783 20.1213L20.2207 20.2789C19.6911 20.8085 19.4263 21.0733 19.0662 21.2756C18.6667 21.5 18.0462 21.6614 17.588 21.66C17.1751 21.6588 16.8928 21.5787 16.3284 21.4185C13.295 20.5575 10.4326 18.933 8.04466 16.545C5.65668 14.1571 4.03221 11.2947 3.17124 8.26131C3.01103 7.69687 2.93092 7.41464 2.9297 7.0017C2.92833 6.54347 3.08969 5.92298 3.31411 5.52348C3.51636 5.16345 3.78117 4.89863 4.3108 4.36901L4.46843 4.21138C4.99987 3.67993 5.2656 3.41421 5.55098 3.26987C6.11854 2.9828 6.7888 2.9828 7.35636 3.26987C7.64174 3.41421 7.90747 3.67993 8.43891 4.21138L8.63378 4.40625C8.98338 4.75585 9.15819 4.93065 9.27247 5.10643C9.70347 5.76932 9.70347 6.6239 9.27247 7.28679C9.15819 7.46257 8.98338 7.63738 8.63378 7.98698C8.51947 8.10129 8.46231 8.15845 8.41447 8.22526C8.24446 8.46269 8.18576 8.80695 8.26748 9.0873C8.29048 9.1662 8.32041 9.22854 8.38028 9.35323Z" stroke="#6700D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span>+7 (495) 234-12-64</span>
+            <a href="tel:+79151724404" class="mobile-phone">
+              <span>+7 (915) 172-44-04</span>
             </a>
             <a href="https://mega-personal.ru/#/ui/index" target="_blank" class="mobile-login">Вход</a>
           </div>
@@ -182,7 +179,7 @@ const openSubIndex = ref(null);
 .header {
   border-radius: 0 0 32px 32px;
   z-index: 20;
-  padding: 2.0rem 4.5rem 2.5rem 4.5rem;
+  padding: 2.0rem 4.5rem 0;
   position: fixed;
   width: 100%;
   top: 0;
@@ -345,7 +342,7 @@ const openSubIndex = ref(null);
   bottom: 0;
   background: #fff;
   z-index: 1000;
-  padding: 3rem 2rem;
+  padding: 36px 2rem 2.3rem;
   display: flex;
   flex-direction: column;
   border-radius: 0 0 24px 24px;
@@ -459,6 +456,10 @@ const openSubIndex = ref(null);
   text-decoration: none;
 }
 
+.mobile-phone::before{
+  content: url("/icon/phone-mobile.svg");
+}
+
 .mobile-login {
   color: #5c1ce0;
   font-weight: 600;
@@ -495,6 +496,8 @@ const openSubIndex = ref(null);
     padding: 1.5rem 1rem;                /* Или минимальный отступ */
     width: 100%;
     box-sizing: border-box;
+    height: 56px;
+    border-radius: 16px;
   }
 
 }
@@ -503,6 +506,13 @@ const openSubIndex = ref(null);
 /* ≥ 768px — Планшеты */
 @media (min-width: 768px) {
   /* Ваши стили */
+}
+
+@media (min-width: 1024px) and (max-width: 1280px){
+ .nav-link, .login{
+   font-size: 12px;
+   display: flex;
+ }
 }
 
 

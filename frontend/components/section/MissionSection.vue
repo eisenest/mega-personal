@@ -90,6 +90,12 @@ p.mission__text {
   .mission__content{
     flex: 1 1 100%;
   }
+
+  .mission__icon{
+    width: 150px;
+    height: 150px;
+    margin-top: 32px;
+  }
 }
 
 </style>

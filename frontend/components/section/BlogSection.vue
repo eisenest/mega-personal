@@ -141,4 +141,10 @@ function getImageUrl(image?: string): string {
   }
 }
 
+@media (max-width: 800px) {
+  .blog__grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 </style>

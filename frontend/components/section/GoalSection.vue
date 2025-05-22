@@ -6,7 +6,7 @@
       <!-- Левая часть -->
       <div class="goal__left">
         <a :href="currentAdvantage.slug">
-          <h3 class="goal__left-title">{{ currentAdvantage.title }}</h3>
+          <h3 v-if="isDesktop" class="goal__left-title">{{ currentAdvantage.title }}</h3>
         </a>
         <div class="goal__points">
           <GoalCard
@@ -26,14 +26,18 @@
 
       <!-- Правая часть -->
       <div class="goal__right">
+        <a :href="currentAdvantage.slug">
+          <h3 v-if="!isDesktop" class="goal__left-title">{{ currentAdvantage.title }}</h3>
+        </a>
         <img :src="`${config.public.publicHost}/uploads/${currentAdvantage?.image}`" alt="Цель" class="goal__image" />
+
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import GoalCard from '~/components/cards/GoalCard.vue'
 import Pagination from '~/components/elements/Pagination.vue'
 
@@ -58,6 +62,16 @@ function prev() {
     current.value--
   }
 }
+
+const isDesktop = ref(true)
+
+onMounted(() => {
+  const checkWidth = () => {
+    isDesktop.value = window.innerWidth > 480
+  }
+  checkWidth()
+  window.addEventListener('resize', checkWidth)
+})
 
 </script>
 
@@ -162,6 +176,7 @@ function prev() {
 @media (max-width: 480px){
   .goal__right{
     flex: 1 1;
+    flex-direction: column;
   }
 }
 
@@ -169,6 +184,7 @@ function prev() {
   .goal__content {
     flex-direction: column-reverse;
     padding: 16px;
+    align-content: center;
   }
 
   .goal__points {
