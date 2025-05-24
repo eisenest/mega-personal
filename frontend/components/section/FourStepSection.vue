@@ -65,6 +65,12 @@ defineProps({
   line-height: 1.4;
 }
 
+@media (min-width: 480px) and (max-width: 1024px) {
+  .steps-section{
+    margin-top: 80px;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .steps-section{
     padding: 16px;

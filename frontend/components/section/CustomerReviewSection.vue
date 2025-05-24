@@ -77,7 +77,7 @@ function nextReview() {
 
 onMounted(() => {
   const checkWidth = () => {
-    isDesktop.value = window.innerWidth > 480
+    isDesktop.value = window.innerWidth > 1024
   }
   checkWidth()
   window.addEventListener('resize', checkWidth)
@@ -157,6 +157,12 @@ onMounted(() => {
   margin: 0;
   line-height: 1.5;
   color: #2c3e50;
+}
+
+@media screen and (max-width: 1024px){
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media screen and (max-width: 480px) {

@@ -118,6 +118,20 @@ onMounted(() => {
   object-position: left;
 }
 
+@media (min-width: 480px) and (max-width: 1024px) {
+  .about-hero__image-wrapper{
+    display: none;
+  }
+  .about-hero{
+    max-height: none;
+  }
+  .about-hero__content{
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+}
+
 @media (max-width: 480px) {
   .about-hero__image-wrapper{
     display: none;

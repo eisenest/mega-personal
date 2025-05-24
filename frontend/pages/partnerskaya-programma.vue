@@ -146,12 +146,26 @@ const steps = [
   gap: 24px;
 }
 
+@media (max-width: 1024px){
+  .partnership-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .register{
+    margin: 80px 0 16px;
+  }
+  .headline {
+    text-align: left !important;
+  }
+
+
+}
+
 
 @media screen and (max-width: 480px) {
   .partnership-grid{
     grid-template-columns: repeat(1, 1fr);
   }
-  .headline[data-v-b6b2c1dd] {
+  .headline {
     text-align: left;
   }
 

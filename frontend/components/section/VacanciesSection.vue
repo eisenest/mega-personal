@@ -105,7 +105,7 @@ const displayedPositions = computed(() => {
 
 onMounted(() => {
   const checkWidth = () => {
-    isDesktop.value = window.innerWidth > 768
+    isDesktop.value = window.innerWidth > 1024
   }
   checkWidth()
   window.addEventListener('resize', checkWidth)

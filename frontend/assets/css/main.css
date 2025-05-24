@@ -348,8 +348,14 @@ button:hover {
 @media (min-width: 768px) and (max-width: 1024px) {
     body {
         max-width: 768px;
-        margin: 40px auto;
+        margin: 60px auto;
     }
+
+    .form{
+        margin: 80px 0 16px 0;
+
+    }
+
     .container {
         max-width: 720px;
     }
@@ -362,5 +368,9 @@ button:hover {
     .form__box,
     .form__info {
         flex: 1 1 100%;
+    }
+
+    .headline{
+        margin: 80px 0 16px 0;
     }
 }

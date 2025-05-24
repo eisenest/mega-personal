@@ -239,25 +239,12 @@ a:hover .radio{
 
 
 @media (max-width: 480px) {
-  .contacts p{
-    margin: 6px 0;
-  }
+
 
   .footer__column.social button{
     width: 100%;
   }
 
-  .email{
-    margin-top: 6px;
-  }
-
-  .footer__column{
-    flex: 1 1;
-  }
-
-  .footer__column ul{
-    gap: 8px;
-  }
 
 }
 
@@ -267,9 +254,17 @@ a:hover .radio{
   gap: 16px; /* или сколько нужно */
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .contacts p{
+    margin: 6px 0;
+  }
+
   .footer{
     margin-top: 80px;
+  }
+
+  .email{
+    margin-top: 6px;
   }
 
   .footer__top {
@@ -285,6 +280,14 @@ a:hover .radio{
 
   .footer__column.nav {
     flex: 1;
+  }
+
+  .footer__column{
+    flex: 1 1;
+  }
+
+  .footer__column ul{
+    gap: 8px;
   }
 }
 

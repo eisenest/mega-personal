@@ -53,6 +53,30 @@
   display: block;
 }
 
+@media (max-width: 1024px) {
+
+  .map-section__content h3 {
+    margin: 0;
+  }
+
+  .map-section__image img{
+    height: fit-content;
+  }
+
+  .map-section__image {
+    margin-top: 24px;
+  }
+
+  .map-section__text{
+    margin: inherit;
+  }
+  .map-section {
+    display: block;
+  }
+
+
+}
+
 @media (max-width: 480px) {
   .map-section {
     padding: 1rem;
@@ -72,6 +96,7 @@
   .map-section {
     flex-direction: column;
     align-items: flex-start;
+    display: block;
   }
 
   .map-section__image {

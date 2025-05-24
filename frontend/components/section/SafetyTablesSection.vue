@@ -239,7 +239,8 @@
 }
 
 
-@media screen and (max-width: 480px) {
+
+@media screen and (max-width: 1024px) {
   .table {
     overflow-x: scroll;
   }

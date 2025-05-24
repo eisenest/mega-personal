@@ -79,6 +79,16 @@ p.mission__text {
   margin-bottom: 0;
 }
 
+@media (min-width: 480px) and (max-width: 1024px) {
+  .mission{
+    margin: 80px 0 16px;
+    flex-wrap: nowrap;
+    height: auto;
+  }
+}
+
+
+
 @media screen and (max-width: 480px) {
   .mission{
     height: auto;

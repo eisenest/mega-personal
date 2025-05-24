@@ -211,6 +211,13 @@ function goTo(url: string) {
   margin-right: 8px;
 }
 
+@media (max-width: 1024px) {
+  .register{
+    margin: 80px 0 16px;
+  }
+}
+
+
 @media screen and (max-width: 480px) {
   .values__grid {
     grid-template-columns: repeat(1, 1fr);
@@ -218,10 +225,6 @@ function goTo(url: string) {
 
   .services__title-content{
     gap: 0;
-  }
-
-  .services__description p{
-    width: 100%;
   }
 
   .social-buttons{

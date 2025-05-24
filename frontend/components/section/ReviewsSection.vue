@@ -72,7 +72,7 @@ function nextReview() {
 
 onMounted(() => {
   const checkWidth = () => {
-    isDesktop.value = window.innerWidth > 480
+    isDesktop.value = window.innerWidth > 1024
   }
   checkWidth()
   window.addEventListener('resize', checkWidth)
@@ -160,10 +160,14 @@ onMounted(() => {
   justify-content: center;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
   .reviews__header{
     margin-top: 80px;
     margin-bottom: 16px;
+  }
+
+  .review-card{
+    max-width: 100%;
   }
 }
 

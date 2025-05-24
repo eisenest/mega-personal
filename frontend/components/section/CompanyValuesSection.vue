@@ -90,6 +90,18 @@ const values = [
   gap: 24px;
 }
 
+@media (min-width: 480px) and (max-width: 1024px) {
+  .values__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .values{
+    margin-top: 80px;
+    margin-bottom: 16px;
+  }
+
+}
+
 @media (max-width: 480px) {
 
   .values__header{

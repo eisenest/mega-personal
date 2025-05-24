@@ -58,7 +58,6 @@ useHead(() => ({
   display: flex;
   flex-direction: column;
   gap: 32px;
-  margin: 2rem 0;
 }
 
 .recruitment__head {

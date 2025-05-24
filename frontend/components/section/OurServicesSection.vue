@@ -69,14 +69,22 @@ defineProps({
   line-height: 1.4;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
   .services-title {
     font-size: 24px;
     margin: 90px 0 24px;
   }
   .services-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
+
+  @media (max-width: 480px){
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+
 }
 </style>
