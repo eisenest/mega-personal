@@ -6,10 +6,21 @@ import ExpectationsSection from "~/components/section/ExpectationsSection.vue";
 import StepRowSection from "~/components/section/StepRowSection.vue";
 import FaqSection from "~/components/section/FaqSection.vue";
 import FormSection from "~/components/section/FormSection.vue";
+import {onMounted, ref} from "vue";
 
 const config = useRuntimeConfig()
 const apiBase = config.public.apiBase
 const { data: faq } = await useFetch(`${apiBase}/api/partnership-faq`)
+const isDesktop = ref(true)
+
+onMounted(() => {
+  const checkWidth = () => {
+    isDesktop.value = window.innerWidth > 480
+    console.log(isDesktop.value)
+  }
+  checkWidth()
+  window.addEventListener('resize', checkWidth)
+})
 
 useHead({
   title: 'Партнерская программа Mega-Personal – сотрудничество и новые возможности для соискателей',
@@ -61,33 +72,6 @@ const steps = [
   }
 ]
 
-const questions = [
-  {
-    question: 'Что необходимо для сотрудничества с вами?',
-    answer: 'Для работы на нашей платформе вам необходимо оформить самозанятость или зарегистрировать индивидуальное предпринимательство (ИП).'
-  },
-  {
-    question: 'Какие направления существуют на вашей IT-платформе для закрытия заявки?',
-    answer: 'Направления зависят от потребностей проектов. Актуальные направления отображаются в вашем личном кабинете.'
-  },
-  {
-    question: 'Какие ресурсы для работы вы предоставляете?',
-    answer: 'Вы получите доступ к IT-платформе, базе вакансий, поддержке команды и регулярному обучению.'
-  },
-  {
-    question: 'Есть ли обучение работе на вашей IT-платформе?',
-    answer: 'Да, мы проводим еженедельное обучение по работе с системой и функционалом платформы.'
-  },
-  {
-    question: 'Где мне узнавать новую информацию о проектах?',
-    answer: 'Вся актуальная информация публикуется в личном кабинете и нашем Telegram-канале.'
-  },
-  {
-    question: 'Как происходит оплата за трудоустроенного кандидата?',
-    answer: 'Оплата производится после подтверждения в CRM-системе в течение 2-х рабочих дней.'
-  }
-]
-
 </script>
 
 <template>
@@ -98,7 +82,7 @@ const questions = [
       :show-button="true"
   />
 
-  <h2 class="headline"><span class="highlight">Наши преимущества</span></h2>
+  <h2 v-if="isDesktop" class="headline"><span class="highlight">Наши преимущества</span></h2>
   <div class="partnership-grid">
     <AnotherGoalCard
         v-for="(item, index) in cards"
@@ -166,7 +150,13 @@ const questions = [
 @media screen and (max-width: 480px) {
   .partnership-grid{
     grid-template-columns: repeat(1, 1fr);
+  }
+  .headline[data-v-b6b2c1dd] {
+    text-align: left;
+  }
 
+  .register{
+    margin: 80px 0 16px;
   }
 }
 

@@ -28,6 +28,13 @@ defineProps({
   gap: 20px;
 }
 
+
+@media (max-width: 370px) {
+  .container.card-block[data-v-6f22fcec] {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 @media (max-width: 480px) {
   .container.card-block {
     grid-template-columns: repeat(2, 1fr);

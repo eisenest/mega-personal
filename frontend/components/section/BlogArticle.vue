@@ -392,7 +392,15 @@ if (process.client) {
   .article-content {
     display: flex;
     flex-direction: column-reverse;
+    margin-top: 0;
   }
+
+  .article-header {
+    margin-bottom: 0;
+  }
+
+
+
 }
 
 

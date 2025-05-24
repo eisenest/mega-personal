@@ -503,9 +503,17 @@ const openSubIndex = ref(null);
 }
 
 
-/* ≥ 768px — Планшеты */
-@media (min-width: 768px) {
-  /* Ваши стили */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .header {
+    max-width: 768px;           /* Растягиваем строго на ширину экрана */
+  }
+
+  .header__container {
+    padding: 1.5rem 1rem;                /* Или минимальный отступ */
+    height: 56px;
+    border-radius: 16px;
+  }
+
 }
 
 @media (min-width: 1024px) and (max-width: 1280px){
@@ -549,19 +557,5 @@ const openSubIndex = ref(null);
   }
 }
 
-/* ≥ 1280px — Средние десктопы */
-@media (min-width: 1280px) {
-  /* Ваши стили */
-}
-
-/* ≥ 1440px — Большие десктопы */
-@media (min-width: 1440px) {
-  /* Ваши стили */
-}
-
-/* ≥ 1920px — FullHD и выше */
-@media (min-width: 1920px) {
-  /* Ваши стили */
-}
 
 </style>

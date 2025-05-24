@@ -178,6 +178,10 @@ onMounted(() => {
     flex: 1 1;
     flex-direction: column;
   }
+
+  .goal__points {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
 }
 
 @media (max-width: 960px) {

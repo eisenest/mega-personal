@@ -1,32 +1,39 @@
 <template>
   <section class="container">
-
-      <div class="blog__container">
-        <h2 :class="{ headline: isMain }">{{ title }}</h2>
-        <div class="blog__grid">
-
-            <div
-                class="blog-card"
-                v-for="(post, i) in displayedPosts"
-                :key="i"
-            >
-              <a :href="`/blog/${post.slug}`" class="href">
-                <div class="blog-card__image-wrapper">
-                  <img :src="getImageUrl(post.image)" alt="" class="blog-card__image" />
-                  <div class="blog-card__overlay"></div>
-                </div>
-                <small class="blog-card__date">{{ formatDate(post.date) }}</small>
-                <h3 class="blog-card__title">{{ post.title }}</h3>
-                <p class="blog-card__excerpt">{{ post.intro }}</p>
-              </a>
+    <div class="blog__container">
+      <h2 :class="{ headline: isMain }">{{ title }}</h2>
+      <div class="blog__grid">
+        <div
+            class="blog-card"
+            v-for="(post, i) in displayedPosts"
+            :key="i"
+        >
+          <a :href="`/blog/${post.slug}`" class="href">
+            <div class="blog-card__image-wrapper">
+              <img :src="getImageUrl(post.image)" alt="" class="blog-card__image" />
+              <div class="blog-card__overlay"></div>
             </div>
+            <small class="blog-card__date">{{ formatDate(post.date) }}</small>
+            <h3 class="blog-card__title">{{ post.title }}</h3>
+            <p class="blog-card__excerpt">{{ post.intro }}</p>
+          </a>
         </div>
-
       </div>
+
+      <Pagination
+          v-if="isMain && isMobile"
+          :current="currentIndex"
+          :total="posts.length"
+          @prev="() => { if (currentIndex > 0) currentIndex-- }"
+          @next="() => { if (currentIndex < posts.length - 1) currentIndex++ }"
+      />
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
+import Pagination from '~/components/elements/Pagination.vue'
 
 const props = defineProps({
   title: {
@@ -37,7 +44,6 @@ const props = defineProps({
   posts: Object,
 })
 
-
 function formatDate(dateStr: string) {
   const date = new Date(dateStr)
   return date.toLocaleDateString('ru-RU', {
@@ -47,28 +53,37 @@ function formatDate(dateStr: string) {
   })
 }
 
-// Ограничение постов, если это главная страница
-const displayedPosts = computed(() =>
-    props.isMain ? props.posts.slice(0, 4) : props.posts
-)
+const isMobile = ref(false)
+const currentIndex = ref(0)
+
+onMounted(() => {
+  const checkMobile = () => {
+    isMobile.value = window.innerWidth <= 480
+  }
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+const displayedPosts = computed(() => {
+  if (props.isMain && isMobile.value) {
+    return [props.posts[currentIndex.value]]
+  }
+  return props.isMain ? props.posts.slice(0, 4) : props.posts
+})
 
 function getImageUrl(image?: string): string {
   const publicHost = useRuntimeConfig().public.publicHost
-  if (!image) return '' // если нет картинки
+  if (!image) return ''
   return `${publicHost}/uploads/${image}`
 }
-
-
-
 </script>
 
 <style scoped>
-
 .blog-card:hover h3 {
   color: var(--main-blue, #00A2F6);
 }
 
-.blog__container h2{
+.blog__container h2 {
   padding: 0;
 }
 
@@ -78,8 +93,6 @@ function getImageUrl(image?: string): string {
   gap: 24px;
   row-gap: 4rem;
 }
-
-
 
 .blog-card {
   display: flex;
@@ -136,15 +149,17 @@ function getImageUrl(image?: string): string {
 }
 
 @media (max-width: 480px) {
-  .blog__grid{
-    grid-template-columns: repeat(1, 1fr);
+  .blog__grid {
+    grid-template-columns: repeat(1, 1fr) !important;
   }
+  .pagination{
+     margin-top: 24px;
+   }
 }
 
 @media (max-width: 800px) {
-  .blog__grid{
+  .blog__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 </style>

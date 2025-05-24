@@ -247,6 +247,18 @@ a:hover .radio{
     width: 100%;
   }
 
+  .email{
+    margin-top: 6px;
+  }
+
+  .footer__column{
+    flex: 1 1;
+  }
+
+  .footer__column ul{
+    gap: 8px;
+  }
+
 }
 
 .footer__nav-wrapper {
@@ -263,7 +275,7 @@ a:hover .radio{
   .footer__top {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
   }
 
   .footer__nav-wrapper {
