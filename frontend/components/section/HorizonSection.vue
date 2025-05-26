@@ -87,7 +87,8 @@
   }
 
   .map-section__image img{
-    height: fit-content;
+    width: 100%;
+    height: auto;
   }
 
 }
