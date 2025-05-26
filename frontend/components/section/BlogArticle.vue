@@ -388,7 +388,7 @@ if (process.client) {
   width: 20px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .article-content {
     display: flex;
     flex-direction: column-reverse;
@@ -397,21 +397,9 @@ if (process.client) {
 
   .article-header {
     margin-bottom: 0;
-  }
-
-
-
-}
-
-
-@media (max-width: 768px) {
-  .article-header {
     grid-template-columns: 1fr;
   }
-}
 
-
-@media (max-width: 768px) {
   .article-content {
     grid-template-columns: 1fr; /* Стакается */
   }
@@ -419,16 +407,12 @@ if (process.client) {
   .article-toc {
     order: 2;
     margin-top: 32px;
+    width: 100%;
+    position: static;
   }
 
   .article-body {
     order: 1;
-  }
-}
-
-@media (max-width: 768px) {
-  .article-toc {
-    position: static;
   }
 }
 

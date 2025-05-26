@@ -122,13 +122,13 @@ useHead(() => ({
   gap: 24px;
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 480px) and (max-width: 1024px) {
   .advantages-grid{
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 758px) {
   .values__grid{
     grid-template-columns: repeat(1, 1fr);
   }

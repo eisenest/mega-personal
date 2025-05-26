@@ -23,7 +23,9 @@
               <p class="category-title">{{ category.title }}</p>
               <p v-if="category.subtitle !== null" class="category-subtitle">{{ category.subtitle }}</p>
             </div>
-            <span class="arrow"><img src="/icon/expand-white.svg" alt="" /></span>
+            <span class="arrow">
+                <img :src="selectedCategoryIndex === index ? '/icon/expand-white.svg' : '/icon/expand.svg'"  alt=""  />
+            </span>
           </button>
         </div>
 
@@ -161,6 +163,9 @@ onMounted(() => {
   cursor: pointer;
   transition: 0.2s;
   width: 100%;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
 }
 
 .category-button.active {

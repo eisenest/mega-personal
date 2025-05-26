@@ -217,6 +217,17 @@ function goTo(url: string) {
   }
 }
 
+@media screen and (max-width: 768px){
+  .values__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .social-buttons{
+    gap: 10px
+  }
+
+}
+
 
 @media screen and (max-width: 480px) {
   .values__grid {

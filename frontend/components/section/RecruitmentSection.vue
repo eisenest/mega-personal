@@ -47,7 +47,8 @@ useHead(() => ({
         <div
             class="card__img"
             :style="{ backgroundImage: `url(${config.public.publicHost}/uploads/${service.previewImage || '/recruitment/1.png'})` }"
-        ></div>
+        >
+        </div>
       </a>
     </div>
   </section>
@@ -134,11 +135,11 @@ useHead(() => ({
 .card__img {
   width: 50%;
   height: 100%;
-  background-size: contain;
-  background-position: center;
+  background-size: cover;
+  background-position: right;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-position-x: right;
+  background-position-x: unset;
   background-repeat: no-repeat;
 }
 

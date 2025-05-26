@@ -203,7 +203,6 @@ a:hover .radio{
 .social-links {
   list-style: none;
   padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 16px !important;
@@ -289,6 +288,11 @@ a:hover .radio{
   .footer__column ul{
     gap: 8px;
   }
+
+  .social-links{
+    margin: 0;
+  }
+
 }
 
 

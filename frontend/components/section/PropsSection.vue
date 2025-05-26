@@ -35,7 +35,7 @@ defineProps({
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .container.card-block {
     grid-template-columns: repeat(2, 1fr);
   }

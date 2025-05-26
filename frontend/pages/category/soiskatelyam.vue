@@ -57,7 +57,6 @@ const services = [
   display: flex;
   flex-direction: column;
   gap: 32px;
-  //padding: 64px 0;
 }
 
 .recruitment__head {
@@ -77,7 +76,7 @@ const services = [
 }
 
 .text {
-  font-size: 24px;
+  font-size: clamp(16px, 0.5vw, 24px);
   margin: 16px auto;
   width: 70%;
 }
@@ -134,11 +133,11 @@ const services = [
 .card__img {
   width: 50%;
   height: 100%;
-  background-size: contain;
-  background-position: center;
+  background-size: cover;
+  background-position: right;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  background-position-x: right;
+  background-position-x: unset;
   background-repeat: no-repeat;
 }
 
@@ -147,8 +146,38 @@ const services = [
 }
 
 span.icon {
-  display: flex
-;
+  display: flex;
+}
+
+@media (max-width: 480px) {
+
+  .recruitment__cards{
+    gap: 12px;
+  }
+
+  .card__img{
+    background-size: cover;
+    background-position: left;
+  }
+
+  .recruitment__head{
+    padding: 24px 16px;
+
+  }
+
+  .text{
+    margin: 0;
+    width: 100%;
+  }
+
+  .recruitment{
+    gap: 8px;
+  }
+
+  .card__text{
+    padding: 16px;
+  }
+
 }
 
 </style>

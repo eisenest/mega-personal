@@ -67,7 +67,7 @@ const isDesktop = ref(true)
 
 onMounted(() => {
   const checkWidth = () => {
-    isDesktop.value = window.innerWidth > 480
+    isDesktop.value = window.innerWidth > 758
   }
   checkWidth()
   window.addEventListener('resize', checkWidth)
@@ -173,7 +173,7 @@ onMounted(() => {
   color: #00A2F6 !important;
 }
 
-@media (max-width: 480px){
+@media (max-width: 768px){
   .goal__right{
     flex: 1 1;
     flex-direction: column;
