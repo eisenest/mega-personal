@@ -142,6 +142,7 @@ onMounted(() => {
   }
   .partners__cta {
     margin-bottom: 32px;
+    min-height: auto;
   }
 }
 </style>

@@ -3,7 +3,9 @@
     <h2 class="steps-title"><span class="highlight">{{ title }}</span></h2>
     <div class="steps-grid">
       <div class="step-box" v-for="(step, index) in steps" :key="index">
-        <span class="step-number">{{ index + 1 }} <span class="dot">∙</span></span>
+        <span class="step-number">{{ index + 1 }}
+          <span class="dot"><img src="/icon/dot.svg" alt=""></span>
+        </span>
         <p class="step-text">{{ step }}</p>
       </div>
     </div>
@@ -49,13 +51,6 @@ defineProps({
   font-weight: 700;
   color: #7400e0;
   font-size: 18px;
-}
-
-.step-number .dot {
-  font-size: 20px;
-  position: relative;
-  top: -2px;
-  margin-left: 4px;
 }
 
 .step-text {

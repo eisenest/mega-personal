@@ -3,7 +3,7 @@
   <div class="value-card">
     <div class="value-card__top">
       <div class="value-card__number p24">
-        {{ number }} <span class="dot">▪</span>
+        {{ number }} <span class="dot"><img src="/icon/dot.svg" alt=""></span>
       </div>
       <p class="value-card__title p24" v-if="showTitle">{{ title }}</p>
     </div>
@@ -45,11 +45,9 @@ defineProps({
 .value-card__number {
   font-weight: 700;
   color: #5c1ce0;
-}
-
-.dot {
-  font-size: clamp(14px, 1vw, 16px);
-  vertical-align: middle;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .value-card__title {

@@ -18,17 +18,16 @@
         </div>
 
         <div class="cases__right">
-          <div class="case-block">
-            <h5>Задачи</h5>
-            <div v-html="currentCase.task"></div>
-          </div>
-          <div class="case-block">
-            <h5>Решение</h5>
-            <div v-html="currentCase.decision"></div>
-          </div>
-          <div class="case-block">
-            <h5>Вывод</h5>
-            <div v-html="currentCase.summary"></div>
+          <div class="case-block" v-for="(block, index) in caseBlocks" :key="index">
+            <h5>{{ block.title }}</h5>
+            <div v-html="block.content" :class="{ 'collapsed': isMobile && !expandedBlocks[index] }"></div>
+            <button
+                v-if="isMobile && isContentOverflowing[index]"
+                class="read-more"
+                @click="toggleExpand(index)"
+            >
+              {{ expandedBlocks[index] ? 'Скрыть' : 'Подробнее...' }}
+            </button>
           </div>
         </div>
       </div>
@@ -46,18 +45,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import Pagination from "~/components/elements/Pagination.vue"
 
 const { cases } = defineProps<{ cases: any[] }>()
 
 const currentCaseIndex = ref(0)
 const isDesktop = ref(true)
+const isMobile = computed(() => !isDesktop.value)
+const expandedBlocks = ref<boolean[]>([false, false, false])
+const isContentOverflowing = ref<boolean[]>([false, false, false])
 
 const currentCase = computed(() => {
   if (!cases || !Array.isArray(cases) || cases.length === 0) return {}
   return cases[currentCaseIndex.value] || {}
 })
+
+const caseBlocks = computed(() => [
+  { title: 'Задачи', content: currentCase.value.task },
+  { title: 'Решение', content: currentCase.value.decision },
+  { title: 'Вывод', content: currentCase.value.summary },
+])
 
 function prevCase() {
   if (currentCaseIndex.value > 0) {
@@ -71,12 +79,26 @@ function nextCase() {
   }
 }
 
+function toggleExpand(index: number) {
+  expandedBlocks.value[index] = !expandedBlocks.value[index]
+}
+
+function checkOverflow() {
+  nextTick(() => {
+    isContentOverflowing.value = caseBlocks.value.map((_, i) => {
+      const el = document.querySelectorAll('.case-block div')[i] as HTMLElement
+      return el && el.scrollHeight > 200
+    })
+  })
+}
+
 onMounted(() => {
   const checkWidth = () => {
     isDesktop.value = window.innerWidth > 480
   }
   checkWidth()
   window.addEventListener('resize', checkWidth)
+  watch(currentCase, checkOverflow, { immediate: true })
 })
 </script>
 
@@ -117,6 +139,7 @@ onMounted(() => {
   background: white;
   border-radius: 16px;
   padding: 24px;
+  position: relative;
 }
 
 .case-block h5 {
@@ -127,6 +150,21 @@ onMounted(() => {
   margin-top: 8px;
   padding-left: 20px;
   list-style: disc;
+}
+
+.read-more {
+  background: none;
+  border: none;
+  color: #5c1ce0;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.collapsed {
+  max-height: 160px;
+  overflow: hidden;
+  position: relative;
 }
 
 @media (max-width: 1024px) {

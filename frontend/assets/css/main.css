@@ -305,6 +305,12 @@ button:hover {
     background: var(--light-grey, #EDF7FF);
 }
 
+.dot{
+    display: flex;
+    height: 5px;
+    align-self: center;
+}
+
 
 /* ≥ 480px — Мелкие устройства (например, большие телефоны) */
 @media (max-width: 768px) {

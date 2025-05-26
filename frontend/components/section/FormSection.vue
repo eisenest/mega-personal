@@ -24,8 +24,8 @@
 
           <template v-if="!isSubmitted">
             <h3>
-              {{ tabHeadlines[internalTab].text }}
-              <span class="highlight">{{ tabHeadlines[internalTab].highlight }}</span>
+              {{ tabHeadlines[fixedTab].text }}
+              <span class="highlight">{{ tabHeadlines[fixedTab].highlight }}</span>
             </h3>
           </template>
 
@@ -330,7 +330,7 @@ import DropdownSelect from "~/components/elements/DropdownSelect.vue"
 const { fixedTab } = defineProps({
   fixedTab: {
     type: Number,
-    default: null
+    default: 0
   }
 })
 

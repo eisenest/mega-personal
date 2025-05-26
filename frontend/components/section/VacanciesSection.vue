@@ -35,7 +35,7 @@
               :key="index"
               class="position-card"
           >
-            <span class="dot">▪</span>
+            <span class="dot"><img src="/icon/dot.svg" alt=""></span>
             {{ position }}
           </div>
         </div>
@@ -66,7 +66,7 @@
                   :key="index"
                   class="position-card"
               >
-                <span class="dot">▪</span>
+                <span class="dot"><img src="/icon/dot.svg" alt=""></span>
                 {{ position }}
               </div>
             </div>
@@ -221,12 +221,6 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.dot {
-  color: #5c1ce0;
-  font-size: 18px;
-  line-height: 1;
 }
 
 .vacancies__description {

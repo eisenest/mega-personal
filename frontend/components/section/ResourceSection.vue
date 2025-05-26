@@ -112,4 +112,11 @@ onUnmounted(() => {
   margin: 0;
   text-wrap: auto;
 }
+
+@media (max-width: 1024px) {
+  .resource-card{
+    width: 327px;
+  }
+}
+
 </style>

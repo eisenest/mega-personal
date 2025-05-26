@@ -129,11 +129,6 @@ onMounted(() => {
   margin-bottom: 8px;
 }
 
-.dot {
-  font-size: 10px;
-  vertical-align: middle;
-}
-
 .goal__pagination {
   display: flex;
   gap: 12px;
@@ -178,10 +173,21 @@ onMounted(() => {
     flex: 1 1;
     flex-direction: column;
   }
+}
 
-  .goal__points {
-    grid-template-columns: repeat(1, 1fr) !important;
+@media (max-width: 480px){
+  .goal__image {
+    display: none;
   }
+
+  .goal__left{
+    gap: 0;
+  }
+
+  .goal__content{
+    gap: 0;
+  }
+
 }
 
 @media (max-width: 960px) {
@@ -193,6 +199,7 @@ onMounted(() => {
 
   .goal__points {
     grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 20px;
   }
 
   .goal__image {
