@@ -76,6 +76,10 @@ const toggle = (index) => {
   cursor: pointer;
 }
 
+.faq-question span {
+  width: fit-content;
+}
+
 .faq-icon {
   transition: transform 0.3s ease;
 }

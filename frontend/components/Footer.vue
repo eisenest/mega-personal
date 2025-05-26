@@ -25,9 +25,9 @@
         <div class="footer__nav-wrapper">
           <div class="footer__column nav">
             <ul class="col-first">
-              <li><a href="/services/autsorsing">Аутсорсинг</a></li>
-              <li><a href="/category/rekrutment">Рекрутмент</a></li>
-              <li><a href="category/predostavleniye-personala">Предоставление персонала</a></li>
+              <li><a href="/frontend/pages/uslugi/autsorsing">Аутсорсинг</a></li>
+              <li><a href="/frontend/pages/kategoriya/rekrutment">Рекрутмент</a></li>
+              <li><a href="/kategoriya/predostavleniye-personala">Предоставление персонала</a></li>
               <li><a href="/vakansii">Вакансии</a></li>
               <li><a href="/partnerskaya-programma">Партнерская программа</a></li>
             </ul>

@@ -24,8 +24,8 @@
 
           <template v-if="!isSubmitted">
             <h3>
-              {{ tabHeadlines[fixedTab].text }}
-              <span class="highlight">{{ tabHeadlines[fixedTab].highlight }}</span>
+              {{ tabHeadlines[activeTab].text }}
+              <span class="highlight">{{ tabHeadlines[activeTab].highlight }}</span>
             </h3>
           </template>
 
@@ -136,9 +136,9 @@
             />
             <input
                 v-model="form.date_of_birth"
-                type="date"
-                :placeholder="errors.date_of_birth ? 'Введите дату рождения' : 'Дата рождения'"
+                :placeholder="errors.date_of_birth ? 'Введите дату рождения' : 'дд.мм.гггг'"
                 :class="{ 'input--error': errors.date_of_birth }"
+                v-date-mask
             />
           </div>
           <div class="form__row">
@@ -330,7 +330,7 @@ import DropdownSelect from "~/components/elements/DropdownSelect.vue"
 const { fixedTab } = defineProps({
   fixedTab: {
     type: Number,
-    default: 0
+    default: null
   }
 })
 

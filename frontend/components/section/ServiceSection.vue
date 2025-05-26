@@ -29,7 +29,7 @@
         <a
             v-for="service in categories[selectedIndex]?.services || []"
             :key="service.slug"
-            :href="`/services/${service.slug}`"
+            :href="`/uslugi/${service.slug}`"
             class="services__card"
         >
           <p class="card__text p24">{{ service.title }}</p>

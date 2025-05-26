@@ -109,6 +109,7 @@ useHead(() => ({
   justify-content: space-between;
   height: 100%;
   padding: 32px;
+  width: 40%;
 }
 
 .card__text h4 {

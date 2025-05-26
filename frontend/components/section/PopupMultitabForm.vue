@@ -46,7 +46,12 @@
             </div>
             <div class="form-row">
               <input v-model="form.email" :placeholder="errors.email ? 'Введите почту' : 'Почта'" :class="{ 'input--error': errors.email }" />
-              <input v-model="form.date_of_birth" type="date" :placeholder="errors.date_of_birth ? 'Введите дату рождения' : 'Дата рождения'" :class="{ 'input--error': errors.date_of_birth }" />
+              <input
+                  v-model="form.date_of_birth"
+                  :placeholder="errors.date_of_birth ? 'Введите дату рождения' : 'дд.мм.гггг'"
+                  :class="{ 'input--error': errors.date_of_birth }"
+                  v-date-mask
+              />
             </div>
             <div class="form-row">
               <input v-model="form.phone" :placeholder="errors.phone ? 'Введите телефон' : 'Телефон'" :class="{ 'input--error': errors.phone }" v-phone-mask />

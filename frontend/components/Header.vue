@@ -146,7 +146,7 @@ const dropdownItems = services.value
     .filter(cat => cat.showPage) // ← добавлено условие
     .map(cat => ({
       label: cat.title,
-      href: `/category/${cat.slug}`,
+      href: `/kategoriya/${cat.slug}`,
       children: (cat.services || []).map(s => ({
         label: s.title,
         href: `/services/${s.slug}`
@@ -155,8 +155,8 @@ const dropdownItems = services.value
 
 const baseItems = [
   { label: 'О компании', href: '/o-kompanii' },
-  { label: 'Аутсорсинг', href: '/services/autsorsing' },
-  { label: 'Соискателям', href: '/category/soiskatelyam', children: [
+  { label: 'Аутсорсинг', href: '/uslugi/autsorsing' },
+  { label: 'Соискателям', href: '/kategoriya/soiskatelyam', children: [
       { label: "Вакансии", href: '/vakansii' },
       { label: "Партнерская программа", href: '/partnerskaya-programma' },
     ] },

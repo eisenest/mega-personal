@@ -173,6 +173,11 @@ onMounted(() => {
     flex: 1 1;
     flex-direction: column;
   }
+
+  .goal__right h3{
+    text-align: center;
+  }
+
 }
 
 @media (max-width: 480px){
@@ -189,6 +194,14 @@ onMounted(() => {
   }
 
 }
+
+@media (min-width: 320px) and (max-width: 425px){
+  .goal__points p {
+    font-size: 14px !important;
+  }
+
+}
+
 
 @media (max-width: 960px) {
   .goal__content {
@@ -209,6 +222,7 @@ onMounted(() => {
   .outsource-card{
     height: unset;
     justify-content: flex-start;
+    padding: 12px;
   }
 
   .outsource-card h5{
