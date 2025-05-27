@@ -21,6 +21,7 @@ services:
   frontend:
     build:
       context: ./frontend
+      dockerfile: DockerfileDev
     volumes:
       - ./frontend:/app
       - /app/node_modules  # чтобы node_modules не перезаписывался

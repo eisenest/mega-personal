@@ -17,8 +17,6 @@ cd mega-personal
 
 ### 3. Запустить Docker в режиме разработки
 
-Предварительно скопировать содержимое из frontend/DockerfileDev в frontend/Dockerfile
-
 ```bash
 docker compose -f docker-compose.dev.yml up --build
 ```
