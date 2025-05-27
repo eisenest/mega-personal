@@ -31,7 +31,7 @@ useHead(() => ({
     <div class="recruitment__cards">
       <a
           v-for="(service, i) in category.services"
-          :href="`/services/${service.slug}`"
+          :href="`/uslugi/${service.slug}`"
           :key="service.slug"
           :class="['card', i % 2 === 0 ? 'card--left' : 'card--right']"
       >

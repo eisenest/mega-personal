@@ -149,7 +149,7 @@ const dropdownItems = services.value
       href: `/kategoriya/${cat.slug}`,
       children: (cat.services || []).map(s => ({
         label: s.title,
-        href: `/services/${s.slug}`
+        href: `/uslugi/${s.slug}`
       }))
     }))
 

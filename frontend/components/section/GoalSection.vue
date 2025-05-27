@@ -187,6 +187,7 @@ onMounted(() => {
 
   .goal__left{
     gap: 0;
+    flex: 1 1;
   }
 
   .goal__content{
