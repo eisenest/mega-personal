@@ -15,11 +15,15 @@ cd mega-personal
 
 Создайте `.env` в корне проекта и добавьте в него переменные окружения (см. раздел ниже).
 
-### 3. Запустить Docker
+### 3. Запустить Docker в режиме разработки
+
+Предварительно скопировать содержимое из frontend/DockerfileDev в frontend/Dockerfile
 
 ```bash
-docker compose up --build
+docker compose -f docker-compose.dev.yml up --build
 ```
+
+> ⚠️ Используется `docker-compose.dev.yml`, в котором для фронтенда указан `frontend/DockerfileDev` с оптимизированным запуском в dev-режиме (hot reload, volume-монтирование и пр.)
 
 ### 4. Доступы
 
@@ -31,13 +35,9 @@ docker compose up --build
 ## 🔐 Переменные окружения (`.env`)
 
 ```env
-# Общие
+# Общие /.env
 NODE_ENV=development
-
-# Бэкенд /.env
-PORT=5050
 MONGO_URI=mongodb://mongo:27017/megapersonal
-NODE_ENV=development
 COOKIE_SECRET=d4b52b688cba8638a121362ea1ded704a8bc2d93ea802d8687f0956950ad3e4f
 
 # Фронтенд /frontend/.env
@@ -78,12 +78,15 @@ docker exec -it mega-mongo mongosh /init-mongo.js
 
 ### 📥 Восстановление из бэкапа
 
+В проекте лежит актуальный бэкап базы с тестового прода. 
+Называется `megapersonal-2025-05-27.archive`
+
 ```bash
 docker exec -i mega-mongo mongorestore \
   --username=mega-root-admin-personal \
   --password=sEcV55Od_G \
   --authenticationDatabase=megapersonal \
-  --archive < mongo-backup3.archive
+  --archive < megapersonal-2025-05-27.archive
 ```
 
 ---
@@ -91,17 +94,19 @@ docker exec -i mega-mongo mongorestore \
 ## 👨‍💼 Доступ к AdminJS
 
 * URL: [http://localhost:5050/admin](http://localhost:5050/admin)
-* Email / password — из `.env` (`admin@example.com`, `admin`)
+* Email / password: (`admin@example.com`, `admin`)
 
 ---
 
-## 🚀 Деплой в продакшн 
+## 🚀 Деплой в продакшн
 
 1. Обновите `.env`:
 
 ```env
 NODE_ENV=production
-API_BASE_URL=https://your-production-api-url.com
+NUXT_PUBLIC_PUBLIC_HOST=<хост на админку>
+
+#Пример
 NUXT_PUBLIC_PUBLIC_HOST=http://89.169.2.131:5050
 ```
 
@@ -110,16 +115,3 @@ NUXT_PUBLIC_PUBLIC_HOST=http://89.169.2.131:5050
 ```bash
 docker compose up -d --build 
 ```
-
----
-
-## ✅ Статус проекта
-
-Проект завершён и готов к передаче. В репозитории присутствуют:
-
-* фронтенд / бэкенд / admin
-* Docker конфиги
-* инструкция `README.md`
-* бэкап MongoDB
-
----
