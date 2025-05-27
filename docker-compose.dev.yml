@@ -1,0 +1,46 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      args:
+        NODE_ENV: ${NODE_ENV}
+    environment:
+      PORT: 5050
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backend/public/uploads:/app/public/uploads
+    container_name: mega-backend
+    ports:
+      - '5050:5050'
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # чтобы node_modules не перезаписывался
+    container_name: mega-frontend
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+
+  mongo:
+    image: mongo:6
+    container_name: mega-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./mongod.conf:/etc/mongod.conf:ro
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    command: [ "mongod", "--config", "/etc/mongod.conf" ]
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
