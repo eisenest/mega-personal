@@ -43,11 +43,9 @@ async function submitForm() {
 
   const queryParams = new URLSearchParams({
     api_key: '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo',
-    list_ids: '7504418',
+    list_ids: 8,
     'fields[email]': email.value,
     double_optin: '1',
-    request_ip: window.location.hostname,
-    request_time: Math.floor(Date.now() / 1000).toString()
   })
 
   const url = `${baseUrl}&${queryParams.toString()}`
@@ -55,7 +53,6 @@ async function submitForm() {
   try {
     const res = await fetch(url)
     const result = await res.json()
-
     if (result.result) {
       successMessage.value = 'Спасибо! Отправили вам письмо для подтверждения подписки на указанную электронную почту.'
       email.value = ''

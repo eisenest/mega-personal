@@ -154,151 +154,36 @@
                 :options="['ИП', 'Самозанятый']"
             />
           </div>
-
+          <!-- Первая часть: обычные поля (text, email, date и т.д.) -->
           <div class="form__row">
             <input
-                v-if="labelToIdMap['Серия паспорта']"
-                :placeholder="errors[labelToIdMap['Серия паспорта']] ? 'Введите серию паспорта' : 'Серия паспорта'"
-                v-model="form.fields[labelToIdMap['Серия паспорта']]"
-                :class="{ 'input--error': errors[labelToIdMap['Серия паспорта']] }"
-            />
-            <input
-                v-if="labelToIdMap['Номер паспорта']"
-                :placeholder="errors[labelToIdMap['Номер паспорта']] ? 'Введите номер паспорта' : 'Номер паспорта'"
-                v-model="form.fields[labelToIdMap['Номер паспорта']]"
-                :class="{ 'input--error': errors[labelToIdMap['Номер паспорта']] }"
+                type="text"
+                v-for="field in selectedTypeObject?.form?.fields?.filter(f => f.type !== 'file') || []"
+                :key="'text-' + field.id"
+                v-model="form.fields[field.id]"
+                :placeholder="errors[field.id] ? 'Введите ' + field.label.toLowerCase() : field.label"
+                :class="{ 'input--error': errors[field.id] }"
+                v-dynamic-mask="field.config?.mask"
             />
           </div>
 
-          <div class="form__row">
-            <input
-                v-if="labelToIdMap['Наименование банка']"
-                :placeholder="errors[labelToIdMap['Наименование банка']] ? 'Введите наименование банка' : 'Наименование банка'"
-                v-model="form.fields[labelToIdMap['Наименование банка']]"
-                :class="{ 'input--error': errors[labelToIdMap['Наименование банка']] }"
-            />
-            <input
-                v-if="labelToIdMap['БИК банка']"
-                :placeholder="errors[labelToIdMap['БИК банка']] ? 'Введите БИК банка' : 'БИК банка'"
-                v-model="form.fields[labelToIdMap['БИК банка']]"
-                :class="{ 'input--error': errors[labelToIdMap['БИК банка']] }"
-            />
-          </div>
-
-          <div class="form__row">
-            <input
-                v-if="labelToIdMap['Корреспондентский счет']"
-                :placeholder="errors[labelToIdMap['Корреспондентский счет']] ? 'Введите корреспондентский счёт' : 'Корреспондентский счет'"
-                v-model="form.fields[labelToIdMap['Корреспондентский счет']]"
-                :class="{ 'input--error': errors[labelToIdMap['Корреспондентский счет']] }"
-            />
-            <input
-                v-if="labelToIdMap['Расчетный счет']"
-                :placeholder="errors[labelToIdMap['Расчетный счет']] ? 'Введите расчётный счёт' : 'Расчетный счет'"
-                v-model="form.fields[labelToIdMap['Расчетный счет']]"
-                :class="{ 'input--error': errors[labelToIdMap['Расчетный счет']] }"
-            />
-          </div>
-
-          <div class="form__row" v-if="entityType === 'Самозанятый'">
-            <input
-                v-if="labelToIdMap['ИНН банка']"
-                :placeholder="errors[labelToIdMap['ИНН банка']] ? 'Введите ИНН банка' : 'ИНН банка'"
-                v-model="form.fields[labelToIdMap['ИНН банка']]"
-                :class="{ 'input--error': errors[labelToIdMap['ИНН банка']] }"
-            />
-            <input
-                v-if="labelToIdMap['Адрес регистрации']"
-                :placeholder="errors[labelToIdMap['Адрес регистрации']] ? 'Введите адрес регистрации' : 'Адрес регистрации'"
-                v-model="form.fields[labelToIdMap['Адрес регистрации']]"
-                :class="{ 'input--error': errors[labelToIdMap['Адрес регистрации']] }"
-            />
-          </div>
-          <div class="form__row" v-else-if="entityType === 'ИП'">
-            <input
-                v-if="labelToIdMap['ИНН']"
-                :placeholder="errors[labelToIdMap['ИНН']] ? 'Введите ИНН' : 'ИНН'"
-                v-model="form.fields[labelToIdMap['ИНН']]"
-                :class="{ 'input--error': errors[labelToIdMap['ИНН']] }"
-            />
-            <input
-                v-if="labelToIdMap['КПП']"
-                :placeholder="errors[labelToIdMap['КПП']] ? 'Введите КПП' : 'КПП'"
-                v-model="form.fields[labelToIdMap['КПП']]"
-                :class="{ 'input--error': errors[labelToIdMap['КПП']] }"
-            />
-          </div>
-
-          <div class="form__row" v-if="entityType === 'ИП'">
-            <input
-                v-if="labelToIdMap['ОГРН']"
-                :placeholder="errors[labelToIdMap['ОГРН']] ? 'Введите ОГРН' : 'ОГРН'"
-                v-model="form.fields[labelToIdMap['ОГРН']]"
-                :class="{ 'input--error': errors[labelToIdMap['ОГРН']] }"
-            />
-            <input
-                v-if="labelToIdMap['Адрес регистрации']"
-                :placeholder="errors[labelToIdMap['Адрес регистрации']] ? 'Введите адрес регистрации' : 'Адрес регистрации'"
-                v-model="form.fields[labelToIdMap['Адрес регистрации']]"
-                :class="{ 'input--error': errors[labelToIdMap['Адрес регистрации']] }"
-            />
-          </div>
-
-          <input
-              v-if="labelToIdMap['ИНН физ. лица']"
-              :placeholder="errors[labelToIdMap['ИНН физ. лица']] ? 'Введите ИНН физ. лица' : 'ИНН физ. лица'"
-              v-model="form.fields[labelToIdMap['ИНН физ. лица']]"
-              :class="{ 'input--error': errors[labelToIdMap['ИНН физ. лица']] }"
-          />
-
-          <!-- Загрузка файлов (upload-links) -->
+          <!-- Вторая часть: файлы -->
           <div class="upload-links">
-            <div v-if="entityType === 'Самозанятый' && labelToIdMap['Справка самозанятого о постановке на учет']">
-              <p
-                  @click="triggerUpload('doc1')"
-                  :class="{ 'input--error': errors[labelToIdMap['Справка самозанятого о постановке на учет']] }"
-              >
+            <div
+                v-for="field in selectedTypeObject?.form?.fields?.filter(f => f.type === 'file') || []"
+                :key="'file-' + field.id"
+            >
+              <p @click="triggerUpload(field.id)" :class="{ 'input--error': errors[field.id] }">
                 <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-                Справка самозанятого о постановке на учет
-                <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
+                {{ field.label }}
+                <span v-if="uploadedFiles[field.id]"> — {{ uploadedFiles[field.id].name }}</span>
               </p>
-              <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
-            </div>
-
-            <div v-if="entityType === 'ИП' && labelToIdMap['Лист записи о регистрации ИП']">
-              <p
-                  @click="triggerUpload('doc1')"
-                  :class="{ 'input--error': errors[labelToIdMap['Лист записи о регистрации ИП']] }"
-              >
-                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-                Лист записи о регистрации ИП
-                <span v-if="uploadedFiles.doc1"> — {{ uploadedFiles.doc1.name }}</span>
-              </p>
-              <input ref="doc1" type="file" @change="handleFileUpload($event, 'doc1')" style="display: none" />
-            </div>
-
-            <div v-if="labelToIdMap['Скан паспорта (1 страница)']">
-              <p
-                  @click="triggerUpload('doc2')"
-                  :class="{ 'input--error': errors[labelToIdMap['Скан паспорта (1 страница)']] }"
-              >
-                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-                Скан паспорта (1 страница)
-                <span v-if="uploadedFiles.doc2"> — {{ uploadedFiles.doc2.name }}</span>
-              </p>
-              <input ref="doc2" type="file" @change="handleFileUpload($event, 'doc2')" style="display: none" />
-            </div>
-
-            <div v-if="labelToIdMap['Скан паспорта (Регистрация)']">
-              <p
-                  @click="triggerUpload('doc3')"
-                  :class="{ 'input--error': errors[labelToIdMap['Скан паспорта (Регистрация)']] }"
-              >
-                <img src="/icon/upload-white.svg" alt="Upload" class="upload-icon" />
-                Скан паспорта (Регистрация)
-                <span v-if="uploadedFiles.doc3"> — {{ uploadedFiles.doc3.name }}</span>
-              </p>
-              <input ref="doc3" type="file" @change="handleFileUpload($event, 'doc3')" style="display: none" />
+              <input
+                  type="file"
+                  :ref="el => setInputRef(el, field.id)"
+                  style="display: none"
+                  @change="handleFileUpload($event, field.id)"
+              />
             </div>
           </div>
 
@@ -483,65 +368,63 @@ watch([activeTab, entityType], async ([newTab, newEntity]) => {
           labelToIdMap[field.label] = field.id
         })
       }
+
+
+
     } catch (e) {
       console.error('Ошибка загрузки типов самозанятости:', e)
     }
   }
 }, { immediate: true })
 
-const doc1 = ref(null)
-const doc2 = ref(null)
-const doc3 = ref(null)
 
-const uploadedFiles = reactive({
-  doc1: null,
-  doc2: null,
-  doc3: null,
-})
+const uploadedFiles = reactive<Record<string, File | null>>({})
 
-const triggerUpload = (name: 'doc1' | 'doc2' | 'doc3') => {
-  if (name === 'doc1') doc1.value?.click()
-  if (name === 'doc2') doc2.value?.click()
-  if (name === 'doc3') doc3.value?.click()
+const inputRefs = ref<Record<string, HTMLInputElement | null>>({})
+const setInputRef = (el: HTMLInputElement | null, id: string) => {
+  inputRefs.value[id] = el
 }
 
-
-const handleFileUpload = async (event, name) => {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const formData = new FormData()
-  formData.append('file', file)
-  formData.append('dir', 'crm') // если хочешь группировать папки
-
-  try {
-    const res = await fetch(`${publicHost}/api/upload`, {
-      method: 'POST',
-      body: formData
-    })
-    const { url } = await res.json()
-
-    const labelToFieldMap = {
-      doc1: entityType.value === 'ИП'
-          ? 'Лист записи о регистрации ИП'
-          : 'Справка самозанятого о постановке на учет',
-      doc2: 'Скан паспорта (1 страница)',
-      doc3: 'Скан паспорта (Регистрация)',
-    }
-
-    const label = labelToFieldMap[name]
-    const fieldId = labelToIdMap[label]
-
-    if (fieldId) {
-      form.fields[fieldId] = url
-      uploadedFiles[name] = file
-    }
-
-  } catch (err) {
-    console.error('Ошибка при загрузке файла', err)
-    alert('Ошибка при загрузке файла')
+const triggerUpload = (fieldId: string) => {
+  const input = inputRefs.value[fieldId]
+  if (input && typeof input.click === 'function') {
+    input.click()
+  } else {
+    console.warn(`Поле загрузки не найдено для id: ${fieldId}`)
   }
 }
+
+const handleFileUpload = async (event, fieldId) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("dir", "crm");
+
+  try {
+    const res = await fetch("https://api-1.beta.mega-personal.ru/file", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await res.json();
+
+    // Сохраняем весь объект вместо просто URL
+    form.fields[fieldId] = {
+      id: result.id,
+      filename: result.filename,
+      extension: result.extension,
+      path: result.path,
+      fullName: result.fullName,
+    };
+
+    uploadedFiles[fieldId] = file;
+  } catch (err) {
+    console.error("Ошибка при загрузке файла", err);
+    alert("Ошибка при загрузке файла");
+  }
+};
 
 
 const tabHeadlines = [
@@ -570,6 +453,7 @@ const tabHeadlines = [
   align-items: center;
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .form__box-link {
@@ -589,6 +473,18 @@ const tabHeadlines = [
 
 a:hover{
   color: #5c1ce0 !important;
+}
+
+
+.form__row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* Если элемент последний в строке и он один — растягиваем */
+.form__row > *:nth-last-child(1):nth-child(odd) {
+  grid-column: span 2;
 }
 
 

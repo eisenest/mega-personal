@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 body {
     background: var(--light-grey, #EDF7FF);
     font-family: 'Inter', sans-serif;
