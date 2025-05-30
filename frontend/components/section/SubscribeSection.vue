@@ -133,6 +133,7 @@ async function submitForm() {
 .checkbox-wrapper a {
   color: #4aa5f8;
   text-decoration: underline;
+  font-size: 14px !important;
 }
 
 .newsletter-form button {
