@@ -21,7 +21,7 @@
 
         <label class="checkbox-wrapper">
           <input type="checkbox" v-model="agree" required />
-          <span>Вы даете согласие на <a href="#">рекламную рассылку</a></span>
+          <span>Вы даете согласие на <a target="_blank" href="/docs/consent_advertising_referrals.pdf">рекламную рассылку</a></span>
         </label>
 
         <button type="submit">Оставить заявку</button>
@@ -41,21 +41,21 @@ async function submitForm() {
   if (!agree.value || !email.value) return
 
   const config = useRuntimeConfig()
-  const apiBase = config.public.apiBase
 
-  await fetch(`http://localhost:5050/api/subscribe`, {
+  const { data, error } = await useFetch('/api/subscribe', {
+    baseURL: config.public.publicHost,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email.value })
+    body: { email: email.value },
   })
-      .then(res => res.json())
-      .then(result => {
-        if (result.result) {
-          successMessage.value = 'Спасибо! Подтвердите подписку в письме.'
-        } else {
-          alert('Ошибка: ' + result.error)
-        }
-      })
+
+  if (data.value?.result) {
+    successMessage.value = 'Спасибо! Подтвердите подписку в письме.'
+    email.value = ''
+    agree.value = false
+  } else {
+    alert('Ошибка: ' + (data.value?.error || error.value?.message))
+  }
+
 }
 </script>
 
