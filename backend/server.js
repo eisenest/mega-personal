@@ -81,12 +81,22 @@ app.use(cors({
   credentials: true
 }))
 
+app.use(express.json()) // 👈 добавь эту строчку выше!
+
+
 // 📦 Обработка multipart/form-data
-app.use(formidableMiddleware({
-  uploadDir: path.join(__dirname, 'public/uploads'),
-  keepExtensions: true,
-  maxFileSize: 10 * 1024 * 1024, // 10MB
-}))
+app.use((req, res, next) => {
+  const contentType = req.headers['content-type'] || ''
+  if (contentType.includes('multipart/form-data')) {
+    formidableMiddleware({
+      uploadDir: path.join(__dirname, 'public/uploads'),
+      keepExtensions: true,
+      maxFileSize: 10 * 1024 * 1024,
+    })(req, res, next)
+  } else {
+    next()
+  }
+})
 
 // 📁 Статика
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')))
@@ -294,4 +304,17 @@ app.listen(5050, () => {
   console.log('🚀 AdminJS доступен по адресу http://localhost:5050/admin')
 })
 
-// admin.watch()
+app.post('/api/subscribe', async (req, res) => {
+  const response = await fetch('https://api.unisender.com/ru/api/subscribe?format=json', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      api_key: '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo',
+      list_ids: '8',
+      'fields[email]': req.body.email,
+      double_optin: '1',
+    })
+  })
+  const result = await response.json()
+  res.send(result)
+})

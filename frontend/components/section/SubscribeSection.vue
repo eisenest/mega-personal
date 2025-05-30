@@ -3,8 +3,11 @@
     <div class="newsletter-container">
       <!-- Левая часть -->
       <div class="newsletter-left">
-        <h3>
+        <h3 v-if="!successMessage">
           Подпишитесь на наши новости, <br />кейсы и исследования!
+        </h3>
+        <h3 v-else>
+          {{ successMessage }}
         </h3>
         <p>Или читайте последние обновления в нашем блоге</p>
         <a href="/blog" class="read-news">
@@ -13,7 +16,7 @@
       </div>
 
       <!-- Правая часть -->
-      <form class="newsletter-form" @submit.prevent="submitForm">
+      <form v-if="!successMessage" class="newsletter-form" @submit.prevent="submitForm">
         <input type="email" v-model="email" placeholder="Ваш email" required />
 
         <label class="checkbox-wrapper">
@@ -22,8 +25,6 @@
         </label>
 
         <button type="submit">Оставить заявку</button>
-
-        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
       </form>
     </div>
   </section>
@@ -39,31 +40,22 @@ const successMessage = ref('')
 async function submitForm() {
   if (!agree.value || !email.value) return
 
-  const baseUrl = 'https://api.unisender.com/ru/api/subscribe?format=json'
+  const config = useRuntimeConfig()
+  const apiBase = config.public.apiBase
 
-  const queryParams = new URLSearchParams({
-    api_key: '65of35pcyrihu56qsfq6iu49r8a4r14wmbqseffo',
-    list_ids: 8,
-    'fields[email]': email.value,
-    double_optin: '1',
+  await fetch(`http://localhost:5050/api/subscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email.value })
   })
-
-  const url = `${baseUrl}&${queryParams.toString()}`
-
-  try {
-    const res = await fetch(url)
-    const result = await res.json()
-    if (result.result) {
-      successMessage.value = 'Спасибо! Отправили вам письмо для подтверждения подписки на указанную электронную почту.'
-      email.value = ''
-      agree.value = false
-    } else {
-      alert('Ошибка: ' + result.error)
-    }
-  } catch (err) {
-    alert('Произошла ошибка при отправке формы')
-    console.error(err)
-  }
+      .then(res => res.json())
+      .then(result => {
+        if (result.result) {
+          successMessage.value = 'Спасибо! Подтвердите подписку в письме.'
+        } else {
+          alert('Ошибка: ' + result.error)
+        }
+      })
 }
 </script>
 
