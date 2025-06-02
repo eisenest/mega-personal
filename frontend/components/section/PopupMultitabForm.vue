@@ -213,7 +213,6 @@ const submitForm = async () => {
       first_name: form.first_name,
       phone: form.phone,
       city: form.city,
-      date_of_birth: form.date_of_birth
     }
     url = 'https://api-1.beta.mega-personal.ru/omega/person_worker_request'
   } else if (activeTab.value === 2 && selectedTypeObject.value) {
@@ -226,7 +225,7 @@ const submitForm = async () => {
       last_name: form.last_name,
       middle_name: form.middle_name,
       email: form.email,
-      date_of_birth: form.date_of_birth,
+      date_of_birth: formatDateToISO(form.date_of_birth),
       phone: form.phone,
       type: selectedTypeObject.value,
       formEntry: {
@@ -322,6 +321,11 @@ const triggerUpload = (fieldId: string) => {
   } else {
     console.warn(`Поле загрузки не найдено для id: ${fieldId}`)
   }
+}
+
+function formatDateToISO(dateStr: string): string {
+  const [dd, mm, yyyy] = dateStr.split('.')
+  return `${yyyy}-${mm}-${dd}`
 }
 
 const handleFileUpload = async (event, fieldId) => {
