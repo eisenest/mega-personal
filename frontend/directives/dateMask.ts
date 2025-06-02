@@ -19,8 +19,13 @@ export const dateMask: Directive = {
     mounted(el: HTMLInputElement) {
         const handler = (e: Event) => {
             const input = e.target as HTMLInputElement
-            input.value = formatDate(input.value)
-            input.dispatchEvent(new Event('input', { bubbles: true }))
+            const formatted = formatDate(input.value)
+
+            // ✅ Предотвращаем бесконечную рекурсию
+            if (input.value !== formatted) {
+                input.value = formatted
+                input.dispatchEvent(new Event('input', { bubbles: true }))
+            }
         }
 
         el.addEventListener('input', handler)

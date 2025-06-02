@@ -30,8 +30,11 @@ export const dynamicMask: Directive = {
                 }
             }
 
-            input.value = result
-            input.dispatchEvent(new Event('input')) // чтобы v-model понял
+            // ✅ Только если форматирование что-то изменило
+            if (input.value !== result) {
+                input.value = result
+                input.dispatchEvent(new Event('input', { bubbles: true }))
+            }
         }
 
         el.addEventListener('input', handleInput)

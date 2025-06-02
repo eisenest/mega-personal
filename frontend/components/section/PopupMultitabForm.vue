@@ -157,6 +157,12 @@ const form = reactive({
   fields: {}
 })
 
+const formStates = reactive<Record<number, any>>({
+  0: {},
+  1: {},
+  2: {}
+})
+
 const tabs = ['Работодателям', 'Соискателям', 'Фрилансерам-рекрутерам']
 const tabTitles = [
   {
@@ -275,6 +281,30 @@ watch([activeTab, entityType], async ([tab, type]) => {
       console.error('Ошибка загрузки типов самозанятости:', e)
     }
   }
+})
+
+watch(activeTab, (newTab, oldTab) => {
+  // Сохраняем предыдущее состояние формы
+  if (oldTab !== null && oldTab !== undefined) {
+    formStates[oldTab] = JSON.parse(JSON.stringify(form))
+  }
+
+  // Очищаем текущую форму
+  Object.keys(form).forEach(key => {
+    if (typeof form[key] === 'object' && form[key] !== null) {
+      form[key] = {}
+    } else {
+      form[key] = ''
+    }
+  })
+
+  // Загружаем новое состояние, если оно было
+  if (formStates[newTab]) {
+    Object.assign(form, JSON.parse(JSON.stringify(formStates[newTab])))
+  }
+
+  // Очищаем ошибки
+  Object.keys(errors).forEach(k => delete errors[k])
 })
 
 

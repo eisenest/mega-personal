@@ -242,6 +242,12 @@ const form = reactive({
   fields: {} // сюда попадут значения из динамических полей
 })
 
+const formStates = reactive<Record<number, any>>({
+  0: {},
+  1: {},
+  2: {}
+})
+
 const selectedTypeObject = ref(null)
 const labelToIdMap = reactive<Record<string, string>>({})
 const errors = reactive<Record<string, string>>({})
@@ -369,14 +375,35 @@ watch([activeTab, entityType], async ([newTab, newEntity]) => {
         })
       }
 
-
-
     } catch (e) {
       console.error('Ошибка загрузки типов самозанятости:', e)
     }
   }
 }, { immediate: true })
 
+watch(activeTab, (newTab, oldTab) => {
+  // Сохраняем предыдущее состояние формы
+  if (oldTab !== null && oldTab !== undefined) {
+    formStates[oldTab] = JSON.parse(JSON.stringify(form))
+  }
+
+  // Очищаем текущую форму
+  Object.keys(form).forEach(key => {
+    if (typeof form[key] === 'object' && form[key] !== null) {
+      form[key] = {}
+    } else {
+      form[key] = ''
+    }
+  })
+
+  // Загружаем новое состояние, если оно было
+  if (formStates[newTab]) {
+    Object.assign(form, JSON.parse(JSON.stringify(formStates[newTab])))
+  }
+
+  // Очищаем ошибки
+  Object.keys(errors).forEach(k => delete errors[k])
+})
 
 const uploadedFiles = reactive<Record<string, File | null>>({})
 

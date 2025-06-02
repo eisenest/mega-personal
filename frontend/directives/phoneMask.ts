@@ -21,9 +21,13 @@ export const phoneMask: Directive = {
     mounted(el: HTMLInputElement) {
         el.addEventListener('input', (e) => {
             const target = e.target as HTMLInputElement
-            target.value = formatPhone(target.value)
-            // генерируем событие для v-model
-            target.dispatchEvent(new Event('input'))
+            const formatted = formatPhone(target.value)
+
+            // ✅ защищаем от зацикливания
+            if (target.value !== formatted) {
+                target.value = formatted
+                target.dispatchEvent(new Event('input'))
+            }
         })
     }
 }
