@@ -120,7 +120,7 @@ if (process.client) {
         <div class="share-links">
           <span>Поделиться</span>
           <a
-              :href="`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`"
+              :href="`https://t.me/share/url?url=${shareUrl}`"
               target="_blank"
               rel="noopener"
           >
@@ -128,7 +128,7 @@ if (process.client) {
           </a>
 
           <a
-              :href="`https://vk.com/share.php?url=${encodeURIComponent(shareUrl)}`"
+              :href="`https://vk.com/share.php?url=${shareUrl}`"
               target="_blank"
               rel="noopener"
           >

@@ -26,7 +26,7 @@ defineProps({
 
 <style scoped>
 .mission {
-  margin: 200px 0 0 0;
+  margin: 100px 0 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;

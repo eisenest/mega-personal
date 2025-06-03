@@ -51,6 +51,8 @@ defineProps({
   font-weight: 700;
   color: #7400e0;
   font-size: 18px;
+  display: flex;
+  gap: 6px;
 }
 
 .step-text {

@@ -156,6 +156,7 @@ function goTo(url: string) {
   gap: 32px;
   align-items: flex-start;
   padding: 0;
+  text-align: center;
 }
 
 .services__title-content h2{

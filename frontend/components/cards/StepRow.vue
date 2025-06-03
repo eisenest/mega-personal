@@ -19,7 +19,7 @@ defineProps({
 <style scoped>
 .step-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 2fr 3fr;
   gap: 24px;
   align-items: center;
   border-bottom: 1px solid #C6C6C6;
@@ -45,15 +45,7 @@ defineProps({
   gap: 14px;
 }
 
-.service .step-row{
-  grid-template-columns: 1fr 2fr 3fr;
-}
-
-
 @media (max-width: 480px) {
-  .service .step-row {
-    grid-template-columns: repeat(1, 1fr);
-  }
 
   .step-row p{
     margin: 0px;

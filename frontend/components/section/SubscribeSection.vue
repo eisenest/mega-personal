@@ -103,6 +103,10 @@ async function submitForm() {
   align-items: center;
 }
 
+.read-news:hover{
+  color: var(--violet, #6700D1) !important;
+}
+
 .newsletter-form {
   background: white;
   border-radius: 24px;
