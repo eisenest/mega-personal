@@ -334,7 +334,7 @@ button:hover {
     }
 
     .form__row{
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 1fr) !important;
     }
 
     .form__box{
