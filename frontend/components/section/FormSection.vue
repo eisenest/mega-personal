@@ -518,5 +518,11 @@ a:hover{
   grid-column: span 2;
 }
 
+@media screen and (max-width:480px ){
+  .form__row > *:nth-last-child(1):nth-child(odd) {
+    grid-column: span 1 !important;
+  }
+}
+
 
 </style>

@@ -230,7 +230,10 @@ function nextSlide() {
 let interval: any = null
 
 onMounted(() => {
-  interval = setInterval(nextSlide, 10000) // авто-смена каждые 5 секунд
+  const isDesktop = window.matchMedia('(min-width: 769px)').matches
+  if (isDesktop) {
+    interval = setInterval(nextSlide, 10000)
+  }
 })
 
 onBeforeUnmount(() => {

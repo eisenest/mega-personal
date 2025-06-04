@@ -503,6 +503,10 @@ textarea {
     padding: 1rem;
   }
 
+  .form__row > *:nth-last-child(1):nth-child(odd) {
+    grid-column: span 1 !important;
+  }
+
 }
 
 
